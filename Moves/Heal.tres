@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="Move" load_steps=2 format=3 uid="uid://doiwwj5xkqkkt"]
+
+[ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="1_sayry"]
+
+[resource]
+script = ExtResource("1_sayry")
+name = "Heal"
+notes = Array[int]([0, 3, 1, 2])
+metadata/_custom_type_script = "uid://d03c4402j4mkx"
