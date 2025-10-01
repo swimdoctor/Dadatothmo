@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bw5t2b7p1ufeg"]
+[gd_scene load_steps=9 format=3 uid="uid://bw5t2b7p1ufeg"]
 
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_lg58s"]
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="2_b12pq"]
@@ -6,10 +6,12 @@
 [ext_resource type="Resource" uid="uid://corhg0q2t70l1" path="res://Moves/BasicAttack.tres" id="3_iw74v"]
 [ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Heal.tres" id="4_48mfx"]
 [ext_resource type="Resource" uid="uid://c58f52gtcjxl5" path="res://Moves/Fireball.tres" id="5_rnsvn"]
+[ext_resource type="Resource" uid="uid://c7mxxirfcexos" path="res://Moves/Strike.tres" id="6_rnsvn"]
+[ext_resource type="Resource" uid="uid://cqq8g07j3p0aw" path="res://Moves/Slash.tres" id="7_jh1eu"]
 
 [node name="Rhythm" type="Node2D"]
 script = ExtResource("1_lg58s")
-moveInventory = Array[ExtResource("2_ecpmg")]([ExtResource("3_iw74v"), ExtResource("4_48mfx"), ExtResource("5_rnsvn")])
+moveInventory = Array[ExtResource("2_ecpmg")]([ExtResource("3_iw74v"), ExtResource("4_48mfx"), ExtResource("5_rnsvn"), ExtResource("6_rnsvn"), ExtResource("7_jh1eu")])
 
 [node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_b12pq")

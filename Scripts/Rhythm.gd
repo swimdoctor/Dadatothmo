@@ -3,8 +3,8 @@ extends Node2D
 
 @export var moveInventory: Array[Move] = []
 
-@export var bpm = 120.0
-@export var successThreshold = 0.15
+@export var bpm = 200.0
+@export var successThreshold = 0.1
 var timePerBeat = 60/bpm
 var timeTillBeat = 0
 var beat = 0;
@@ -31,8 +31,8 @@ func _process(delta):
 	if timeTillBeat <= 0:
 		timeTillBeat += timePerBeat
 		beat += 1
-		if beat % 4 == 0:
-			$ClickPlayer.pitch_scale = 1.2
+		if beat % 4 == 1:
+			$ClickPlayer.pitch_scale = .8
 		else:
 			$ClickPlayer.pitch_scale = 1
 		$ClickPlayer.play()
@@ -56,15 +56,15 @@ func playNote(direction, timeFromBeat):
 		return
 	
 	timeSinceLastNote = 0
-	noteQueue.push_front(direction)
+	noteQueue.push_back(direction)
 	
-	if noteQueue.size() > 4:
-		noteQueue.pop_back()
+	#if noteQueue.size() > 4:
+		#noteQueue.pop_front()
 	
-	if beat % 4 == 0 and noteQueue.size() >= 4:
-		for move in moveInventory:
-			var validMove = true
-			for i in range(4):
+	for move in moveInventory:
+		var validMove = true
+		if noteQueue.size() >= move.notes.size():
+			for i in range(move.notes.size()):
 				if noteQueue[i] != move.notes[i]:
 					validMove = false
 			
