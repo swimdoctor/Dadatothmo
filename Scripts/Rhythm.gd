@@ -3,9 +3,9 @@ extends Node2D
 
 @export var moveInventory: Array[Move] = []
 
-@export var bpm = 200.0
+@export var bpm:float = 200.0
 @export var successThreshold = 0.1
-var timePerBeat = 60/bpm
+@onready var timePerBeat = 60/bpm
 var timeTillBeat = 0
 var beat = 0;
 
@@ -14,7 +14,9 @@ var noteQueue = []
 
 var click = preload("res://Sounds/metronomeClick.mp3")
 
-
+signal beatHit(size:float)
+signal inputPressed(direction:String, time:float)
+signal movePerformed(name:String)
 
 func _ready() -> void:
 	print("Move Inventory: ");
@@ -32,10 +34,13 @@ func _process(delta):
 		timeTillBeat += timePerBeat
 		beat += 1
 		if beat % 4 == 1:
+			emit_signal("beatHit", 1.2)
 			$ClickPlayer.pitch_scale = .8
 		else:
+			emit_signal("beatHit", 1.1)
 			$ClickPlayer.pitch_scale = 1
 		$ClickPlayer.play()
+		
 	
 	var timeFromBeat = min(timeTillBeat, timePerBeat - timeTillBeat)
 	timeFromBeat *= sign(timePerBeat/2 - timeTillBeat)
@@ -50,6 +55,8 @@ func _process(delta):
 		playNote(Move.Note.LEFT, timeFromBeat)
 	
 func playNote(direction, timeFromBeat):
+	emit_signal("inputPressed", direction, timeFromBeat)
+	
 	print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromBeat), " seconds ","early" if (timeFromBeat > 0) else "late")
 	if abs(timeFromBeat) > successThreshold:
 		noteQueue.clear()
@@ -69,6 +76,7 @@ func playNote(direction, timeFromBeat):
 					validMove = false
 			
 			if validMove:
+				movePerformed.emit(move.name)
 				print("YOU DID ", move.name)
 			
 	
