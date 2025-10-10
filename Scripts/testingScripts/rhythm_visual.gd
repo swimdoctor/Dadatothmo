@@ -13,6 +13,17 @@ func _ready() -> void:
 	$MovesText.text = "Moves:\n"
 	for move in rhythm.moveInventory:
 		$MovesText.text += move.getString() + "\n"
+		
+	var movesText:String = $MovesText.text
+	
+	movesText = movesText.replace("UP   ", str("[img=24x24]" + "Images/Test/Arrow0.png" + "[/img] "))
+	movesText = movesText.replace("DOWN ", str("[img=24x24]" + "Images/Test/Arrow1.png" + "[/img] "))
+	movesText = movesText.replace("LEFT ", str("[img=24x24]" + "Images/Test/Arrow3.png" + "[/img] "))
+	movesText = movesText.replace("RIGHT", str("[img=24x24]" + "Images/Test/Arrow2.png" + "[/img] "))
+	# print(movesText)
+	
+	$MovesText.text = movesText;
+	
 		#print(move.getString())
 	
 func _process(delta):
@@ -29,9 +40,9 @@ func playNote(direction, timeFromBeat):
 	
 	image = load("res://Images/Test/Arrow" + str(direction) + ".png")
 
-	$NotePlayedText.add_image(image, 16, 16, Color(1, 1, 1, 1), 0, Rect2(), "note")
+	# $NotePlayedText.add_image(image, 256, 256, Color(1, 1, 1, 1), 0, Rect2(), "note")
 
-	$NotePlayedText.text += ("[img name=note]" + "Images/Test/Arrow" + str(direction) + ".png" + "[/img] ")
+	$NotePlayedText.text += ("[img=32x32]" + "Images/Test/Arrow" + str(direction) + ".png" + "[/img] ")
 	# print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromBeat), " seconds ","early" if (timeFromBeat > 0) else "late")
 
 func moveCompleted(moveName:String):

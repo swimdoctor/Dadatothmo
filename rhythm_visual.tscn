@@ -48,20 +48,25 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="NotePlayedText" type="RichTextLabel" parent="Camera2D/Control"]
+texture_filter = 1
+layout_mode = 0
 offset_left = 386.0
-offset_top = 563.87
+offset_top = 459.87
 offset_right = 763.0
-offset_bottom = 628.335
+offset_bottom = 524.335
 bbcode_enabled = true
 text = "Beat:"
 horizontal_alignment = 1
 
 [node name="MovesText" type="RichTextLabel" parent="Camera2D/Control"]
+layout_mode = 0
 offset_left = 8.0
-offset_top = 45.935
+offset_top = 46.0
 offset_right = 385.0
-offset_bottom = 110.4
+offset_bottom = 266.0
+bbcode_enabled = true
 text = "Beat:"
+fit_content = true
 
 [node name="BeatText" type="RichTextLabel" parent="Camera2D/Control"]
 layout_mode = 0
