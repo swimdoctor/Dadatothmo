@@ -25,7 +25,7 @@ func getString():
 	return string
 
 static func getNoteString(note: Note):
-	match  note:
+	match note:
 		Note.UP:
 			return "UP   "
 		Note.DOWN:
