@@ -1,22 +1,22 @@
 [gd_scene load_steps=9 format=3 uid="uid://bp8d4tgc7rt5c"]
 
-[ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_4vf03"]
-[ext_resource type="Script" uid="uid://br6wrsv0iahlc" path="res://Scripts/testingScripts/rhythm_visual.gd" id="1_42qm8"]
-[ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_op2mw"]
-[ext_resource type="Resource" uid="uid://corhg0q2t70l1" path="res://Moves/BasicAttack.tres" id="3_qrnkq"]
-[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Heal.tres" id="4_jaoxq"]
-[ext_resource type="Resource" uid="uid://c58f52gtcjxl5" path="res://Moves/Fireball.tres" id="5_qo7h6"]
-[ext_resource type="Texture2D" uid="uid://dh7hwpmrmo7k7" path="res://icon.svg" id="8_4vf03"]
-[ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="8_vfk8l"]
+[ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_qdjid"]
+[ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_oyofj"]
+[ext_resource type="Resource" uid="uid://corhg0q2t70l1" path="res://Moves/BasicAttack.tres" id="3_tuy08"]
+[ext_resource type="Resource" uid="uid://c58f52gtcjxl5" path="res://Moves/Fireball.tres" id="4_oyhti"]
+[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Heal.tres" id="5_8ntgc"]
+[ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="6_y8efi"]
+[ext_resource type="Script" uid="uid://br6wrsv0iahlc" path="res://Scripts/testingScripts/rhythm_visual.gd" id="7_66vxs"]
+[ext_resource type="Texture2D" uid="uid://dh7hwpmrmo7k7" path="res://icon.svg" id="8_ue8ww"]
 
 [node name="Rhythm" type="Node2D"]
-script = ExtResource("1_4vf03")
-moveInventory = Array[ExtResource("2_op2mw")]([ExtResource("3_qrnkq"), ExtResource("5_qo7h6"), ExtResource("4_jaoxq")])
+script = ExtResource("1_qdjid")
+moveInventory = Array[ExtResource("2_oyofj")]([ExtResource("3_tuy08"), ExtResource("4_oyhti"), ExtResource("5_8ntgc")])
 bpm = 160.0
 successThreshold = 0.15
 
 [node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("8_vfk8l")
+stream = ExtResource("6_y8efi")
 volume_db = -10.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -28,7 +28,7 @@ offset_left = -575.0
 offset_top = -325.0
 offset_right = 575.0
 offset_bottom = 325.0
-script = ExtResource("1_42qm8")
+script = ExtResource("7_66vxs")
 
 [node name="BeatIndicator" type="TextureRect" parent="Camera2D/Control"]
 layout_mode = 2
@@ -37,7 +37,7 @@ offset_top = 261.0
 offset_right = 639.0
 offset_bottom = 389.0
 pivot_offset = Vector2(64, 64)
-texture = ExtResource("8_4vf03")
+texture = ExtResource("8_ue8ww")
 
 [node name="CenterContainer" type="CenterContainer" parent="Camera2D/Control"]
 layout_mode = 1
