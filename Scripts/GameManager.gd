@@ -17,7 +17,7 @@ enum GameState
 var state: GameState = GameState.MainMenu
 var previous_state: GameState # set by change_gamestate()
 
-# --- Pause Menu ---
+#region Pause Menu
 var pause_menu_scene: PackedScene = preload("res://Scenes/pause_menu.tscn")
 var pause_instance: Control = null
 	
@@ -36,6 +36,8 @@ func _load_pause_menu() -> void:
 	pause_instance = pause_menu_scene.instantiate() as Control
 	current_scene.add_child(pause_instance)
 	
+#endregion
+
 # --- State Management ---
 func change_gamestate(newState: GameState):
 	previous_state = state
@@ -53,7 +55,7 @@ func change_scene(newState: GameState) -> void:
 		GameState.Dungeon:
 			get_tree().change_scene_to_file("res://Scenes/main.tscn")
 		GameState.Fighting:
-			get_tree().change_scene_to_file("res://Scenes/rhythm.tscn")
+			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
 		GameState.Upgrading:
 			print("upgrading")
 		GameState.GameOver:
