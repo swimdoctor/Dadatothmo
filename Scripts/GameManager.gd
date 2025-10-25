@@ -6,7 +6,6 @@ extends Node
 enum GameState
 {
 	MainMenu,
-	Paused,
 	Dungeon,
 	Fighting,
 	Upgrading,
@@ -14,8 +13,9 @@ enum GameState
 }
 
 # --- Game State and Global Variables ---
-var state: GameState = GameState.MainMenu
-var previous_state: GameState # set by change_gamestate()
+var _state: GameState = GameState.MainMenu
+
+var current_enemy: Enemy
 
 #region Pause Menu
 var pause_menu_scene: PackedScene = preload("res://Scenes/pause_menu.tscn")
@@ -38,18 +38,25 @@ func _load_pause_menu() -> void:
 	
 #endregion
 
-# --- State Management ---
+# --- Game Management ---
 func change_gamestate(newState: GameState):
-	previous_state = state
-	state = newState
+	"""
+	Changes the gamestate and performs all associated actions that go along
+	with editing the gamestate such as changing scenes and setting state variables.
+	"""
+	_state = newState
+	
+	# change scene
+	_change_scene(newState)
 
-# --- Scene Management ---
-func change_scene(newState: GameState) -> void:
-	change_gamestate(newState)
+
+func _change_scene(newState: GameState) -> void:
+	"""
+	Don't use outside of GameManager. Instead use change_gamestate.
+	Changes the current scene to a new one based on the GameState.
+	"""
 	get_tree().paused = false
 	match newState:
-		GameState.Paused:
-			print("paused")
 		GameState.MainMenu:
 			get_tree().change_scene_to_file("res://Scenes/main.tscn")
 		GameState.Dungeon:
@@ -65,4 +72,4 @@ func change_scene(newState: GameState) -> void:
 
 func game_over() -> void:
 	print("Game Over!")
-	change_scene(GameState.MainMenu)
+	change_gamestate(GameState.MainMenu)

@@ -19,22 +19,16 @@ func _ready():
 func toggle_pause():
 	$CanvasLayer.visible = !$CanvasLayer.visible
 	get_tree().paused = $CanvasLayer.visible
-	gamemanager.change_gamestate(gamemanager.previous_state)
-	
-# Pause Scene
-func _input(event):
-	if event.is_action_pressed("pause"):
-		toggle_pause()
 
 # Button Actions
 func _on_resume_pressed():
 	toggle_pause()
 
 func _on_main_menu_pressed():
-	gamemanager.change_scene(gamemanager.GameState.MainMenu)	
+	gamemanager.change_gamestate(gamemanager.GameState.MainMenu)	
 
 func _on_rhythm_pressed():
-	gamemanager.change_scene(gamemanager.GameState.Fighting)
+	gamemanager.change_gamestate(gamemanager.GameState.Fighting)
 	
 func _on_dungeon_pressed():
-	gamemanager.change_scene(gamemanager.GameState.Dungeon)
+	gamemanager.change_gamestate(gamemanager.GameState.Dungeon)
