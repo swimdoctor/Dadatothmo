@@ -1,14 +1,19 @@
-[gd_scene load_steps=6 format=4 uid="uid://cxafmeknv604x"]
+[gd_scene load_steps=9 format=4 uid="uid://cxafmeknv604x"]
 
 [ext_resource type="TileSet" uid="uid://dqb5k04b80vrf" path="res://DungeonTiles.tres" id="1_ig7tw"]
-[ext_resource type="Texture2D" uid="uid://coe2xmq6ge3vj" path="res://Ghost.png" id="2_h2yge"]
+[ext_resource type="Texture2D" uid="uid://coe2xmq6ge3vj" path="res://Images/Test/Ghost.png" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://d2i10htgojvvn" path="res://Scripts/Player.gd" id="3_1bvp3"]
+[ext_resource type="Texture2D" uid="uid://dqmu5aylj07lw" path="res://Images/Test/pacman.png" id="4_jjvhh"]
+[ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/Enemy.gd" id="4_kry3j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_h2yge"]
 friction = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
 size = Vector2(12, 14.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8gbba"]
+size = Vector2(14, 16)
 
 [node name="Main" type="Node2D"]
 
@@ -41,3 +46,15 @@ texture = ExtResource("2_h2yge")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 zoom = Vector2(5, 5)
+
+[node name="Enemy" type="Area2D" parent="."]
+position = Vector2(40, -28)
+script = ExtResource("4_kry3j")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy"]
+shape = SubResource("RectangleShape2D_8gbba")
+
+[node name="Sprite2D" type="Sprite2D" parent="Enemy"]
+scale = Vector2(0.007, 0.007)
+texture = ExtResource("4_jjvhh")
+flip_h = true

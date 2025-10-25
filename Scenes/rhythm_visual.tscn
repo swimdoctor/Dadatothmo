@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Heal.tres" id="5_8ntgc"]
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="6_y8efi"]
 [ext_resource type="Script" uid="uid://br6wrsv0iahlc" path="res://Scripts/testingScripts/rhythm_visual.gd" id="7_66vxs"]
-[ext_resource type="Texture2D" uid="uid://dh7hwpmrmo7k7" path="res://icon.svg" id="8_ue8ww"]
+[ext_resource type="Texture2D" uid="uid://dh7hwpmrmo7k7" path="res://Images/Test/icon.svg" id="8_ue8ww"]
 
 [node name="Rhythm" type="Node2D"]
 script = ExtResource("1_qdjid")
