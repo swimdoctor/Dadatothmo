@@ -18,8 +18,8 @@ func _ready() -> void:
 	
 	movesText = movesText.replace("UP   ", str("[img=24x24]" + "Images/Test/Arrow0.png" + "[/img] "))
 	movesText = movesText.replace("DOWN ", str("[img=24x24]" + "Images/Test/Arrow1.png" + "[/img] "))
-	movesText = movesText.replace("LEFT ", str("[img=24x24]" + "Images/Test/Arrow3.png" + "[/img] "))
-	movesText = movesText.replace("RIGHT", str("[img=24x24]" + "Images/Test/Arrow2.png" + "[/img] "))
+	movesText = movesText.replace("LEFT ", str("[img=24x24]" + "Images/Test/Arrow2.png" + "[/img] "))
+	movesText = movesText.replace("RIGHT", str("[img=24x24]" + "Images/Test/Arrow3.png" + "[/img] "))
 	# print(movesText)
 	
 	$MovesText.text = movesText;
