@@ -12,6 +12,10 @@ var beat = 0;
 var timeSinceLastNote = 0
 var noteQueue = []
 
+var interFrameInput
+# this stores a number of seconds
+var interFrameTimestamp
+
 var click = preload("res://Sounds/metronomeClick.mp3")
 
 signal beatHit(size:float)
@@ -50,23 +54,39 @@ func _process(delta):
 	
 	# find the relative time from the nearest beat
 	# min(timeTillBeat, timeSinceLastBeat)
-	var timeFromNearestBeat = min(timeTillBeat, timePerBeat - timeTillBeat)
-	timeFromNearestBeat *= sign(timePerBeat/2 - timeTillBeat)
+	#var timeFromNearestBeat = min(timeTillBeat, timePerBeat - timeTillBeat)
+	#timeFromNearestBeat *= sign(timePerBeat/2 - timeTillBeat)
 	
-	if Input.is_action_just_pressed("up"):
+	# if there was no input since last frame, return early
+	if interFrameInput == null:
+		return
+	
+	# plug this baby into desmos
+	# 0 when the input is on the beat
+	# domain is (-timePerBeat/2, timePerBeat/2)
+	var timeFromNearestBeat = fmod(interFrameTimestamp - timePerBeat/2, timePerBeat) - timePerBeat/2
+	
+	#if Input.is_action_just_pressed("up"):
+	if interFrameInput == KEY_UP:
 		playNote(Move.Note.UP, timeFromNearestBeat)
-	if Input.is_action_just_pressed("right"):
+	#if Input.is_action_just_pressed("right"):
+	elif interFrameInput == KEY_RIGHT:
 		playNote(Move.Note.RIGHT, timeFromNearestBeat)
-	if Input.is_action_just_pressed("down"):
+	#if Input.is_action_just_pressed("down"):
+	elif interFrameInput == KEY_DOWN:
 		playNote(Move.Note.DOWN, timeFromNearestBeat)
-	if Input.is_action_just_pressed("left"):
+	#if Input.is_action_just_pressed("left"):
+	elif interFrameInput == KEY_LEFT:
 		playNote(Move.Note.LEFT, timeFromNearestBeat)
+	
+	interFrameInput = null
+	interFrameTimestamp = null
 
 func _input(event) -> void:
 	if event is InputEventKey and event.is_pressed():
 		print(event.keycode);
-		
-	var timestamp = Time.get_ticks_usec()
+		interFrameTimestamp = Time.get_ticks_usec() / 1_000_000.0
+		interFrameInput = event.keycode
 	
 	#if event.keycode == KEY_UP:
 		#playNote(Move.Note.UP, Time.get_ticks_usec())
