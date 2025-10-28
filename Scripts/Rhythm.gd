@@ -52,10 +52,6 @@ func _process(delta):
 			$ClickPlayer.pitch_scale = 1
 		$ClickPlayer.play()
 	
-	# find the relative time from the nearest beat
-	# min(timeTillBeat, timeSinceLastBeat)
-	#var timeFromNearestBeat = min(timeTillBeat, timePerBeat - timeTillBeat)
-	#timeFromNearestBeat *= sign(timePerBeat/2 - timeTillBeat)
 	
 	# if there was no input since last frame, return early
 	if interFrameInput == null:
@@ -64,20 +60,17 @@ func _process(delta):
 	# plug this baby into desmos
 	# 0 when the input is on the beat
 	# domain is (-timePerBeat/2, timePerBeat/2)
+	# negative when before the beat, positive after
 	var timeFromNearestBeat = fmod(interFrameTimestamp - timePerBeat/2, timePerBeat) - timePerBeat/2
 	
-	#if Input.is_action_just_pressed("up"):
 	if interFrameInput == KEY_UP:
-		playNote(Move.Note.UP, timeFromNearestBeat)
-	#if Input.is_action_just_pressed("right"):
+		playNote(Move.Direction.UP, timeFromNearestBeat)
 	elif interFrameInput == KEY_RIGHT:
-		playNote(Move.Note.RIGHT, timeFromNearestBeat)
-	#if Input.is_action_just_pressed("down"):
+		playNote(Move.Direction.RIGHT, timeFromNearestBeat)
 	elif interFrameInput == KEY_DOWN:
-		playNote(Move.Note.DOWN, timeFromNearestBeat)
-	#if Input.is_action_just_pressed("left"):
+		playNote(Move.Direction.DOWN, timeFromNearestBeat)
 	elif interFrameInput == KEY_LEFT:
-		playNote(Move.Note.LEFT, timeFromNearestBeat)
+		playNote(Move.Direction.LEFT, timeFromNearestBeat)
 	
 	interFrameInput = null
 	interFrameTimestamp = null
@@ -87,16 +80,8 @@ func _input(event) -> void:
 		print(event.keycode);
 		interFrameTimestamp = Time.get_ticks_usec() / 1_000_000.0
 		interFrameInput = event.keycode
-	
-	#if event.keycode == KEY_UP:
-		#playNote(Move.Note.UP, Time.get_ticks_usec())
-	#if event.keycode == KEY_RIGHT:
-		#playNote(Move.Note.RIGHT, timeFromNearestBeat)
-	#if event.keycode == KEY_DOWN:
-		#playNote(Move.Note.DOWN, timeFromNearestBeat)
-	#if event.keycode == KEY_LEFT:
-		#playNote(Move.Note.LEFT, timeFromNearestBeat)
-	#playNote()
+
+
 
 func playNote(direction, timeFromNearestBeat):
 	emit_signal("inputPressed", direction, timeFromNearestBeat)

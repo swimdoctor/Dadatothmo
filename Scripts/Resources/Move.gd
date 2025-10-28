@@ -1,7 +1,7 @@
 class_name Move
 extends Resource
 
-enum Note {
+enum Direction {
 	UP,
 	DOWN,
 	LEFT,
@@ -10,9 +10,9 @@ enum Note {
 
 @export var name: String = ""
 @export var icon: Texture2D = null
-@export var notes: Array[Note] = []
+@export var notes: Array[Direction] = []
 
-func _init(name = "", icon = null, notes: Array[Note] = []):
+func _init(name = "", icon = null, notes: Array[Direction] = []):
 	self.icon = icon
 	self.name = name
 	self.notes = notes
@@ -24,16 +24,28 @@ func getString():
 		string = string + getNoteString(note) + " "
 	return string
 
-static func getNoteString(note: Note):
+static func getNoteString(note: Direction):
 	match note:
-		Note.UP:
+		Direction.UP:
 			return "UP   "
-		Note.DOWN:
+		Direction.DOWN:
 			return "DOWN "
-		Note.LEFT:
+		Direction.LEFT:
 			return "LEFT "
-		Note.RIGHT:
+		Direction.RIGHT:
 			return "RIGHT"
 	
 	return "Invalid"
-			
+
+static func getNoteSprite(direction: Direction):
+	match direction:
+		Direction.UP:
+			return preload("res://Images/Test/Arrow_Up.png")
+		Direction.DOWN:
+			return preload("res://Images/Test/Arrow_Down.png")
+		Direction.LEFT:
+			return preload("res://Images/Test/Arrow_Left.png")
+		Direction.RIGHT:
+			return preload("res://Images/Test/Arrow_Right.png")
+	pass
+	

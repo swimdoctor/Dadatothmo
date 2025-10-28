@@ -16,10 +16,10 @@ func _ready() -> void:
 		
 	var movesText:String = $MovesText.text
 	
-	movesText = movesText.replace("UP   ", str("[img=24x24]" + "Images/Test/Arrow0.png" + "[/img] "))
-	movesText = movesText.replace("DOWN ", str("[img=24x24]" + "Images/Test/Arrow1.png" + "[/img] "))
-	movesText = movesText.replace("LEFT ", str("[img=24x24]" + "Images/Test/Arrow2.png" + "[/img] "))
-	movesText = movesText.replace("RIGHT", str("[img=24x24]" + "Images/Test/Arrow3.png" + "[/img] "))
+	movesText = movesText.replace("UP   ", str("[img=24x24]" + "Images/Test/Arrow_Up.png" + "[/img] "))
+	movesText = movesText.replace("DOWN ", str("[img=24x24]" + "Images/Test/Arrow_Down.png" + "[/img] "))
+	movesText = movesText.replace("LEFT ", str("[img=24x24]" + "Images/Test/Arrow_Left.png" + "[/img] "))
+	movesText = movesText.replace("RIGHT", str("[img=24x24]" + "Images/Test/Arrow_Right.png" + "[/img] "))
 	# print(movesText)
 	
 	$MovesText.text = movesText;
@@ -34,6 +34,7 @@ func _process(delta):
 	
 func playNote(direction, timeFromBeat):
 	print(direction)
+	var dirNames = []
 	
 	#var imgName:String
 	var image:Texture2D
