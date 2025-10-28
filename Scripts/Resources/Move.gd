@@ -37,6 +37,19 @@ static func getNoteString(note: Direction):
 	
 	return "Invalid"
 
+
+static func getNoteSpriteName(direction: Direction):
+	match direction:
+		Direction.UP:
+			return "Images/Test/Arrow_Up.png"
+		Direction.DOWN:
+			return "Images/Test/Arrow_Down.png"
+		Direction.LEFT:
+			return "Images/Test/Arrow_Left.png"
+		Direction.RIGHT:
+			return "Images/Test/Arrow_Right.png"
+
+
 static func getNoteSprite(direction: Direction):
 	match direction:
 		Direction.UP:

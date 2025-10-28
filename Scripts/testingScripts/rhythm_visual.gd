@@ -34,16 +34,15 @@ func _process(delta):
 	
 func playNote(direction, timeFromBeat):
 	print(direction)
-	var dirNames = []
 	
 	#var imgName:String
 	var image:Texture2D
 	
-	image = load("res://Images/Test/Arrow" + str(direction) + ".png")
+	#image = load("res://Images/Test/Arrow" + str(direction) + ".png")
 
 	# $NotePlayedText.add_image(image, 256, 256, Color(1, 1, 1, 1), 0, Rect2(), "note")
 
-	$NotePlayedText.text += ("[img=32x32]" + "Images/Test/Arrow" + str(direction) + ".png" + "[/img] ")
+	$NotePlayedText.text += ("[img=32x32]" + Move.getNoteSpriteName(direction) + "[/img] ")
 	# print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromBeat), " seconds ","early" if (timeFromBeat > 0) else "late")
 
 func moveCompleted(moveName:String):

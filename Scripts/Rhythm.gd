@@ -75,6 +75,7 @@ func _process(delta):
 	interFrameInput = null
 	interFrameTimestamp = null
 
+
 func _input(event) -> void:
 	if event is InputEventKey and event.is_pressed():
 		print(event.keycode);
