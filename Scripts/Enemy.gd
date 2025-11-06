@@ -1,9 +1,9 @@
 class_name Enemy
 extends Area2D
 
-var health: int # how many times the enemy can be hit
-var tempo: int # speed of enemy encounter
-var attack_pattern: Array[String] # a list of strings for the enemies attack pattern
+@export var health: int # how many times the enemy can be hit
+@export var tempo: int # speed of enemy encounter
+@export var attack_pattern: Array[String] # a list of strings for the enemies attack pattern
 
 func _ready() -> void:
 	# connect signals for enter area2D
