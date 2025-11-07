@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="Move" load_steps=2 format=3 uid="uid://doiwwj5xkqkkt"]
+[gd_resource type="Resource" script_class="Move" load_steps=3 format=3 uid="uid://doiwwj5xkqkkt"]
 
+[ext_resource type="Texture2D" uid="uid://61mns4wyxsm4" path="res://Images/Test/IconRoughHealth.png" id="1_l83uu"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="1_sayry"]
 
 [resource]
 script = ExtResource("1_sayry")
 name = "Heal"
+icon = ExtResource("1_l83uu")
 notes = Array[int]([0, 3, 1, 2])
 metadata/_custom_type_script = "uid://d03c4402j4mkx"

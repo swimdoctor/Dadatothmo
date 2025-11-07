@@ -1,9 +1,11 @@
-[gd_resource type="Resource" script_class="Move" load_steps=2 format=3 uid="uid://c58f52gtcjxl5"]
+[gd_resource type="Resource" script_class="Move" load_steps=3 format=3 uid="uid://c58f52gtcjxl5"]
 
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="1_1tgeu"]
+[ext_resource type="Texture2D" uid="uid://8cg7o12gty0a" path="res://Images/Test/IconRoughFire.png" id="1_jbbsc"]
 
 [resource]
 script = ExtResource("1_1tgeu")
 name = "Fireball"
+icon = ExtResource("1_jbbsc")
 notes = Array[int]([3, 3, 1, 2])
 metadata/_custom_type_script = "uid://d03c4402j4mkx"

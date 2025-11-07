@@ -3,7 +3,7 @@ extends Node2D
 
 @export var moveInventory: Array[Move] = []
 
-@export var bpm:float = 120.0
+@export var bpm: float = 120.0
 @export var successThreshold = 0.2
 @onready var timePerBeat = 60/bpm
 var timeTillBeat = 0
@@ -119,8 +119,7 @@ func playNote(direction, timeFromNearestBeat):
 					validMove = false
 			
 			if validMove:
-				movePerformed.emit(move.name)
+				movePerformed.emit(move)
 				print("YOU DID ", move.name)
-			
 	
 	print(noteQueue)
