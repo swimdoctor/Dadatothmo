@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bp8d4tgc7rt5c"]
+[gd_scene load_steps=19 format=3 uid="uid://bp8d4tgc7rt5c"]
 
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_qdjid"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_oyofj"]
@@ -9,17 +9,26 @@
 [ext_resource type="Script" uid="uid://br6wrsv0iahlc" path="res://Scripts/testingScripts/rhythm_visual.gd" id="7_66vxs"]
 [ext_resource type="Texture2D" uid="uid://dh7hwpmrmo7k7" path="res://Images/Test/icon.svg" id="8_ue8ww"]
 [ext_resource type="Texture2D" uid="uid://dv5ch70p1auyc" path="res://Images/Test/purple.jpg" id="9_oyofj"]
+[ext_resource type="AudioStream" uid="uid://qr12rn2sntdc" path="res://Sounds/boom1.mp3" id="10_66vxs"]
 [ext_resource type="Texture2D" uid="uid://dqmu5aylj07lw" path="res://Images/Test/pacman.png" id="10_tuy08"]
+[ext_resource type="AudioStream" uid="uid://b75reqt5y6bm5" path="res://Sounds/boom2.mp3" id="11_ue8ww"]
+[ext_resource type="AudioStream" uid="uid://cir5rjijdgiqj" path="res://Sounds/boom3.mp3" id="12_75du4"]
+[ext_resource type="AudioStream" uid="uid://dyy2tpcuyngj" path="res://Sounds/success.mp3" id="13_75du4"]
+[ext_resource type="AudioStream" uid="uid://drnqc782kf0si" path="res://Sounds/failure.mp3" id="13_ue8ww"]
+[ext_resource type="AudioStream" uid="uid://bxrhkps6jc0nl" path="res://Sounds/buildup.mp3" id="14_75du4"]
+
+[sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_oyhti"]
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bpf63"]
+streams_count = 3
+stream_0/stream = ExtResource("10_66vxs")
+stream_1/stream = ExtResource("11_ue8ww")
+stream_2/stream = ExtResource("12_75du4")
 
 [node name="Rhythm" type="Node2D"]
 script = ExtResource("1_qdjid")
 moveInventory = Array[ExtResource("2_oyofj")]([ExtResource("3_tuy08"), ExtResource("4_oyhti"), ExtResource("5_8ntgc")])
-bpm = 80.0
 successThreshold = 0.15
-
-[node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("6_y8efi")
-volume_db = -10.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -50,27 +59,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="NotePlayedText" type="RichTextLabel" parent="Camera2D/Control"]
-texture_filter = 1
-layout_mode = 0
-offset_left = 8.0
-offset_top = 422.0
-offset_right = 385.0
-offset_bottom = 486.465
-bbcode_enabled = true
-text = "Beat:"
-horizontal_alignment = 1
-
-[node name="MovesText" type="RichTextLabel" parent="Camera2D/Control"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 46.0
-offset_right = 385.0
-offset_bottom = 266.0
-bbcode_enabled = true
-text = "Beat:"
-fit_content = true
-
 [node name="BeatText" type="RichTextLabel" parent="Camera2D/Control"]
 layout_mode = 0
 offset_left = 8.0
@@ -78,6 +66,45 @@ offset_top = 10.0
 offset_right = 385.0
 offset_bottom = 50.0
 text = "Beat:"
+
+[node name="ClickPlayer" type="AudioStreamPlayer" parent="Camera2D/Control"]
+stream = ExtResource("6_y8efi")
+volume_db = -10.0
+
+[node name="MovesBox" type="VBoxContainer" parent="Camera2D/Control"]
+layout_mode = 0
+offset_right = 182.44
+offset_bottom = 180.03
+
+[node name="NotesBox" type="HBoxContainer" parent="Camera2D/Control"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 0
+offset_left = 106.0
+offset_top = 408.0
+offset_right = 146.0
+offset_bottom = 458.0
+
+[node name="NotePlayer" type="AudioStreamPlayer2D" parent="Camera2D/Control"]
+stream = SubResource("AudioStreamPolyphonic_oyhti")
+
+[node name="BoomPlayer" type="AudioStreamPlayer2D" parent="Camera2D/Control"]
+stream = SubResource("AudioStreamRandomizer_bpf63")
+
+[node name="FailurePlayer" type="AudioStreamPlayer2D" parent="Camera2D/Control"]
+stream = ExtResource("13_ue8ww")
+
+[node name="NotePlayedText" type="RichTextLabel" parent="Camera2D/Control"]
+layout_mode = 0
+offset_left = 461.0
+offset_top = 201.0
+offset_right = 783.0
+offset_bottom = 332.0
+
+[node name="SuccessPlayer" type="AudioStreamPlayer2D" parent="Camera2D/Control"]
+stream = ExtResource("13_75du4")
+
+[node name="BuildupPlayer" type="AudioStreamPlayer2D" parent="Camera2D/Control"]
+stream = ExtResource("14_75du4")
 
 [node name="RhythmMarker" type="Sprite2D" parent="."]
 z_index = -100

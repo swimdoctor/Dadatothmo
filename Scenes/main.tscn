@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://coe2xmq6ge3vj" path="res://Images/Test/Ghost.png" id="2_h2yge"]
 [ext_resource type="Script" uid="uid://d2i10htgojvvn" path="res://Scripts/Player.gd" id="3_1bvp3"]
 [ext_resource type="Texture2D" uid="uid://dqmu5aylj07lw" path="res://Images/Test/pacman.png" id="4_jjvhh"]
-[ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/Enemy.gd" id="4_kry3j"]
+[ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/WorldEnemy.gd" id="4_kry3j"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_h2yge"]
 friction = 0.0

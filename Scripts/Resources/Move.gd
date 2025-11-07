@@ -48,17 +48,3 @@ static func getNoteSpriteName(direction: Direction):
 			return "Images/Test/Arrow_Left.png"
 		Direction.RIGHT:
 			return "Images/Test/Arrow_Right.png"
-
-
-static func getNoteSprite(direction: Direction):
-	match direction:
-		Direction.UP:
-			return preload("res://Images/Test/Arrow_Up.png")
-		Direction.DOWN:
-			return preload("res://Images/Test/Arrow_Down.png")
-		Direction.LEFT:
-			return preload("res://Images/Test/Arrow_Left.png")
-		Direction.RIGHT:
-			return preload("res://Images/Test/Arrow_Right.png")
-	pass
-	

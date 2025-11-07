@@ -3,115 +3,150 @@ extends Control
 
 @onready var rhythm: = $"../.."
 
-var beat_index: int = 1
 @export var spawn_y: float = 250.0
 @export var marker_size: float = 100.0
 
+# The 'width' of the bottom bar, in beats.
+const BAR_WIDTH_BEATS = 12;
+
+var arrowRows: Array[HBoxContainer] = []
+
 func _ready() -> void:
-	#print(rhythm.bpm)
-	
-	rhythm.inputPressed.connect(playNote)
-	rhythm.movePerformed.connect(moveCompleted)
+	rhythm.playedNote.connect(playedNote)
+	rhythm.clearedNotes.connect(clearedNotes)
+	rhythm.moveCompleted.connect(moveCompleted)
 	rhythm.beatHit.connect(beatHit)
 	
-	$MovesText.text = "Moves:\n"
 	for move in rhythm.moveInventory:
-		$MovesText.text += move.getString() + "\n"
+		var moveRow = HBoxContainer.new()
+		moveRow.add_child(texnode(move.icon))
+		moveRow.custom_minimum_size.y = 50
 		
-	var movesText:String = $MovesText.text
+		var arrows = HBoxContainer.new()
+		for dir in move.notes:
+			arrows.add_child(texnode(getNoteSprite(dir)))
+		moveRow.add_child(arrows)
+		arrowRows.append(arrows)
+		
+		$MovesBox.add_child(moveRow)
 	
-	movesText = movesText.replace("UP   ", str("[img=24x24]" + "Images/Test/Arrow_Up.png" + "[/img] "))
-	movesText = movesText.replace("DOWN ", str("[img=24x24]" + "Images/Test/Arrow_Down.png" + "[/img] "))
-	movesText = movesText.replace("LEFT ", str("[img=24x24]" + "Images/Test/Arrow_Left.png" + "[/img] "))
-	movesText = movesText.replace("RIGHT", str("[img=24x24]" + "Images/Test/Arrow_Right.png" + "[/img] "))
-	# print(movesText)
+	# begin polyphonic audio streams
+	$NotePlayer.play()
 	
-	$MovesText.text = movesText;
-	
-		#print(move.getString())
-	
+func texnode(tex: Texture):
+	var arrow = TextureRect.new()
+	arrow.texture = tex
+	arrow.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	arrow.expand_mode = TextureRect.ExpandMode.EXPAND_FIT_WIDTH
+	return arrow
+
 func _process(delta):
 	$BeatText.text = str(rhythm.beat)
 	
-	if rhythm.noteQueue.size() == 0:
-		$NotePlayedText.text = ""
+	var m = 0
+	for arrowRow in arrowRows:
+		var a = 0
+		var failedmatch = false
+		for arrow in arrowRow.get_children():
+			if a < rhythm.noteQueue.size() and \
+			   a < rhythm.moveInventory[m].notes.size() and \
+			   rhythm.noteQueue[a] == rhythm.moveInventory[m].notes[a] and \
+			   !failedmatch:
+				arrow.self_modulate = Color(1, 0, 0);
+			else:
+				arrow.self_modulate = Color(1, 1, 1);
+				failedmatch = true
+			
+			a += 1
+			
+			if !failedmatch and a == rhythm.moveInventory[m].notes.size() - 1:
+				if !$BuildupPlayer.is_playing():
+					$BuildupPlayer.play()
+		m += 1
 		
-func playNote(direction, timeFromBeat):
-	print(direction)
+func playedNote(direction: Move.Direction):
+	$NotesBox.add_child(texnode(getNoteSprite(direction)))
+	$NotePlayer.get_stream_playback().play_stream(getNoteSound(direction)) 
+	$BoomPlayer.play()
 	
-	#var imgName:String
-	var image:Texture2D
+func clearedNotes():
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_parallel()
+	for dirtex in $NotesBox.get_children():
+		tween.tween_property(dirtex, "self_modulate:a", 0, 0.02)
+		tween.tween_callback(Callable(dirtex, "queue_free")).set_delay(0.1)
 	
-	#image = load("res://Images/Test/Arrow" + str(direction) + ".png")
-
-	# $NotePlayedText.add_image(image, 256, 256, Color(1, 1, 1, 1), 0, Rect2(), "note")
-
-	$NotePlayedText.text += ("[img=32x32]" + Move.getNoteSpriteName(direction) + "[/img] ")
-	# print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromBeat), " seconds ","early" if (timeFromBeat > 0) else "late")
+	$FailurePlayer.play()
 
 func moveCompleted(move: Move):
 	$NotePlayedText.text = ""
 	$NotePlayedText.text = "Performed " + move.name + "!"
 	
+	$SuccessPlayer.play()
+	
 	# actual logic for each attack
 	spawn_move(move)
-
-func beatHit(size:float):
-	$BeatIndicator.scale = Vector2(size,size)
 	
-	var tween = create_tween().set_ease(Tween.EASE_OUT)
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
+	tween.set_parallel()
+	for dirtex in $NotesBox.get_children():
+		dirtex.self_modulate = Color(0, 1, 0);
+		tween.tween_property(dirtex, "self_modulate:a", 0, 0.2)
+		tween.tween_callback(Callable(dirtex, "queue_free")).set_delay(0.2)
+		
+	$BuildupPlayer.stop()
+
+func beatHit(downbeat: bool):
+	$BeatIndicator.scale = Vector2.ONE * (1.5 if downbeat else 1.3)
+	var tween = create_tween()
+	tween.set_ease(Tween.EASE_OUT)
 	tween.tween_property($BeatIndicator, "scale", Vector2(1,1), 0.1)
 	
-	# spawn the measure markers
-	beat_index += 1
-	if beat_index > 4:
-		beat_index = 1
+	spawn_marker(downbeat, get_viewport_rect().size.x)
 	
-	var is_measure_start = (beat_index == 1)
-	spawn_marker(is_measure_start)
+	$ClickPlayer.pitch_scale = 1.4 if downbeat else 1
+	$ClickPlayer.play()
+
+func screen_end():
+	return get_viewport_rect().size.x
+
+func move_across_screen(node: Node):
+	# Move node across the screen and remove it after travel
+	var end_x = node.position.x - screen_end() - marker_size
+	var travel_time = BAR_WIDTH_BEATS * rhythm.beat_time()
+	var tween = create_tween()
+	tween.tween_property(node, "position:x", end_x, travel_time)
+	tween.tween_callback(Callable(node, "queue_free"))
 	
-func get_travel_time() -> float:
-	var beats_per_measure = 4
-	var measures_to_cross = 3
-	var beats_to_cross = measures_to_cross * beats_per_measure
-	var seconds_per_beat = 60.0 / rhythm.bpm
-	var travel_time = beats_to_cross * seconds_per_beat
-	
-	return travel_time
-	
-func spawn_marker(is_measure_start: bool):
+func spawn_marker(downbeat: bool, start_x: float):
 	var marker = ColorRect.new()
-	marker.color = Color.BLACK if is_measure_start else Color.GRAY
+	marker.color = Color.BLACK if downbeat else Color.GRAY
 	marker.size = Vector2(10, marker_size)
-	
-	var start_x = 0 - marker.size.x
-	var end_x = get_viewport_rect().size.x + marker.size.x
 	marker.position = Vector2(start_x, spawn_y)
 	 
 	add_child(marker)
-	
-	# Move marker across the screen and remove it after travel
-	var tween = create_tween()
-	
-	var travel_time = get_travel_time()
-	
-	tween.tween_property(marker, "position:x", end_x, travel_time)
-	tween.tween_callback(Callable(marker, "queue_free"))
+	move_across_screen(marker)
 	
 func spawn_move(move: Move):
 	var sprite: Sprite2D = Sprite2D.new()
 	sprite.texture = move.icon
+	sprite.position = Vector2(screen_end(), spawn_y)
 	
 	add_child(sprite)
+	move_across_screen(sprite)
 	
-	# Start position (offscreen left)
-	var start_x = 0 - sprite.texture.get_width()
-	var end_x = get_viewport_rect().size.x + sprite.texture.get_width()
-	sprite.position = Vector2(start_x, spawn_y)
-	
-	var travel_time = get_travel_time()
-	
-	# Animate across the screen
-	var tween = create_tween()
-	tween.tween_property(sprite, "position:x", end_x, travel_time)
-	tween.tween_callback(Callable(sprite, "queue_free"))
+func getNoteSprite(direction: Move.Direction):
+	match direction:
+		Move.Direction.UP:    return preload("res://Images/Test/Arrow_Up.png")
+		Move.Direction.DOWN:  return preload("res://Images/Test/Arrow_Down.png")
+		Move.Direction.LEFT:  return preload("res://Images/Test/Arrow_Left.png")
+		Move.Direction.RIGHT: return preload("res://Images/Test/Arrow_Right.png")
+
+func getNoteSound(direction: Move.Direction):
+	match direction:
+		Move.Direction.UP:    return preload("res://Sounds/hitup.mp3")
+		Move.Direction.DOWN:  return preload("res://Sounds/hitdown.mp3")
+		Move.Direction.LEFT:  return preload("res://Sounds/hitleft.mp3")
+		Move.Direction.RIGHT: return preload("res://Sounds/hitright.mp3")

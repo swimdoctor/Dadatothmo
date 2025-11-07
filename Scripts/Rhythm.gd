@@ -3,24 +3,25 @@ extends Node2D
 
 @export var moveInventory: Array[Move] = []
 
-@export var bpm: float = 120.0
+@export var beats_per_minute: float = 120.0
+func beat_time():
+	return 60 / beats_per_minute
+
 @export var successThreshold = 0.2
-@onready var timePerBeat = 60/bpm
 var timeTillBeat = 0
-var beat = 0;
+var beat = -1; # start at negative one so first beat is 0
 
 var timeSinceLastNote = 0
-var noteQueue = []
+var noteQueue: Array[Move.Direction] = []
 
 var interFrameInput
 # this stores a number of seconds
 var interFrameTimestamp
 
-var click = preload("res://Sounds/metronomeClick.mp3")
-
-signal beatHit(size:float)
-signal inputPressed(direction:String, time:float)
-signal movePerformed(name:String)
+signal beatHit(downbeat: bool)
+signal playedNote(direction: Move.Direction)
+signal clearedNotes()
+signal moveCompleted(name:String)
 
 func _ready() -> void:
 	Engine.max_fps = 60
@@ -32,26 +33,19 @@ func _ready() -> void:
 	
 
 func _process(delta):
-	
 	# if it has been a while since last keypress clear the cache
 	timeSinceLastNote += delta
-	if timeSinceLastNote > (timePerBeat + successThreshold * 2):
+	if !noteQueue.is_empty() && timeSinceLastNote > (beat_time() + successThreshold * 2):
 		noteQueue.clear()
+		emit_signal("clearedNotes")
 	
 	# handle beat hits
 	timeTillBeat -= delta
 	if timeTillBeat <= 0:
 		while timeTillBeat <= 0:
-			timeTillBeat += timePerBeat
+			timeTillBeat += beat_time()
 		beat += 1
-		if beat % 4 == 0:
-			emit_signal("beatHit", 1.2)
-			$ClickPlayer.pitch_scale = .8
-		else:
-			emit_signal("beatHit", 1.1)
-			$ClickPlayer.pitch_scale = 1
-		$ClickPlayer.play()
-	
+		emit_signal("beatHit", beat % 4 == 0)
 	
 	# if there was no input since last frame, return early
 	if interFrameInput == null:
@@ -61,7 +55,8 @@ func _process(delta):
 	# 0 when the input is on the beat
 	# domain is (-timePerBeat/2, timePerBeat/2)
 	# negative when before the beat, positive after
-	var timeFromNearestBeat = fmod(interFrameTimestamp - timePerBeat/2, timePerBeat) - timePerBeat/2
+	var timeFromNearestBeat = fmod(interFrameTimestamp, beat_time()) - beat_time()/2
+	print(timeFromNearestBeat)
 	
 	if interFrameInput == KEY_UP:
 		playNote(Move.Direction.UP, timeFromNearestBeat)
@@ -78,35 +73,23 @@ func _process(delta):
 
 func _input(event) -> void:
 	if event is InputEventKey and event.is_pressed():
-		print(event.keycode);
 		interFrameTimestamp = Time.get_ticks_usec() / 1_000_000.0
 		interFrameInput = event.keycode
 
-
-
 func playNote(direction, timeFromNearestBeat):
-	emit_signal("inputPressed", direction, timeFromNearestBeat)
-	
-	# print("x")
-	# println("y")
-	
-	# print("x".."y")
-	
-	# print("x" + "y")
-	
-	# print(f"{x}{y}")
-	
-	
 	print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromNearestBeat), " seconds ", 
 		"early" if (timeFromNearestBeat > 0) else "late")
+	
+	timeSinceLastNote = 0
 	
 	# return on invalid input times
 	if abs(timeFromNearestBeat) > successThreshold:
 		noteQueue.clear()
+		emit_signal("clearedNotes")
 		return
 	
-	timeSinceLastNote = 0
 	noteQueue.append(direction)
+	emit_signal("playedNote", direction)
 	
 	#if noteQueue.size() > 4:
 		#noteQueue.pop_front()
@@ -119,7 +102,5 @@ func playNote(direction, timeFromNearestBeat):
 					validMove = false
 			
 			if validMove:
-				movePerformed.emit(move)
-				print("YOU DID ", move.name)
-	
-	print(noteQueue)
+				noteQueue.clear()
+				moveCompleted.emit(move)
