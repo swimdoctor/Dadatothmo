@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=3 uid="uid://bp8d4tgc7rt5c"]
+[gd_scene load_steps=40 format=3 uid="uid://bp8d4tgc7rt5c"]
 
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_qdjid"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_oyofj"]
@@ -8,6 +8,8 @@
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="6_y8efi"]
 [ext_resource type="Script" uid="uid://br6wrsv0iahlc" path="res://Scripts/testingScripts/rhythm_visual.gd" id="7_66vxs"]
 [ext_resource type="Texture2D" uid="uid://cwbvibx8u0pt5" path="res://Images/Test/Player/PlayerTempSprites.png" id="7_75du4"]
+[ext_resource type="Texture2D" uid="uid://bqsmk2psef8fj" path="res://Images/Test/bg.png" id="7_wmisu"]
+[ext_resource type="Script" uid="uid://dq6dvay8yw1b6" path="res://Scripts/bg.gd" id="8_g1jfu"]
 [ext_resource type="Texture2D" uid="uid://dv5ch70p1auyc" path="res://Images/Test/purple.jpg" id="9_oyofj"]
 [ext_resource type="AudioStream" uid="uid://qr12rn2sntdc" path="res://Sounds/boom1.mp3" id="10_66vxs"]
 [ext_resource type="AudioStream" uid="uid://b75reqt5y6bm5" path="res://Sounds/boom2.mp3" id="11_ue8ww"]
@@ -17,6 +19,9 @@
 [ext_resource type="AudioStream" uid="uid://bxrhkps6jc0nl" path="res://Sounds/buildup.mp3" id="14_75du4"]
 [ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/Enemy.gd" id="14_bpf63"]
 [ext_resource type="Texture2D" uid="uid://wgpvkvwhks0m" path="res://Images/Test/Enemies/GoblinSprites.png" id="16_75du4"]
+[ext_resource type="AudioStream" uid="uid://c5w3uc74qb88d" path="res://Sounds/goblindie.wav" id="19_jmhar"]
+[ext_resource type="Theme" uid="uid://qsgq6qeoql70" path="res://themes/goblintheme.tres" id="19_y847q"]
+[ext_resource type="AudioStream" uid="uid://uogih0ewfwwc" path="res://Sounds/ouch.wav" id="22_7rwv8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bpf63"]
 atlas = ExtResource("7_75du4")
@@ -145,6 +150,20 @@ offset_bottom = 325.0
 script = ExtResource("7_66vxs")
 spawn_y = 520.0
 
+[node name="TextureRect" type="TextureRect" parent="Camera2D/Control"]
+z_index = -999
+texture_filter = 1
+layout_mode = 0
+offset_left = -216.0
+offset_top = -126.0
+offset_right = 184.0
+offset_bottom = 114.0
+rotation = -7.49905e-05
+scale = Vector2(4, 4)
+texture = ExtResource("7_wmisu")
+stretch_mode = 1
+script = ExtResource("8_g1jfu")
+
 [node name="BeatIndicator" type="AnimatedSprite2D" parent="Camera2D/Control"]
 texture_filter = 1
 position = Vector2(213, 293)
@@ -157,7 +176,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-metadata/_edit_lock_ = true
 
 [node name="BeatText" type="RichTextLabel" parent="Camera2D/Control"]
 layout_mode = 0
@@ -173,8 +191,10 @@ volume_db = -10.0
 
 [node name="MovesBox" type="VBoxContainer" parent="Camera2D/Control"]
 layout_mode = 0
-offset_right = 182.44
-offset_bottom = 180.03
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 214.44
+offset_bottom = 212.03
 
 [node name="NotesBox" type="HBoxContainer" parent="Camera2D/Control"]
 custom_minimum_size = Vector2(50, 50)
@@ -206,10 +226,21 @@ stream = ExtResource("13_75du4")
 [node name="BuildupPlayer" type="AudioStreamPlayer2D" parent="Camera2D/Control"]
 stream = ExtResource("14_75du4")
 
+[node name="RhythmMarker" type="Sprite2D" parent="Camera2D/Control"]
+z_index = -100
+position = Vector2(575, 571)
+scale = Vector2(0.601042, 0.14375)
+texture = ExtResource("9_oyofj")
+
 [node name="Enemy" type="Area2D" parent="Camera2D/Control"]
 position = Vector2(936, 294)
+rotation = -0.00445726
 script = ExtResource("14_bpf63")
 health = 30
+
+[node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
+scale = Vector2(1, 1)
+stream = ExtResource("19_jmhar")
 
 [node name="EnemySprite" type="AnimatedSprite2D" parent="Camera2D/Control/Enemy"]
 texture_filter = 1
@@ -221,14 +252,12 @@ scale = Vector2(7.12, 7.12)
 shape = SubResource("RectangleShape2D_75du4")
 
 [node name="HealthBar" type="ProgressBar" parent="Camera2D/Control/Enemy"]
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
-offset_bottom = -73.0
+offset_left = -99.5533
+offset_top = -100.445
+offset_right = 100.447
+offset_bottom = -73.4447
+theme = ExtResource("19_y847q")
 show_percentage = false
 
-[node name="RhythmMarker" type="Sprite2D" parent="."]
-z_index = -100
-position = Vector2(0, 246)
-scale = Vector2(0.601042, 0.14375)
-texture = ExtResource("9_oyofj")
+[node name="OuchSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
+stream = ExtResource("22_7rwv8")

@@ -12,9 +12,16 @@ func _ready() -> void:
 
 var hit_time: float = 0
 func damage(by):
-	hit_time = 0.5
-	
 	health -= by;
+	if health <= 0:
+		$DieSound.play()
+		var tween = create_tween()
+		tween.tween_property($EnemySprite, "self_modulate:a", 0, 1)
+		tween.tween_callback(Callable(self, "queue_free")).set_delay(0.8)
+		hit_time = 20
+	else:
+		hit_time = 0.5
+		$OuchSound.play()
 
 func _process(delta):
 	if hit_time > 0:
