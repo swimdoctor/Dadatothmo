@@ -1,6 +1,6 @@
 extends Control
 
-@export var cards: Array[Card] = []
+@export var cards: Array[Card]
 @export var topcard: TextureRect
 @export var leftcard: TextureRect
 @export var rightcard: TextureRect
@@ -9,18 +9,28 @@ extends Control
 # Need to implement permanent moves list and stats after selection
 # Make sure no duplicates / repeats
 # How are we planning on storing global values
+# Need a list of stats to modify from Nicholas
 
 var card0 = null
 var card1 = null
 var card2 = null
 
-func ready_():
-	card0 = cards[randi_range(0, cards.size())]
-	card1 = cards[randi_range(0, cards.size())]
-	card2 = cards[randi_range(0, cards.size())]
-	(topcard.get_child(0) as TextureRect).texture = card1.icon
-	(leftcard.get_child(0) as TextureRect).texture = card1.icon
-	(rightcard.get_child(0) as TextureRect).texture = card1.icon
+func _ready():
+	card0 = cards[randi_range(0, cards.size() - 1)]
+	card1 = cards[randi_range(0, cards.size() - 1)]
+	card2 = cards[randi_range(0, cards.size() - 1)]
+	
+	
+	print((card0 as MoveCard).move.name)
+	print((card1 as MoveCard).move.name)
+	print((card2 as MoveCard).move.name)
+	
+	if card0 is MoveCard:
+		(topcard.get_child(0) as TextureRect).texture = (card0 as MoveCard).move.icon
+	if card1 is MoveCard:
+		(leftcard.get_child(0) as TextureRect).texture = (card1 as MoveCard).move.icon
+	if card2 is MoveCard:
+		(rightcard.get_child(0) as TextureRect).texture = (card2 as MoveCard).move.icon
 
 func _process(delta):
 	if Input.is_action_pressed("up"):

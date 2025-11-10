@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MoveCard" load_steps=3 format=3 uid="uid://sxa5gatyktok"]
+
+[ext_resource type="Resource" uid="uid://corhg0q2t70l1" path="res://Moves/BasicAttack.tres" id="1_bijpy"]
+[ext_resource type="Script" uid="uid://06xrsal5gf3h" path="res://Scripts/Resources/MoveCard.gd" id="2_40y14"]
+
+[resource]
+script = ExtResource("2_40y14")
+move = ExtResource("1_bijpy")
+cardType = 0
+metadata/_custom_type_script = "uid://06xrsal5gf3h"

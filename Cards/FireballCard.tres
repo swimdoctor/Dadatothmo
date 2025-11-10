@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="MoveCard" load_steps=3 format=3 uid="uid://c2ayfbx6p72he"]
+
+[ext_resource type="Resource" uid="uid://c58f52gtcjxl5" path="res://Moves/Fireball.tres" id="1_6o54n"]
+[ext_resource type="Script" uid="uid://06xrsal5gf3h" path="res://Scripts/Resources/MoveCard.gd" id="2_u2a18"]
+
+[resource]
+script = ExtResource("2_u2a18")
+move = ExtResource("1_6o54n")
+cardType = 0
+metadata/_custom_type_script = "uid://06xrsal5gf3h"

@@ -6,4 +6,4 @@ enum CardType {
 	STAT
 }
 
-@export var cardTyoe: CardType = CardType.MOVE
+@export var cardType: CardType = CardType.MOVE
