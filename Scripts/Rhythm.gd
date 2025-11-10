@@ -7,7 +7,7 @@ extends Node2D
 func beat_time():
 	return 60 / beats_per_minute
 
-@export var successThreshold = 0.2
+@export var successThreshold = 0.4
 var timeTillBeat = 0
 var beat = -1; # start at negative one so first beat is 0
 
@@ -103,4 +103,11 @@ func playNote(direction, timeFromNearestBeat):
 			
 			if validMove:
 				noteQueue.clear()
+				
+				if move.damage > 0:
+					print("dala")
+					for enemy in gamemanager.current_enemies:
+						print(enemy)
+						enemy.damage(move.damage)
+				
 				moveCompleted.emit(move)

@@ -1,18 +1,30 @@
 class_name Enemy
 extends Area2D
 
+@export var max_health = 30
 @export var health: int # how many times the enemy can be hit
 @export var tempo: int # speed of enemy encounter
 @export var attack_pattern: Array[String] # a list of strings for the enemies attack pattern
 
 func _ready() -> void:
-	# connect signals for enter area2D
-	connect("body_entered", Callable(self, "_on_body_entered"))
+	gamemanager.current_enemies.append(self)
 	
-func _on_body_entered(body: Node):
-	gamemanager.current_enemy = self
+
+var hit_time: float = 0
+func damage(by):
+	hit_time = 0.5
 	
-	gamemanager.change_gamestate(gamemanager.GameState.Fighting)
+	health -= by;
+
+func _process(delta):
+	if hit_time > 0:
+		hit_time -= delta;
+		$EnemySprite.frame = 1;
+	else:
+		$EnemySprite.frame = 0;
+		
+	$HealthBar.value = lerp($HealthBar.value, float(health), 0.1);
+	$HealthBar.max_value = max_health;
 	
 # _process (delta)
 	# - fires attacks periodically based on tempo and attack pattern

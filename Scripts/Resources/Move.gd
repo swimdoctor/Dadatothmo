@@ -11,6 +11,7 @@ enum Direction {
 @export var name: String = ""
 @export var icon: Texture2D = null
 @export var notes: Array[Direction] = []
+@export var damage: float
 
 func _init(name = "", icon = null, notes: Array[Direction] = []):
 	self.icon = icon
