@@ -1,0 +1,69 @@
+[gd_scene load_steps=4 format=3 uid="uid://dsjdl2k5iuawe"]
+
+[ext_resource type="Script" uid="uid://dc76tjuk8q5u5" path="res://Scripts/upgrades.gd" id="1_lisd6"]
+[ext_resource type="Texture2D" uid="uid://cdd2hq6wtpecd" path="res://Images/Test/UnlockCard.png" id="2_ua6wq"]
+[ext_resource type="Texture2D" uid="uid://duxbvrmlviqjg" path="res://Images/Test/IconRoughBlank.png" id="3_hhb4j"]
+
+[node name="Upgrades" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_right = -2.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_lisd6")
+
+[node name="TopCard" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -24.0
+offset_right = 24.0
+offset_bottom = 64.0
+grow_horizontal = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(25, 0)
+texture = ExtResource("2_ua6wq")
+
+[node name="Icon" type="TextureRect" parent="TopCard"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -8.0
+offset_top = 5.0
+offset_right = 8.0
+offset_bottom = 21.0
+grow_horizontal = 2
+texture = ExtResource("3_hhb4j")
+
+[node name="TopCard2" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.3
+anchor_right = 0.25
+anchor_bottom = 0.3
+grow_horizontal = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(25, 0)
+texture = ExtResource("2_ua6wq")
+
+[node name="TopCard3" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.75
+anchor_top = 0.3
+anchor_right = 0.75
+anchor_bottom = 0.3
+grow_horizontal = 2
+scale = Vector2(4, 4)
+pivot_offset = Vector2(25, 0)
+texture = ExtResource("2_ua6wq")
