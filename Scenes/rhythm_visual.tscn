@@ -2,14 +2,14 @@
 
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_qdjid"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_oyofj"]
-[ext_resource type="Resource" uid="uid://corhg0q2t70l1" path="res://Moves/BasicAttack.tres" id="3_tuy08"]
+[ext_resource type="Resource" uid="uid://c7mxxirfcexos" path="res://Moves/Strike.tres" id="3_jmhar"]
 [ext_resource type="Resource" uid="uid://c58f52gtcjxl5" path="res://Moves/Fireball.tres" id="4_oyhti"]
-[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Heal.tres" id="5_8ntgc"]
+[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Rest.tres" id="5_8ntgc"]
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="6_y8efi"]
 [ext_resource type="Script" uid="uid://br6wrsv0iahlc" path="res://Scripts/testingScripts/rhythm_visual.gd" id="7_66vxs"]
 [ext_resource type="Texture2D" uid="uid://cwbvibx8u0pt5" path="res://Images/Test/Player/PlayerTempSprites.png" id="7_75du4"]
 [ext_resource type="Texture2D" uid="uid://bqsmk2psef8fj" path="res://Images/Test/bg.png" id="7_wmisu"]
-[ext_resource type="Script" uid="uid://dq6dvay8yw1b6" path="res://Scripts/bg.gd" id="8_g1jfu"]
+[ext_resource type="Script" path="res://Scripts/bg.gd" id="8_g1jfu"]
 [ext_resource type="Texture2D" uid="uid://dv5ch70p1auyc" path="res://Images/Test/purple.jpg" id="9_oyofj"]
 [ext_resource type="AudioStream" uid="uid://qr12rn2sntdc" path="res://Sounds/boom1.mp3" id="10_66vxs"]
 [ext_resource type="AudioStream" uid="uid://b75reqt5y6bm5" path="res://Sounds/boom2.mp3" id="11_ue8ww"]
@@ -135,7 +135,7 @@ animations = [{
 
 [node name="Rhythm" type="Node2D"]
 script = ExtResource("1_qdjid")
-moveInventory = Array[ExtResource("2_oyofj")]([ExtResource("3_tuy08"), ExtResource("4_oyhti"), ExtResource("5_8ntgc")])
+moveInventory = Array[ExtResource("2_oyofj")]([ExtResource("3_jmhar"), ExtResource("4_oyhti"), ExtResource("5_8ntgc")])
 successThreshold = 0.15
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -239,7 +239,6 @@ script = ExtResource("14_bpf63")
 health = 30
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
-scale = Vector2(1, 1)
 stream = ExtResource("19_jmhar")
 
 [node name="EnemySprite" type="AnimatedSprite2D" parent="Camera2D/Control/Enemy"]
