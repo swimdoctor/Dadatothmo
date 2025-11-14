@@ -17,6 +17,10 @@ func _ready() -> void:
 	rhythm.moveCompleted.connect(moveCompleted)
 	rhythm.beatHit.connect(beatHit)
 	
+	# begin polyphonic audio streams
+	$NotePlayer.play()
+
+func display_moves():
 	for move in rhythm.moveInventory:
 		var moveRow = HBoxContainer.new()
 		moveRow.add_child(texnode(move.icon))
@@ -29,10 +33,7 @@ func _ready() -> void:
 		arrowRows.append(arrows)
 		
 		$MovesBox.add_child(moveRow)
-	
-	# begin polyphonic audio streams
-	$NotePlayer.play()
-	
+
 func texnode(tex: Texture):
 	var arrow = TextureRect.new()
 	arrow.texture = tex

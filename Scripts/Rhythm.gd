@@ -23,6 +23,8 @@ signal playedNote(direction: Move.Direction)
 signal clearedNotes()
 signal moveCompleted(name:String)
 
+@onready var rhythm_visual = $"Camera2D/Control"
+
 func _ready() -> void:
 	Engine.max_fps = 60
 	print("Move Inventory: ");
@@ -33,6 +35,8 @@ func _ready() -> void:
 		print(move.getString())
 	
 	Input.set_use_accumulated_input(false)
+	
+	(rhythm_visual as RhythmVisuals).display_moves()
 	
 
 func _process(delta):
