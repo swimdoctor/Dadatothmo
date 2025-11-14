@@ -8,6 +8,7 @@ extends Area2D
 
 func _ready() -> void:
 	gamemanager.current_enemies.append(self)
+	print("ADDED", self.name)
 	
 
 var hit_time: float = 0

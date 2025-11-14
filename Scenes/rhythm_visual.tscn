@@ -237,6 +237,8 @@ position = Vector2(936, 294)
 rotation = -0.00445726
 script = ExtResource("14_bpf63")
 health = 30
+tempo = 10
+attack_pattern = Array[String](["2"])
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
 stream = ExtResource("19_jmhar")
