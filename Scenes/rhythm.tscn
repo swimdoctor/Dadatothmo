@@ -4,7 +4,7 @@
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="2_b12pq"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_ecpmg"]
 [ext_resource type="Resource" uid="uid://corhg0q2t70l1" path="res://Moves/BasicAttack.tres" id="3_iw74v"]
-[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Rest.tres" id="4_48mfx"]
+[ext_resource type="Resource" uid="uid://djea434d81k61" path="res://Moves/Rest.tres" id="4_48mfx"]
 [ext_resource type="Resource" uid="uid://c58f52gtcjxl5" path="res://Moves/Fireball.tres" id="5_rnsvn"]
 [ext_resource type="Resource" uid="uid://c7mxxirfcexos" path="res://Moves/Strike.tres" id="6_rnsvn"]
 [ext_resource type="Resource" uid="uid://cqq8g07j3p0aw" path="res://Moves/Slash.tres" id="7_jh1eu"]
