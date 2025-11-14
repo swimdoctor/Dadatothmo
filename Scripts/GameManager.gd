@@ -15,7 +15,7 @@ enum GameState
 # --- Game State and Global Variables ---
 var _state: GameState = GameState.MainMenu
 
-var current_enemy: Enemy
+var current_enemies: Array[Enemy]
 
 #region Pause Menu
 var pause_menu_scene: PackedScene = preload("res://Scenes/pause_menu.tscn")

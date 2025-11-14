@@ -99,10 +99,10 @@ func moveCompleted(move: Move):
 	$BuildupPlayer.stop()
 
 func beatHit(downbeat: bool):
-	$BeatIndicator.scale = Vector2.ONE * (1.5 if downbeat else 1.3)
+	$BeatIndicator.scale = Vector2.ONE * (1.5 if downbeat else 1.3)*4
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
-	tween.tween_property($BeatIndicator, "scale", Vector2(1,1), 0.1)
+	tween.tween_property($BeatIndicator, "scale", Vector2(1,1)*4, 0.1)
 	
 	spawn_marker(downbeat, get_viewport_rect().size.x)
 	

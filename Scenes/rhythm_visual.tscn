@@ -1,21 +1,91 @@
-[gd_scene load_steps=19 format=3 uid="uid://bp8d4tgc7rt5c"]
+[gd_scene load_steps=40 format=3 uid="uid://bp8d4tgc7rt5c"]
 
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_qdjid"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_oyofj"]
-[ext_resource type="Resource" uid="uid://corhg0q2t70l1" path="res://Moves/BasicAttack.tres" id="3_tuy08"]
+[ext_resource type="Resource" uid="uid://c7mxxirfcexos" path="res://Moves/Strike.tres" id="3_jmhar"]
 [ext_resource type="Resource" uid="uid://c58f52gtcjxl5" path="res://Moves/Fireball.tres" id="4_oyhti"]
-[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Heal.tres" id="5_8ntgc"]
+[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Rest.tres" id="5_8ntgc"]
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="6_y8efi"]
 [ext_resource type="Script" uid="uid://br6wrsv0iahlc" path="res://Scripts/testingScripts/rhythm_visual.gd" id="7_66vxs"]
-[ext_resource type="Texture2D" uid="uid://dh7hwpmrmo7k7" path="res://Images/Test/icon.svg" id="8_ue8ww"]
+[ext_resource type="Texture2D" uid="uid://cwbvibx8u0pt5" path="res://Images/Test/Player/PlayerTempSprites.png" id="7_75du4"]
+[ext_resource type="Texture2D" uid="uid://bqsmk2psef8fj" path="res://Images/Test/bg.png" id="7_wmisu"]
+[ext_resource type="Script" path="res://Scripts/bg.gd" id="8_g1jfu"]
 [ext_resource type="Texture2D" uid="uid://dv5ch70p1auyc" path="res://Images/Test/purple.jpg" id="9_oyofj"]
 [ext_resource type="AudioStream" uid="uid://qr12rn2sntdc" path="res://Sounds/boom1.mp3" id="10_66vxs"]
-[ext_resource type="Texture2D" uid="uid://dqmu5aylj07lw" path="res://Images/Test/pacman.png" id="10_tuy08"]
 [ext_resource type="AudioStream" uid="uid://b75reqt5y6bm5" path="res://Sounds/boom2.mp3" id="11_ue8ww"]
 [ext_resource type="AudioStream" uid="uid://cir5rjijdgiqj" path="res://Sounds/boom3.mp3" id="12_75du4"]
 [ext_resource type="AudioStream" uid="uid://dyy2tpcuyngj" path="res://Sounds/success.mp3" id="13_75du4"]
 [ext_resource type="AudioStream" uid="uid://drnqc782kf0si" path="res://Sounds/failure.mp3" id="13_ue8ww"]
 [ext_resource type="AudioStream" uid="uid://bxrhkps6jc0nl" path="res://Sounds/buildup.mp3" id="14_75du4"]
+[ext_resource type="Texture2D" uid="uid://wgpvkvwhks0m" path="res://Images/Test/Enemies/GoblinSprites.png" id="16_75du4"]
+[ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/Enemy.gd" id="18_jmhar"]
+[ext_resource type="AudioStream" uid="uid://c5w3uc74qb88d" path="res://Sounds/goblindie.wav" id="19_jmhar"]
+[ext_resource type="Theme" uid="uid://qsgq6qeoql70" path="res://themes/goblintheme.tres" id="19_y847q"]
+[ext_resource type="AudioStream" uid="uid://uogih0ewfwwc" path="res://Sounds/ouch.wav" id="22_7rwv8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bpf63"]
+atlas = ExtResource("7_75du4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wmisu"]
+atlas = ExtResource("7_75du4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y847q"]
+atlas = ExtResource("7_75du4")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g1jfu"]
+atlas = ExtResource("7_75du4")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q7s1m"]
+atlas = ExtResource("7_75du4")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jmhar"]
+atlas = ExtResource("7_75du4")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7rwv8"]
+atlas = ExtResource("7_75du4")
+region = Rect2(0, 96, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gxxu4"]
+atlas = ExtResource("7_75du4")
+region = Rect2(32, 96, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_me4b4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bpf63")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wmisu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y847q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g1jfu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_q7s1m")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jmhar")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7rwv8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gxxu4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
 
 [sub_resource type="AudioStreamPolyphonic" id="AudioStreamPolyphonic_oyhti"]
 
@@ -25,9 +95,47 @@ stream_0/stream = ExtResource("10_66vxs")
 stream_1/stream = ExtResource("11_ue8ww")
 stream_2/stream = ExtResource("12_75du4")
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_me4b4"]
+atlas = ExtResource("16_75du4")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdkp3"]
+atlas = ExtResource("16_75du4")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ce6xr"]
+atlas = ExtResource("16_75du4")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6h8wf"]
+atlas = ExtResource("16_75du4")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_utmfr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_me4b4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdkp3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ce6xr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6h8wf")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_75du4"]
+
 [node name="Rhythm" type="Node2D"]
 script = ExtResource("1_qdjid")
-moveInventory = Array[ExtResource("2_oyofj")]([ExtResource("3_tuy08"), ExtResource("4_oyhti"), ExtResource("5_8ntgc")])
+moveInventory = Array[ExtResource("2_oyofj")]([ExtResource("3_jmhar"), ExtResource("4_oyhti"), ExtResource("5_8ntgc")])
 successThreshold = 0.15
 
 [node name="Camera2D" type="Camera2D" parent="."]
@@ -42,14 +150,24 @@ offset_bottom = 325.0
 script = ExtResource("7_66vxs")
 spawn_y = 520.0
 
-[node name="BeatIndicator" type="TextureRect" parent="Camera2D/Control"]
-layout_mode = 2
-offset_left = 130.0
-offset_top = 261.0
-offset_right = 258.0
-offset_bottom = 389.0
-pivot_offset = Vector2(64, 64)
-texture = ExtResource("8_ue8ww")
+[node name="TextureRect" type="TextureRect" parent="Camera2D/Control"]
+z_index = -999
+texture_filter = 1
+layout_mode = 0
+offset_left = -216.0
+offset_top = -126.0
+offset_right = 184.0
+offset_bottom = 114.0
+rotation = -7.49905e-05
+scale = Vector2(4, 4)
+texture = ExtResource("7_wmisu")
+stretch_mode = 1
+script = ExtResource("8_g1jfu")
+
+[node name="BeatIndicator" type="AnimatedSprite2D" parent="Camera2D/Control"]
+texture_filter = 1
+position = Vector2(213, 293)
+sprite_frames = SubResource("SpriteFrames_me4b4")
 
 [node name="CenterContainer" type="CenterContainer" parent="Camera2D/Control"]
 layout_mode = 1
@@ -73,8 +191,10 @@ volume_db = -10.0
 
 [node name="MovesBox" type="VBoxContainer" parent="Camera2D/Control"]
 layout_mode = 0
-offset_right = 182.44
-offset_bottom = 180.03
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 214.44
+offset_bottom = 212.03
 
 [node name="NotesBox" type="HBoxContainer" parent="Camera2D/Control"]
 custom_minimum_size = Vector2(50, 50)
@@ -106,14 +226,39 @@ stream = ExtResource("13_75du4")
 [node name="BuildupPlayer" type="AudioStreamPlayer2D" parent="Camera2D/Control"]
 stream = ExtResource("14_75du4")
 
-[node name="RhythmMarker" type="Sprite2D" parent="."]
+[node name="RhythmMarker" type="Sprite2D" parent="Camera2D/Control"]
 z_index = -100
-position = Vector2(0, 246)
+position = Vector2(575, 571)
 scale = Vector2(0.601042, 0.14375)
 texture = ExtResource("9_oyofj")
 
-[node name="Enemy" type="Sprite2D" parent="."]
-position = Vector2(437, 2.84217e-14)
-scale = Vector2(0.0364999, 0.0365)
-texture = ExtResource("10_tuy08")
-flip_h = true
+[node name="Enemy" type="Area2D" parent="Camera2D/Control"]
+position = Vector2(936, 294)
+rotation = -0.00445726
+script = ExtResource("18_jmhar")
+health = 30
+tempo = 1
+attack_pattern = Array[String](["1"])
+
+[node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
+stream = ExtResource("19_jmhar")
+
+[node name="EnemySprite" type="AnimatedSprite2D" parent="Camera2D/Control/Enemy"]
+texture_filter = 1
+scale = Vector2(5, 5)
+sprite_frames = SubResource("SpriteFrames_utmfr")
+
+[node name="EnemyBox" type="CollisionShape2D" parent="Camera2D/Control/Enemy"]
+scale = Vector2(7.12, 7.12)
+shape = SubResource("RectangleShape2D_75du4")
+
+[node name="HealthBar" type="ProgressBar" parent="Camera2D/Control/Enemy"]
+offset_left = -99.5533
+offset_top = -100.445
+offset_right = 100.447
+offset_bottom = -73.4447
+theme = ExtResource("19_y847q")
+show_percentage = false
+
+[node name="OuchSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
+stream = ExtResource("22_7rwv8")
