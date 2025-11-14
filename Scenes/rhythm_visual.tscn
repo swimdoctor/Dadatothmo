@@ -17,8 +17,8 @@
 [ext_resource type="AudioStream" uid="uid://dyy2tpcuyngj" path="res://Sounds/success.mp3" id="13_75du4"]
 [ext_resource type="AudioStream" uid="uid://drnqc782kf0si" path="res://Sounds/failure.mp3" id="13_ue8ww"]
 [ext_resource type="AudioStream" uid="uid://bxrhkps6jc0nl" path="res://Sounds/buildup.mp3" id="14_75du4"]
-[ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/Enemy.gd" id="14_bpf63"]
 [ext_resource type="Texture2D" uid="uid://wgpvkvwhks0m" path="res://Images/Test/Enemies/GoblinSprites.png" id="16_75du4"]
+[ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/Enemy.gd" id="18_jmhar"]
 [ext_resource type="AudioStream" uid="uid://c5w3uc74qb88d" path="res://Sounds/goblindie.wav" id="19_jmhar"]
 [ext_resource type="Theme" uid="uid://qsgq6qeoql70" path="res://themes/goblintheme.tres" id="19_y847q"]
 [ext_resource type="AudioStream" uid="uid://uogih0ewfwwc" path="res://Sounds/ouch.wav" id="22_7rwv8"]
@@ -235,10 +235,10 @@ texture = ExtResource("9_oyofj")
 [node name="Enemy" type="Area2D" parent="Camera2D/Control"]
 position = Vector2(936, 294)
 rotation = -0.00445726
-script = ExtResource("14_bpf63")
+script = ExtResource("18_jmhar")
 health = 30
-tempo = 10
-attack_pattern = Array[String](["2"])
+tempo = 1
+attack_pattern = Array[String](["", ""])
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
 stream = ExtResource("19_jmhar")

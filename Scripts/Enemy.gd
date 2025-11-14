@@ -7,8 +7,8 @@ extends Area2D
 @export var attack_pattern: Array[String] # a list of strings for the enemies attack pattern
 
 func _ready() -> void:
-	gamemanager.current_enemies.append(self)
 	print("ADDED", self.name)
+	gamemanager.current_enemies.append(self)
 	
 
 var hit_time: float = 0
