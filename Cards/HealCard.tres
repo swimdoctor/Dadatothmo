@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="MoveCard" load_steps=3 format=3 uid="uid://x634foxkhkeu"]
 
-[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Heal.tres" id="1_krsoq"]
+[ext_resource type="Resource" uid="uid://djea434d81k61" path="res://Moves/Rest.tres" id="1_krsoq"]
 [ext_resource type="Script" uid="uid://06xrsal5gf3h" path="res://Scripts/Resources/MoveCard.gd" id="2_mybrn"]
 
 [resource]
