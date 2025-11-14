@@ -238,7 +238,7 @@ rotation = -0.00445726
 script = ExtResource("18_jmhar")
 health = 30
 tempo = 1
-attack_pattern = Array[String](["", ""])
+attack_pattern = Array[String](["1"])
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
 stream = ExtResource("19_jmhar")
