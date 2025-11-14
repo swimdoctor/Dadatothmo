@@ -20,6 +20,9 @@ func damage(by):
 		tween.tween_property($EnemySprite, "self_modulate:a", 0, 1)
 		tween.tween_callback(Callable(self, "queue_free")).set_delay(0.8)
 		hit_time = 20
+		#Later, wait for all enemies to be dead
+		gamemanager.remove_enemy(self)
+		
 	else:
 		hit_time = 0.5
 		$OuchSound.play()

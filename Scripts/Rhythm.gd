@@ -26,6 +26,9 @@ signal moveCompleted(name:String)
 func _ready() -> void:
 	Engine.max_fps = 60
 	print("Move Inventory: ");
+	for move in gamemanager.movelist:
+		moveInventory.append(move)
+	
 	for move in moveInventory:
 		print(move.getString())
 	

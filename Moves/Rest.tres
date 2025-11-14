@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="Move" load_steps=3 format=3 uid="uid://doiwwj5xkqkkt"]
+[gd_resource type="Resource" script_class="Move" load_steps=3 format=3 uid="uid://djea434d81k61"]
 
 [ext_resource type="Texture2D" uid="uid://61mns4wyxsm4" path="res://Images/Test/IconRoughHealth.png" id="1_doltd"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_5p5wp"]

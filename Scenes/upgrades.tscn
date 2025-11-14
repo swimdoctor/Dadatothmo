@@ -1,12 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsjdl2k5iuawe"]
+[gd_scene load_steps=12 format=3 uid="uid://bvlbjv3qwv5rx"]
 
 [ext_resource type="Script" uid="uid://dc76tjuk8q5u5" path="res://Scripts/upgrades.gd" id="1_lisd6"]
-[ext_resource type="Script" uid="uid://bafiecs8lgh7k" path="res://Scripts/Resources/Card.gd" id="2_rmsmy"]
+[ext_resource type="Script" path="res://Scripts/Resources/Card.gd" id="2_rmsmy"]
 [ext_resource type="Texture2D" uid="uid://cdd2hq6wtpecd" path="res://Images/Test/UnlockCard.png" id="2_ua6wq"]
-[ext_resource type="Texture2D" uid="uid://duxbvrmlviqjg" path="res://Images/Test/IconRoughBlank.png" id="3_hhb4j"]
 [ext_resource type="Resource" uid="uid://sxa5gatyktok" path="res://Cards/BasicAttackCard.tres" id="3_sy0g7"]
 [ext_resource type="Resource" uid="uid://c2ayfbx6p72he" path="res://Cards/FireballCard.tres" id="4_copim"]
 [ext_resource type="Resource" uid="uid://x634foxkhkeu" path="res://Cards/HealCard.tres" id="5_bbjwf"]
+[ext_resource type="Texture2D" uid="uid://biekfo5wfuttp" path="res://Images/Test/IconRoughs.png" id="7_rmsmy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sy0g7"]
+atlas = ExtResource("7_rmsmy")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="Theme" id="Theme_copim"]
+default_font_size = 60
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbjwf"]
+atlas = ExtResource("7_rmsmy")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jr3vf"]
+atlas = ExtResource("7_rmsmy")
+region = Rect2(96, 0, 16, 16)
 
 [node name="Upgrades" type="Control" node_paths=PackedStringArray("topcard", "leftcard", "rightcard")]
 layout_mode = 3
@@ -48,7 +63,43 @@ offset_top = 5.0
 offset_right = 8.0
 offset_bottom = 21.0
 grow_horizontal = 2
-texture = ExtResource("3_hhb4j")
+texture = SubResource("AtlasTexture_sy0g7")
+stretch_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="TopCard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 460.0
+offset_bottom = 480.0
+grow_horizontal = 2
+scale = Vector2(0.083, 0.083)
+pivot_offset = Vector2(0, 25)
+focus_mode = 2
+theme = SubResource("Theme_copim")
+text = "Magic Missile"
+horizontal_alignment = 1
+selection_enabled = true
+
+[node name="Title2" type="RichTextLabel" parent="TopCard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -2.5
+offset_right = 620.0
+offset_bottom = 270.5
+grow_horizontal = 2
+scale = Vector2(0.063, 0.063)
+pivot_offset = Vector2(0, 35)
+focus_mode = 2
+theme = SubResource("Theme_copim")
+text = "Deal 40% AD (4) Damage to all enemies"
+horizontal_alignment = 1
+selection_enabled = true
 
 [node name="LeftCard" type="TextureRect" parent="."]
 texture_filter = 1
@@ -74,7 +125,43 @@ offset_top = 5.0
 offset_right = 8.0
 offset_bottom = 21.0
 grow_horizontal = 2
-texture = ExtResource("3_hhb4j")
+texture = SubResource("AtlasTexture_bbjwf")
+stretch_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="LeftCard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 460.0
+offset_bottom = 480.0
+grow_horizontal = 2
+scale = Vector2(0.083, 0.083)
+pivot_offset = Vector2(0, 25)
+focus_mode = 2
+theme = SubResource("Theme_copim")
+text = "Double Attack"
+horizontal_alignment = 1
+selection_enabled = true
+
+[node name="Title2" type="RichTextLabel" parent="LeftCard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -3.0
+offset_right = 620.0
+offset_bottom = 348.0
+grow_horizontal = 2
+scale = Vector2(0.063, 0.063)
+pivot_offset = Vector2(0, 35)
+focus_mode = 2
+theme = SubResource("Theme_copim")
+text = "Deal 40% AD (4) Damage to the closest enemy twice"
+horizontal_alignment = 1
+selection_enabled = true
 
 [node name="RightCard" type="TextureRect" parent="."]
 texture_filter = 1
@@ -100,4 +187,41 @@ offset_top = 5.0
 offset_right = 8.0
 offset_bottom = 21.0
 grow_horizontal = 2
-texture = ExtResource("3_hhb4j")
+texture = SubResource("AtlasTexture_jr3vf")
+stretch_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="RightCard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_right = 460.0
+offset_bottom = 480.0
+grow_horizontal = 2
+scale = Vector2(0.083, 0.083)
+pivot_offset = Vector2(0, 25)
+focus_mode = 2
+theme = SubResource("Theme_copim")
+text = "Sharpen"
+horizontal_alignment = 1
+selection_enabled = true
+
+[node name="Title2" type="RichTextLabel" parent="RightCard"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -2.5
+offset_right = 620.0
+offset_bottom = 270.5
+grow_horizontal = 2
+scale = Vector2(0.063, 0.063)
+pivot_offset = Vector2(0, 35)
+focus_mode = 2
+theme = SubResource("Theme_copim")
+text = "Increase damage dealt by 10% for 5 seconds
+"
+horizontal_alignment = 1
+selection_enabled = true

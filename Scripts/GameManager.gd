@@ -16,6 +16,7 @@ enum GameState
 var _state: GameState = GameState.MainMenu
 
 var current_enemies: Array[Enemy]
+var movelist: Array[Move]
 
 #region Pause Menu
 var pause_menu_scene: PackedScene = preload("res://Scenes/pause_menu.tscn")
@@ -49,7 +50,6 @@ func change_gamestate(newState: GameState):
 	# change scene
 	_change_scene(newState)
 
-
 func _change_scene(newState: GameState) -> void:
 	"""
 	Don't use outside of GameManager. Instead use change_gamestate.
@@ -64,11 +64,21 @@ func _change_scene(newState: GameState) -> void:
 		GameState.Fighting:
 			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
 		GameState.Upgrading:
-			print("upgrading")
+			get_tree().change_scene_to_file("res://Scenes/upgrades.tscn")
 		GameState.GameOver:
 			print("game over")
 		_:
 			print("unknown GameState")
+
+func remove_enemy(enemy):
+	current_enemies.remove_at(current_enemies.find(enemy))
+	
+	if(current_enemies.size() == 0):
+		change_gamestate(GameState.Upgrading)
+		
+func add_card_to_hand(move: Move):
+	movelist.append(move)
+	
 
 func game_over() -> void:
 	print("Game Over!")

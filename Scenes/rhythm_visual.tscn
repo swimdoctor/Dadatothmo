@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_oyofj"]
 [ext_resource type="Resource" uid="uid://c7mxxirfcexos" path="res://Moves/Strike.tres" id="3_jmhar"]
 [ext_resource type="Resource" uid="uid://c58f52gtcjxl5" path="res://Moves/Fireball.tres" id="4_oyhti"]
-[ext_resource type="Resource" uid="uid://doiwwj5xkqkkt" path="res://Moves/Rest.tres" id="5_8ntgc"]
+[ext_resource type="Resource" uid="uid://djea434d81k61" path="res://Moves/Rest.tres" id="5_8ntgc"]
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="6_y8efi"]
 [ext_resource type="Script" uid="uid://br6wrsv0iahlc" path="res://Scripts/testingScripts/rhythm_visual.gd" id="7_66vxs"]
 [ext_resource type="Texture2D" uid="uid://cwbvibx8u0pt5" path="res://Images/Test/Player/PlayerTempSprites.png" id="7_75du4"]
