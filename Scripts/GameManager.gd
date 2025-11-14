@@ -77,7 +77,8 @@ func remove_enemy(enemy):
 		change_gamestate(GameState.Upgrading)
 		
 func add_card_to_hand(move: Move):
-	movelist.append(move)
+	if(!movelist.has(move)):
+		movelist.append(move)
 	
 
 func game_over() -> void:
