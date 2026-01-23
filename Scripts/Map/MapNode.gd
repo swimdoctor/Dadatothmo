@@ -11,6 +11,8 @@ enum MapNodeType {
 var nodeType: MapNodeType = MapNodeType.Enemy
 var connections: Array[MapNode] = []
 
+var hasIncomingConnection: bool = false
+
 
 func _init(_position: Vector2, _nodeType: MapNodeType) -> void:
 	nodeType = _nodeType
@@ -21,3 +23,12 @@ func _init(_position: Vector2, _nodeType: MapNodeType) -> void:
 			texture = load("res://Images/Test/Map/Frog.png")
 		_:
 			print("MapNodeTypes Sprite Not Found")
+			
+func _draw() -> void:
+	for i in range(connections.size()):
+		draw_line(
+			Vector2.ZERO,
+			Vector2(connections[i].position - self.position),
+			Color.BLACK,
+			4.0
+		)

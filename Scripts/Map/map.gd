@@ -7,6 +7,7 @@ var mapNodes: Array[Array] = []
 
 func _ready() -> void:
 	buildNodes()
+	connectNodes()
 
 ## Builds a graph made of MapNode objects. Generates in a 1-?-1 structure
 ## where the ? is pseudo randomized using curated parameters to set the number of vertical slices and horizontal slices.
@@ -37,8 +38,40 @@ func buildNodes() -> void:
 
 ## Connects MapNodes in a logical fashion
 func connectNodes() -> void:
+	# go through each column to connect everything
 	for i in range(mapLength - 1):
-		var rowACount = mapNodes[i].size()
-		var rowBCount = mapNodes[i + 1].size()
-		
-		var index = 0
+		var currentColumn = mapNodes[i]
+		var nextColumn = mapNodes[i + 1]
+		for j in range(currentColumn.size()):
+			var currentNode = currentColumn[j]
+			
+			# go through each node in the next column and connect based on the current state of connections
+			for k in range(nextColumn.size()):
+				var nextNodeAbove = nextColumn[k - 1] if k > 0 else null
+				var nextNode = nextColumn[k]
+				var nextNodeBelow = nextColumn[k + 1] if k < nextColumn.size() - 1 else null
+				
+				# conditionals to go through all connection scenarios
+				# TODO: change these conditionals to actually connect the graph
+				if (nextNodeBelow != null &&
+					nextNode.hasIncomingConnection && 
+					nextNodeBelow.hasIncomingConnection):
+					continue
+				elif (nextNodeBelow != null &&
+					nextNode.hasIncomingConnection && 
+					!nextNodeBelow.hasIncomingConnection):
+					if (randf() > 0.5):
+						nextNode.hasIncomingConnection = true;
+						currentNode.connections.append(nextNode)
+				elif (nextNodeAbove == null ||
+					(nextNodeAbove.hasIncomingConnection && 
+					!nextNode.hasIncomingConnection)):
+					if (randf() > 0.5):
+						nextNode.hasIncomingConnection = true;
+						currentNode.connections.append(nextNode)
+					else:
+						continue
+				else:
+					print("somehing has gone wrong with connecting nodes")
+				
+			print(currentNode.connections)
