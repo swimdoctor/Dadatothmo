@@ -63,6 +63,6 @@ text = "Main Menu"
 layout_mode = 2
 text = "Rhythm"
 
-[node name="DungeonButton" type="Button" parent="CanvasLayer/DebugContainer"]
+[node name="MapButton" type="Button" parent="CanvasLayer/DebugContainer"]
 layout_mode = 2
-text = "Dungeon"
+text = "World Map"

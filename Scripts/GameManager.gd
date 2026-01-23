@@ -6,7 +6,7 @@ extends Node
 enum GameState
 {
 	MainMenu,
-	Dungeon,
+	Map,
 	Fighting,
 	Upgrading,
 	GameOver
@@ -59,8 +59,8 @@ func _change_scene(newState: GameState) -> void:
 	match newState:
 		GameState.MainMenu:
 			get_tree().change_scene_to_file("res://Scenes/main.tscn")
-		GameState.Dungeon:
-			get_tree().change_scene_to_file("res://Scenes/main.tscn")
+		GameState.Map:
+			get_tree().change_scene_to_file("res://Scenes/map.tscn")
 		GameState.Fighting:
 			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
 		GameState.Upgrading:

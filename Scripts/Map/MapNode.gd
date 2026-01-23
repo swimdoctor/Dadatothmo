@@ -20,4 +20,4 @@ func _init(_position: Vector2, _nodeType: MapNodeType) -> void:
 		MapNodeType.Enemy:
 			texture = load("res://Images/Test/Map/Frog.png")
 		_:
-			print("MapNodeType Sprite Not Found")
+			print("MapNodeTypes Sprite Not Found")
