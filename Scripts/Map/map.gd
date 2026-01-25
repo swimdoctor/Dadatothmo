@@ -1,7 +1,8 @@
 extends Node2D
 
-var mapLength: int = 10
-var mapMaxHeight: int = 7
+var mapLength: int = 20
+var mapMaxHeight: int = 15
+var mapMaxDelta: int = 2
 
 var mapNodes: Array[Array] = []
 
@@ -15,22 +16,24 @@ func buildNodes() -> void:
 	
 	for i in range(mapLength):
 		# Determine how many nodes to generate in the i-th vertical slice
-		var maxSliceHeight = mapMaxHeight
-		var minSliceHeight = 2
+		var sliceHeight: int
 		if i == 0 or i == mapLength - 1:
-			maxSliceHeight = 1
-			minSliceHeight = 1
-		elif i == 1 or i == mapLength - 2:
-			maxSliceHeight = 3
-		
-		var sliceHeight = randi_range(minSliceHeight, maxSliceHeight)
+			sliceHeight = 1
+		else:
+			var prevSliceHeight = mapNodes[i-1].size()
+			var minSliceHeight = max(2, prevSliceHeight - mapMaxDelta)
+			var maxSliceHeight = min(5, prevSliceHeight + mapMaxDelta, (mapLength - i - 1)*mapMaxDelta + 1)
+			
+			if maxSliceHeight < minSliceHeight:
+				minSliceHeight = maxSliceHeight
+			sliceHeight = randi_range(minSliceHeight, maxSliceHeight)
 		print(sliceHeight)
 		
 		# then fill out each node in the vertical slice with a MapNode
 		mapNodes.append([])
 		for j in range(sliceHeight):
 			var nodePos: Vector2 = Vector2()
-			nodePos.x = 100 + i * 100
+			nodePos.x = 100 + i * 50
 			nodePos.y = 324 - (int)(80 * (sliceHeight - 1) / 2) + 80 * j
 			# TODO: (easily adjustably) randomize NodeType so we can mess with the percentages
 			mapNodes[i].append(MapNode.new(nodePos, MapNode.MapNodeType.Enemy))
