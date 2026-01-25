@@ -11,8 +11,7 @@ enum MapNodeType {
 var nodeType: MapNodeType = MapNodeType.Enemy
 var connections: Array[MapNode] = []
 
-var hasIncomingConnection: bool = false
-
+var connectionCount: int = 0
 
 func _init(_position: Vector2, _nodeType: MapNodeType) -> void:
 	nodeType = _nodeType
@@ -32,3 +31,7 @@ func _draw() -> void:
 			Color.BLACK,
 			4.0
 		)
+
+func appendNode(_node: MapNode) -> void:
+	connections.append(_node)
+	_node.connectionCount += 1

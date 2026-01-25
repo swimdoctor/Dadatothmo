@@ -55,24 +55,21 @@ func connectNodes() -> void:
 				# conditionals to go through all connection scenarios
 				# TODO: change these conditionals to actually connect the graph
 				if (nextNodeBelow != null &&
-					nextNode.hasIncomingConnection && 
-					nextNodeBelow.hasIncomingConnection):
+					nextNode.connectionCount > 0 && 
+					nextNodeBelow.connectionCount > 0):
 					continue
 				elif (currentNode.connections == []):
-					nextNode.hasIncomingConnection = true;
-					currentNode.connections.append(nextNode)
+					currentNode.appendNode(nextNode)
 				elif (nextNodeBelow != null &&
-					nextNode.hasIncomingConnection && 
-					!nextNodeBelow.hasIncomingConnection):
+					nextNode.connectionCount > 0 && 
+					nextNodeBelow.connectionCount == 0):
 					if (randf() > 0.5):
-						nextNode.hasIncomingConnection = true;
-						currentNode.connections.append(nextNode)
+						currentNode.appendNode(nextNode)
 				elif (nextNodeAbove == null ||
-					(nextNodeAbove.hasIncomingConnection && 
-					!nextNode.hasIncomingConnection)):
+					(nextNodeAbove.connectionCount > 0 && 
+					nextNode.connectionCount == 0)):
 					if (randf() > 0.5):
-						nextNode.hasIncomingConnection = true;
-						currentNode.connections.append(nextNode)
+						currentNode.appendNode(nextNode)
 					elif (nextNodeBelow != null):
 						continue
 				#elif (!nextNode.hasIncomingConnection):
