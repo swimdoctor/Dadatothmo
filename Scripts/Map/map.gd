@@ -57,6 +57,9 @@ func connectNodes() -> void:
 					nextNode.hasIncomingConnection && 
 					nextNodeBelow.hasIncomingConnection):
 					continue
+				elif (currentNode.connections == []):
+					nextNode.hasIncomingConnection = true;
+					currentNode.connections.append(nextNode)
 				elif (nextNodeBelow != null &&
 					nextNode.hasIncomingConnection && 
 					!nextNodeBelow.hasIncomingConnection):
@@ -69,8 +72,11 @@ func connectNodes() -> void:
 					if (randf() > 0.5):
 						nextNode.hasIncomingConnection = true;
 						currentNode.connections.append(nextNode)
-					else:
+					elif (nextNodeBelow != null):
 						continue
+				#elif (!nextNode.hasIncomingConnection):
+					#nextNode.hasIncomingConnection = true;
+					#currentNode.connections.append(nextNode)
 				else:
 					print("somehing has gone wrong with connecting nodes")
 				
