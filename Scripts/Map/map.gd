@@ -42,6 +42,7 @@ func connectNodes() -> void:
 	for i in range(mapLength - 1):
 		var currentColumn = mapNodes[i]
 		var nextColumn = mapNodes[i + 1]
+		
 		for j in range(currentColumn.size()):
 			var currentNode = currentColumn[j]
 			
