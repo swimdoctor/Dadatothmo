@@ -1,0 +1,50 @@
+[gd_scene load_steps=3 format=3 uid="uid://j8jxy7j3tely"]
+
+[ext_resource type="Script" uid="uid://o06dsu4b6dg2" path="res://Scripts/start_menu.gd" id="1_jgtwh"]
+[ext_resource type="Texture2D" uid="uid://w3hclb7in0f8" path="res://Images/Test/Background/BG.png" id="1_juhg0"]
+
+[node name="Start Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jgtwh")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1155.0
+offset_bottom = 648.0
+texture = ExtResource("1_juhg0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Game Title" type="RichTextLabel" parent="CanvasLayer"]
+modulate = Color(0.88516, 0.832339, 0.972868, 1)
+offset_left = 248.0
+offset_top = 28.0
+offset_right = 971.0
+offset_bottom = 241.0
+theme_override_font_sizes/normal_font_size = 150
+text = "Datebayo"
+tab_size = 13
+
+[node name="Play Button" type="Button" parent="CanvasLayer"]
+offset_left = 433.0
+offset_top = 281.0
+offset_right = 798.0
+offset_bottom = 414.0
+theme_override_font_sizes/font_size = 90
+text = "Play"
+
+[node name="Quit Button" type="Button" parent="CanvasLayer"]
+offset_left = 434.0
+offset_top = 437.0
+offset_right = 801.0
+offset_bottom = 569.0
+theme_override_font_sizes/font_size = 90
+text = "Quit"
+
+[connection signal="pressed" from="CanvasLayer/Play Button" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Quit Button" to="." method="_on_quit_button_pressed"]

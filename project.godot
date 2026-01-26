@@ -19,6 +19,10 @@ config/icon="res://Images/Test/icon.svg"
 
 gamemanager="*res://Scripts/GameManager.gd"
 
+[dotnet]
+
+project/assembly_name="Dadatothmo"
+
 [input]
 
 up={
