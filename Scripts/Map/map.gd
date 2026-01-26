@@ -46,6 +46,16 @@ func connectNodes() -> void:
 		var currentColumn = mapNodes[i]
 		var nextColumn = mapNodes[i + 1]
 		
+		var p: float = 0.5
+		var targetInputsPerNode: float = 2.0
+		
+		#Geometric Series thingy only works on n > 1
+		if currentColumn.size() < nextColumn.size():
+			var connectionsPerNode = nextColumn.size() * targetInputsPerNode / currentColumn.size()
+			#Geometric Series Math
+			p = 1 / (connectionsPerNode / (connectionsPerNode - 1))
+		print(p)
+		
 		for j in range(currentColumn.size()):
 			var currentNode = currentColumn[j]
 			var currentNodeBelow = currentColumn[j + 1] if j < currentColumn.size() - 1 else null
@@ -67,7 +77,7 @@ func connectNodes() -> void:
 				elif (nextNodeBelow != null &&
 					nextNode.connectionCount > 0 && 
 					nextNodeBelow.connectionCount == 0):
-					if (randf() > 0.5):
+					if (randf() < p):
 						currentNode.appendNode(nextNode)
 				elif (nextNode.connectionCount == 0 &&
 					currentNodeBelow == null):
@@ -75,7 +85,7 @@ func connectNodes() -> void:
 				elif (nextNodeAbove == null ||
 					(nextNodeAbove.connectionCount > 0 && 
 					nextNode.connectionCount == 0)):
-					if (randf() > 0.5):
+					if (randf() < p):
 						currentNode.appendNode(nextNode)
 					elif (nextNodeBelow != null):
 						continue
