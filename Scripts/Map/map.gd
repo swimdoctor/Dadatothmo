@@ -48,6 +48,7 @@ func connectNodes() -> void:
 		
 		for j in range(currentColumn.size()):
 			var currentNode = currentColumn[j]
+			var currentNodeBelow = currentColumn[j + 1] if j < currentColumn.size() - 1 else null
 			
 			# go through each node in the next column and connect based on the current state of connections
 			for k in range(nextColumn.size()):
@@ -68,6 +69,9 @@ func connectNodes() -> void:
 					nextNodeBelow.connectionCount == 0):
 					if (randf() > 0.5):
 						currentNode.appendNode(nextNode)
+				elif (nextNode.connectionCount == 0 &&
+					currentNodeBelow == null):
+					currentNode.appendNode(nextNode)
 				elif (nextNodeAbove == null ||
 					(nextNodeAbove.connectionCount > 0 && 
 					nextNode.connectionCount == 0)):
@@ -75,9 +79,6 @@ func connectNodes() -> void:
 						currentNode.appendNode(nextNode)
 					elif (nextNodeBelow != null):
 						continue
-				#elif (!nextNode.hasIncomingConnection):
-					#nextNode.hasIncomingConnection = true;
-					#currentNode.connections.append(nextNode)
 				else:
 					print("somehing has gone wrong with connecting nodes")
 				
