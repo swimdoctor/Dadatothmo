@@ -9,4 +9,5 @@ name = "Strike"
 icon = ExtResource("1_gq2wq")
 notes = Array[int]([2, 0, 3])
 damage = 5.0
+heal = 0.0
 metadata/_custom_type_script = "uid://d03c4402j4mkx"

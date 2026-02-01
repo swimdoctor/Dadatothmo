@@ -118,10 +118,5 @@ func playNote(direction, timeFromNearestBeat):
 		
 		# do the move
 		noteQueue.clear()
-		if move.damage > 0:
-			print("dala")
-			for enemy in gamemanager.current_enemies:
-				print(enemy)
-				enemy.damage(move.damage)
-			
-			moveCompleted.emit(move)
+		move.do_move(gamemanager.current_enemies)
+		moveCompleted.emit(move)

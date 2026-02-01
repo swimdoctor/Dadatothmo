@@ -9,4 +9,5 @@ name = "Fireball"
 icon = ExtResource("1_jbbsc")
 notes = Array[int]([2, 3, 2, 3])
 damage = 10.0
+heal = 0.0
 metadata/_custom_type_script = "uid://d03c4402j4mkx"

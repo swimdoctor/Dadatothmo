@@ -5,13 +5,22 @@ enum Direction {
 	UP,
 	DOWN,
 	LEFT,
-	RIGHT
+	RIGHT,
+	REST
 }
 
 @export var name: String = ""
 @export var icon: Texture2D = null
 @export var notes: Array[Direction] = []
 @export var damage: float
+@export var group_damage: float
+# effects don't exist, but here's my idea for putting them in attacks
+# you would select an effect from a dropdown and each one would take
+# number arguments for things and everything is peachy
+# but they dont exist yet so I cant implement them
+# @export var enemyEffects: Array[Effect]
+
+@export var heal: float
 
 func _init(name = "", icon = null, notes: Array[Direction] = []):
 	self.icon = icon
@@ -49,3 +58,17 @@ static func getNoteSpriteName(direction: Direction):
 			return "Images/Test/Arrow_Left.png"
 		Direction.RIGHT:
 			return "Images/Test/Arrow_Right.png"
+
+
+func do_move(enemies: Array[Enemy]):
+	for enemy in enemies:
+		enemy.damage(group_damage)
+	
+	# if there were a targeted enemy, this would
+	# affect them. but theres not a system for that
+	# so we get enemy[0]
+	var target: Enemy = enemies[0]
+	target.damage(damage)
+	
+	# and then if the player existed we'd apply effects to them too
+	return
