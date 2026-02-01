@@ -37,7 +37,7 @@ func _ready() -> void:
 	Input.set_use_accumulated_input(false)
 	
 	(rhythm_visual as RhythmVisuals).display_moves()
-	
+
 
 func _process(delta):
 	# if it has been a while since last keypress clear the cache
@@ -83,6 +83,7 @@ func _input(event) -> void:
 		interFrameTimestamp = Time.get_ticks_usec() / 1_000_000.0
 		interFrameInput = event.keycode
 
+
 func playNote(direction, timeFromNearestBeat):
 	print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromNearestBeat), " seconds ", 
 		"early" if (timeFromNearestBeat > 0) else "late")
@@ -101,20 +102,26 @@ func playNote(direction, timeFromNearestBeat):
 	#if noteQueue.size() > 4:
 		#noteQueue.pop_front()
 	
+	# Check every move to see if one should be executed
 	for move in moveInventory:
-		var validMove = true
-		if noteQueue.size() >= move.notes.size():
-			for i in range(move.notes.size()):
-				if noteQueue[i] != move.notes[i]:
-					validMove = false
+		# Ensure note queue is the right size
+		if noteQueue.size() != move.notes.size():
+			continue;
+		
+		# Check that the note queue matches
+		var exactMatch = true
+		for i in range(move.notes.size()):
+			if noteQueue[i] != move.notes[i]:
+				exactMatch = false
+		if (!exactMatch):
+			continue;
+		
+		# do the move
+		noteQueue.clear()
+		if move.damage > 0:
+			print("dala")
+			for enemy in gamemanager.current_enemies:
+				print(enemy)
+				enemy.damage(move.damage)
 			
-			if validMove:
-				noteQueue.clear()
-				
-				if move.damage > 0:
-					print("dala")
-					for enemy in gamemanager.current_enemies:
-						print(enemy)
-						enemy.damage(move.damage)
-				
-				moveCompleted.emit(move)
+			moveCompleted.emit(move)
