@@ -1,8 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b7y8s5gjla7qb"]
+[gd_scene load_steps=2 format=3 uid="uid://b7y8s5gjla7qb"]
 
 [ext_resource type="Script" uid="uid://cl4s5aiy2y1v6" path="res://Scripts/testingScripts/ui_manager_test.gd" id="1_s7hfn"]
-[ext_resource type="Script" uid="uid://2snu4cpq85sr" path="res://Scripts/arrow_ui.gd" id="1_vnwg2"]
-[ext_resource type="Texture2D" uid="uid://xy8feraxucnr" path="res://Images/Test/Arrow_Up.png" id="3_nybc5"]
 
 [node name="ArrowUiTest" type="Node2D"]
 
@@ -12,16 +10,3 @@ anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 650.0
 script = ExtResource("1_s7hfn")
-
-[node name="ArrowUi" type="HBoxContainer" parent="UiManager"]
-texture_filter = 1
-layout_direction = 2
-layout_mode = 0
-offset_right = 469.0
-offset_bottom = 67.0
-script = ExtResource("1_vnwg2")
-
-[node name="TextureRect" type="TextureRect" parent="UiManager/ArrowUi"]
-layout_mode = 2
-texture = ExtResource("3_nybc5")
-expand_mode = 2

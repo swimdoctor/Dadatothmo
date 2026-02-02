@@ -33,6 +33,12 @@ func decrement():
 
 # sets number of completed moves
 func set_completed_moves(num_moves : int):
+	# completing moves
+	while(completed_moves < num_moves && completed_moves < get_child_count()):
+		increment();
+	# uncompleting moves
+	while(completed_moves > num_moves && completed_moves > 0):
+		decrement();
 	
 
 # resets completion of displayed moves
