@@ -24,6 +24,17 @@ func increment():
 		move.modulate = Color(1, 0, 0, 1);
 		completed_moves += 1;
 
+# uncompletes the latest move in the pattern
+func decrement():
+	if(completed_moves > 0):
+		completed_moves -= 1;
+		var move = get_child(completed_moves);
+		move.modulate = Color(1, 1, 1, 1);
+
+# sets number of completed moves
+func set_completed_moves(num_moves : int):
+	
+
 # resets completion of displayed moves
 func reset():
 	for i in completed_moves:

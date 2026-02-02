@@ -25,6 +25,9 @@ func _input(event : InputEvent):
 		# increment
 		if event.keycode == KEY_SPACE:
 			arrowUI.increment();
+		#decrement
+		if event.keycode == KEY_BACKSPACE:
+			arrowUI.decrement();
 		# reset
 		if event.keycode == KEY_R:
 			arrowUI.reset();  
