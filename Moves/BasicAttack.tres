@@ -9,5 +9,6 @@ name = "BasicAttack"
 icon = ExtResource("1_28tr3")
 notes = Array[int]([0, 3, 0, 3])
 damage = 0.0
+group_damage = 0.0
 heal = 0.0
 metadata/_custom_type_script = "uid://d03c4402j4mkx"
