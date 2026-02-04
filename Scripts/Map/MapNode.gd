@@ -14,8 +14,8 @@ enum MapNodeType {
 
 var nodeType: MapNodeType = MapNodeType.Enemy
 var connections: Array[MapNode] = []
+var incomingConnections: Array[MapNode] = []
 
-var connectionCount: int = 0
 
 ## Map node factory constructor.
 static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -> MapNode:
@@ -58,7 +58,7 @@ func _draw() -> void:
 ## Adds a node to connections array and increases count of connections
 func appendNode(_node: MapNode) -> void:
 	connections.append(_node)
-	_node.connectionCount += 1
+	_node.incomingConnections.append(self)
 
 ## When node is clicked
 func _input_event(viewport, event, shape_idx):

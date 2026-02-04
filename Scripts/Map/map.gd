@@ -9,6 +9,7 @@ var mapNodes: Array[Array] = []
 func _ready() -> void:
 	buildNodes()
 	connectNodes()
+	#balanceNodes()
 
 ## Builds a graph made of MapNode objects. Generates in a 1-?-1 structure
 ## where the ? is pseudo randomized using curated parameters to set the number of vertical slices and horizontal slices.
@@ -65,7 +66,7 @@ func connectNodes() -> void:
 			
 			# go through each node in the next column and connect based on the current state of connections
 			for k in range(nextColumn.size()):
-				if nextColumn[k].connectionCount >= 3:
+				if nextColumn[k].incomingConnections.size() >= 3:
 					continue;
 				if currentNode.connections.size() >= 3:
 					break;
@@ -76,22 +77,22 @@ func connectNodes() -> void:
 				
 				# conditionals to go through all connection scenarios
 				if (nextNodeBelow != null &&
-					nextNode.connectionCount > 0 && 
-					nextNodeBelow.connectionCount > 0):
+					nextNode.incomingConnections.size() > 0 && 
+					nextNodeBelow.incomingConnections.size() > 0):
 					continue
 				elif (currentNode.connections == []):
 					currentNode.appendNode(nextNode)
 				elif (nextNodeBelow != null &&
-					nextNode.connectionCount > 0 && 
-					nextNodeBelow.connectionCount == 0):
+					nextNode.incomingConnections.size() > 0 && 
+					nextNodeBelow.incomingConnections.size() == 0):
 					if (randf() < p):
 						currentNode.appendNode(nextNode)
-				elif (nextNode.connectionCount == 0 &&
+				elif (nextNode.incomingConnections.size() == 0 &&
 					currentNodeBelow == null):
 					currentNode.appendNode(nextNode)
 				elif (nextNodeAbove == null ||
-					(nextNodeAbove.connectionCount > 0 && 
-					nextNode.connectionCount == 0)):
+					(nextNodeAbove.incomingConnections.size() > 0 && 
+					nextNode.incomingConnections.size() == 0)):
 					if (randf() < p):
 						currentNode.appendNode(nextNode)
 					elif (nextNodeBelow != null):
@@ -109,7 +110,7 @@ func connectNodes() -> void:
 				break;
 		
 		for node in nextColumn:
-			if node.connectionCount == 0:
+			if node.incomingConnections.size() == 0:
 				validMap = false;
 				break;
 		
@@ -126,4 +127,17 @@ func connectNodes() -> void:
 			for node in currentColumn:
 				node.connections.clear();
 			for node in nextColumn:
-				node.connectionCount = 0;
+				node.incomingConnections.clear();
+
+func balanceNodes() -> void:
+	for i in range(1, mapLength):
+		for currentNode in mapNodes[i]:
+			var y = 0
+			
+			for prevNode in currentNode.incomingConnections:
+				y += prevNode.position.y
+			
+			y /= currentNode.incomingConnections.size();
+			currentNode.position.y = y;
+			
+	
