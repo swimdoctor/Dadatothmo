@@ -36,7 +36,8 @@ func buildNodes() -> void:
 			nodePos.x = 100 + i * 50
 			nodePos.y = 324 - (int)(80 * (sliceHeight - 1) / 2) + 80 * j
 			# TODO: (easily adjustably) randomize NodeType so we can mess with the percentages
-			mapNodes[i].append(MapNode.new(nodePos, MapNode.MapNodeType.Enemy))
+			# TODO: change the Vector2 for size to use variables
+			mapNodes[i].append(MapNode.create(nodePos, Vector2(10, 10), MapNode.MapNodeType.Enemy))
 			add_child(mapNodes[i][j])
 
 ## Connects MapNodes in a logical fashion
@@ -67,7 +68,6 @@ func connectNodes() -> void:
 				var nextNodeBelow = nextColumn[k + 1] if k < nextColumn.size() - 1 else null
 				
 				# conditionals to go through all connection scenarios
-				# TODO: change these conditionals to actually connect the graph
 				if (nextNodeBelow != null &&
 					nextNode.connectionCount > 0 && 
 					nextNodeBelow.connectionCount > 0):
