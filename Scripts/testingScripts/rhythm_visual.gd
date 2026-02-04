@@ -3,6 +3,9 @@ extends Control
 
 @onready var rhythm: = $"../.."
 
+#tracks move completion, seperate from ui
+var move_progress: Array[int];
+
 @export var spawn_y: float = 250.0
 @export var marker_size: float = 100.0
 
@@ -10,6 +13,8 @@ extends Control
 const BAR_WIDTH_BEATS = 12;
 
 var arrowRows: Array[HBoxContainer] = []
+
+@onready var arrow_ui = preload("res://Scenes/arrowUI/arrow_ui.tscn");
 
 func _ready() -> void:
 	rhythm.playedNote.connect(playedNote)
@@ -26,13 +31,21 @@ func display_moves():
 		moveRow.add_child(texnode(move.icon))
 		moveRow.custom_minimum_size.y = 50
 		
-		var arrows = HBoxContainer.new()
-		for dir in move.notes:
-			arrows.add_child(texnode(getNoteSprite(dir)))
-		moveRow.add_child(arrows)
-		arrowRows.append(arrows)
+		#var arrows = HBoxContainer.new()
+		#for dir in move.notes:
+		#	arrows.add_child(texnode(getNoteSprite(dir)))
+		#moveRow.add_child(arrows)
+		#arrowRows.append(arrows)
+		var arrows = arrow_ui.instantiate();
+		arrows.set_pattern(move.notes);
+		moveRow.add_child(arrows);
+		arrowRows.append(arrows);
 		
 		$MovesBox.add_child(moveRow)
+	
+	move_progress = [];
+	move_progress.resize(arrowRows.size());
+	move_progress.fill(0);
 
 func texnode(tex: Texture):
 	var arrow = TextureRect.new()

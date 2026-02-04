@@ -3,8 +3,7 @@ extends HBoxContainer
 var completed_moves = 0;
 
 # sets number of moves contained in this pattern
-# TODO: allow for patterns with directions
-func set_pattern(directions : Array[Move.Direction]):
+func set_pattern(directions : Array[int]):
 	# reset pattern
 	completed_moves = 0;
 	for n in get_children():
