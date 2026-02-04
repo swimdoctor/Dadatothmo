@@ -15,6 +15,9 @@ enum GameState
 # --- Game State and Global Variables ---
 var _state: GameState = GameState.MainMenu
 
+var player_health: int = 100
+var max_player_health: int = 100
+
 var current_enemies: Array[Enemy]
 var movelist: Array[Move]
 
@@ -58,14 +61,17 @@ func _change_scene(newState: GameState) -> void:
 	get_tree().paused = false
 	match newState:
 		GameState.MainMenu:
-			get_tree().change_scene_to_file("res://Scenes/main.tscn")
+      get_tree().change_scene_to_file("res://Scenes/start_menu.tscn")
 		GameState.Map:
 			get_tree().change_scene_to_file("res://Scenes/map.tscn")
+		GameState.Dungeon:
+			get_tree().change_scene_to_file("res://Scenes/main.tscn")
 		GameState.Fighting:
 			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
 		GameState.Upgrading:
 			get_tree().change_scene_to_file("res://Scenes/upgrades.tscn")
 		GameState.GameOver:
+			get_tree().change_scene_to_file("res://Scenes/lose.tscn")
 			print("game over")
 		_:
 			print("unknown GameState")

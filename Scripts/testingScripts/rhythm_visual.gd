@@ -64,6 +64,9 @@ func _process(delta):
 				if !$BuildupPlayer.is_playing():
 					$BuildupPlayer.play()
 		m += 1
+	
+	$PlayerHealthBar.value = lerp($PlayerHealthBar.value, float(gamemanager.player_health), 0.1);
+	$PlayerHealthBar.max_value = gamemanager.max_player_health;
 		
 func playedNote(direction: Move.Direction):
 	$NotesBox.add_child(texnode(getNoteSprite(direction)))
