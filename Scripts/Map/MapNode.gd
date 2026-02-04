@@ -45,7 +45,7 @@ static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -
 	node.add_child(node.collision)
 	
 	return node
-	
+
 func _draw() -> void:
 	for i in range(connections.size()):
 		draw_line(
@@ -55,6 +55,14 @@ func _draw() -> void:
 			4.0
 		)
 
+## Adds a node to connections array and increases count of connections
 func appendNode(_node: MapNode) -> void:
 	connections.append(_node)
 	_node.connectionCount += 1
+
+## When node is clicked
+func _input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton \
+	and event.button_index == MOUSE_BUTTON_LEFT \
+	and event.pressed:
+		print("Sprite clicked!")
