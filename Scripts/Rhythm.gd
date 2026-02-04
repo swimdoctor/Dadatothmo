@@ -25,6 +25,21 @@ signal moveCompleted(name:String)
 
 @onready var rhythm_visual = $"Camera2D/Control"
 
+#Cedric did this. This is here just because of how player damage is currently implemented
+#Can move to a different script later
+#Player base stats
+var hp = 100
+var attack = 10
+var defense = 10
+@export var speed = 50
+
+#Elemental multipliers (%)
+var void_percent = 100
+var ice_percent = 100
+var nature_percent = 100
+var flame_lighting_percent = 100
+
+
 func _ready() -> void:
 	Engine.max_fps = 60
 	print("Move Inventory: ");
@@ -118,5 +133,5 @@ func playNote(direction, timeFromNearestBeat):
 		
 		# do the move
 		noteQueue.clear()
-		move.do_move(gamemanager.current_enemies)
+		move.do_move(gamemanager.current_enemies, self)
 		moveCompleted.emit(move)

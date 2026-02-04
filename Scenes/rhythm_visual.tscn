@@ -20,7 +20,7 @@
 [ext_resource type="AudioStream" uid="uid://bxrhkps6jc0nl" path="res://Sounds/buildup.mp3" id="14_75du4"]
 [ext_resource type="Texture2D" uid="uid://wgpvkvwhks0m" path="res://Images/Test/Enemies/GoblinSprites.png" id="16_75du4"]
 [ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/Enemy.gd" id="18_jmhar"]
-[ext_resource type="Script" uid="uid://cmsu2m2hi806b" path="res://EnemyMove.gd" id="19_gxxu4"]
+[ext_resource type="Script" path="res://EnemyMove.gd" id="19_gxxu4"]
 [ext_resource type="AudioStream" uid="uid://c5w3uc74qb88d" path="res://Sounds/goblindie.wav" id="19_jmhar"]
 [ext_resource type="Theme" uid="uid://qsgq6qeoql70" path="res://themes/goblintheme.tres" id="19_y847q"]
 [ext_resource type="Resource" uid="uid://btsj5hkwacaf0" path="res://EnemyMoves/BasicGoblinAttack.tres" id="20_me4b4"]
