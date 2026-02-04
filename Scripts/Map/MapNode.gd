@@ -65,4 +65,13 @@ func _input_event(viewport, event, shape_idx):
 	if (event is InputEventMouseButton
 	and event.button_index == MOUSE_BUTTON_LEFT
 	and event.pressed):
-		print("Sprite clicked!")
+		#TODO: Add an NPC and a Hidden state change in , then make those nodes not GameOver
+		match nodeType:
+			MapNodeType.Enemy:
+				gamemanager.change_gamestate(GameManager.GameState.Fighting)
+			MapNodeType.NPC:
+				gamemanager.change_gamestate(GameManager.GameState.GameOver)
+			MapNodeType.Loot:
+				gamemanager.change_gamestate(GameManager.GameState.Upgrading)
+			MapNodeType.Hidden:
+				gamemanager.change_gamestate(GameManager.GameState.GameOver)
