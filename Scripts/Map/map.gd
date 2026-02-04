@@ -43,7 +43,9 @@ func buildNodes() -> void:
 ## Connects MapNodes in a logical fashion
 func connectNodes() -> void:
 	# go through each column to connect everything
-	for i in range(mapLength - 1):
+	var i = 0;
+	var errorCount = 0;
+	while i < mapLength - 1:
 		var currentColumn = mapNodes[i]
 		var nextColumn = mapNodes[i + 1]
 		
@@ -55,7 +57,7 @@ func connectNodes() -> void:
 			var connectionsPerNode = nextColumn.size() * targetInputsPerNode / currentColumn.size()
 			#Geometric Series Math
 			p = 1 / (connectionsPerNode / (connectionsPerNode - 1))
-		print(p)
+		#print(p)
 		
 		for j in range(currentColumn.size()):
 			var currentNode = currentColumn[j]
@@ -63,6 +65,11 @@ func connectNodes() -> void:
 			
 			# go through each node in the next column and connect based on the current state of connections
 			for k in range(nextColumn.size()):
+				if nextColumn[k].connectionCount >= 3:
+					continue;
+				if currentNode.connections.size() >= 3:
+					break;
+				
 				var nextNodeAbove = nextColumn[k - 1] if k > 0 else null
 				var nextNode = nextColumn[k]
 				var nextNodeBelow = nextColumn[k + 1] if k < nextColumn.size() - 1 else null
@@ -90,6 +97,33 @@ func connectNodes() -> void:
 					elif (nextNodeBelow != null):
 						continue
 				else:
-					print("somehing has gone wrong with connecting nodes")
+					print("something has gone wrong with connecting nodes")
 				
-			print(currentNode.connections)
+			#print(currentNode.connections)
+		
+		var validMap = true;
+		
+		for node in currentColumn:
+			if node.connections.size() == 0:
+				validMap = false;
+				break;
+		
+		for node in nextColumn:
+			if node.connectionCount == 0:
+				validMap = false;
+				break;
+		
+		if validMap:
+			i += 1;
+			print("Errors: ", errorCount);
+			errorCount = 0;
+		else:
+			errorCount += 1;
+			if errorCount > 100:
+				print("Map Not Generated");
+				return;
+			
+			for node in currentColumn:
+				node.connections.clear();
+			for node in nextColumn:
+				node.connectionCount = 0;
