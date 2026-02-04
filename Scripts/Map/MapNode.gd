@@ -12,10 +12,14 @@ enum MapNodeType {
 	Hidden
 }
 
+var highlighted: bool = false
+var occupied: bool = false
+
 var nodeType: MapNodeType = MapNodeType.Enemy
 var connections: Array[MapNode] = []
 var incomingConnections: Array[MapNode] = []
 
+var connectionCount: int = 0
 
 ## Map node factory constructor.
 static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -> MapNode:
@@ -54,24 +58,51 @@ func _draw() -> void:
 			Color.BLACK,
 			4.0
 		)
+		
+	if (highlighted):
+		draw_circle(Vector2.ZERO, 15, Color.YELLOW)
+		
+	if (occupied):
+		draw_circle(Vector2.ZERO, 15, Color.BLACK)
 
 ## Adds a node to connections array and increases count of connections
 func appendNode(_node: MapNode) -> void:
 	connections.append(_node)
 	_node.incomingConnections.append(self)
 
-## When node is clicked
+# When node is clicked
 func _input_event(viewport, event, shape_idx):
 	if (event is InputEventMouseButton
 	and event.button_index == MOUSE_BUTTON_LEFT
-	and event.pressed):
+	and event.pressed
+	and highlighted):
 		#TODO: Add an NPC and a Hidden state change in , then make those nodes not GameOver
 		match nodeType:
 			MapNodeType.Enemy:
-				gamemanager.change_gamestate(GameManager.GameState.Fighting)
+				print("enemy clicked")
+				#gamemanager.change_gamestate(GameManager.GameState.Fighting)
 			MapNodeType.NPC:
 				gamemanager.change_gamestate(GameManager.GameState.GameOver)
 			MapNodeType.Loot:
 				gamemanager.change_gamestate(GameManager.GameState.Upgrading)
 			MapNodeType.Hidden:
 				gamemanager.change_gamestate(GameManager.GameState.GameOver)
+				
+		playerMovesOn()
+
+func playerMovesOn() -> void:
+	occupied = true
+	
+	for connection in connections:
+		connection.highlighted = true
+		connection.queue_redraw()
+		
+	for connection in incomingConnections:
+		if (connection.occupied):
+			for c in connection.connections:
+				c.highlighted = false
+				c.queue_redraw()
+		connection.occupied = false
+		connection.queue_redraw()
+		
+	queue_redraw()

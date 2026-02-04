@@ -6,15 +6,20 @@ var mapMaxDelta: int = 2
 
 var mapNodes: Array[Array] = []
 
+var playerNode: MapNode
+
 func _ready() -> void:
 	buildNodes()
 	connectNodes()
 	#balanceNodes()
+	
+	# Player starts on first node when the map is built
+	playerNode = mapNodes[0][0]
+	playerNode.playerMovesOn()
 
 ## Builds a graph made of MapNode objects. Generates in a 1-?-1 structure
 ## where the ? is pseudo randomized using curated parameters to set the number of vertical slices and horizontal slices.
 func buildNodes() -> void:
-	
 	for i in range(mapLength):
 		# Determine how many nodes to generate in the i-th vertical slice
 		var sliceHeight: int
@@ -139,5 +144,3 @@ func balanceNodes() -> void:
 			
 			y /= currentNode.incomingConnections.size();
 			currentNode.position.y = y;
-			
-	
