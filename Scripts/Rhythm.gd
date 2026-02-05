@@ -12,7 +12,8 @@ var timeTillBeat = 0
 var beat = -1; # start at negative one so first beat is 0
 
 var timeSinceLastNote = 0
-var noteQueue: Array[Move.Direction] = []
+#tracking move completion directly instead of relying on a queue of inputs
+var move_progress: Array[int] = [];
 
 var interFrameInput
 # this stores a number of seconds
@@ -49,6 +50,9 @@ func _ready() -> void:
 	for move in moveInventory:
 		print(move.getString())
 	
+	move_progress.resize(moveInventory.size());
+	move_progress.fill(0);
+	
 	Input.set_use_accumulated_input(false)
 	
 	(rhythm_visual as RhythmVisuals).display_moves()
@@ -57,8 +61,8 @@ func _ready() -> void:
 func _process(delta):
 	# if it has been a while since last keypress clear the cache
 	timeSinceLastNote += delta
-	if !noteQueue.is_empty() && timeSinceLastNote > (beat_time() + successThreshold * 2):
-		noteQueue.clear()
+	if move_progress.any(func(num): return num > 0) && timeSinceLastNote > (beat_time() + successThreshold * 2):
+		move_progress.fill(0);
 		emit_signal("clearedNotes")
 	
 	# handle beat hits
@@ -107,31 +111,21 @@ func playNote(direction, timeFromNearestBeat):
 	
 	# return on invalid input times
 	if abs(timeFromNearestBeat) > successThreshold:
-		noteQueue.clear()
+		move_progress.fill(0);
 		emit_signal("clearedNotes")
 		return
 	
-	noteQueue.append(direction)
+	# update move progress
+	
+	for i in moveInventory.size():
+		if(moveInventory[i].notes[move_progress[i]] == direction):
+			move_progress[i] += 1;
+			# check to see if move should be completed
+			if(move_progress[i] == moveInventory[i].notes.size()):
+				#do the move
+				move_progress[i] = 0;
+				moveInventory[i].do_move(gamemanager.current_enemies, self)
+				moveCompleted.emit(moveInventory[i])
+		else:
+			move_progress[i] = 0;
 	emit_signal("playedNote", direction)
-	
-	#if noteQueue.size() > 4:
-		#noteQueue.pop_front()
-	
-	# Check every move to see if one should be executed
-	for move in moveInventory:
-		# Ensure note queue is the right size
-		if noteQueue.size() != move.notes.size():
-			continue;
-		
-		# Check that the note queue matches
-		var exactMatch = true
-		for i in range(move.notes.size()):
-			if noteQueue[i] != move.notes[i]:
-				exactMatch = false
-		if (!exactMatch):
-			continue;
-		
-		# do the move
-		noteQueue.clear()
-		move.do_move(gamemanager.current_enemies, self)
-		moveCompleted.emit(move)
