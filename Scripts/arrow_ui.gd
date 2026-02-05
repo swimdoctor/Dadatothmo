@@ -3,8 +3,7 @@ extends HBoxContainer
 var completed_moves = 0;
 
 # sets number of moves contained in this pattern
-# TODO: allow for patterns with directions
-func set_pattern(directions : Array[Move.Direction]):
+func set_pattern(directions : Array[int]):
 	# reset pattern
 	completed_moves = 0;
 	for n in get_children():
@@ -23,6 +22,23 @@ func increment():
 		var move = get_child(completed_moves);
 		move.modulate = Color(1, 0, 0, 1);
 		completed_moves += 1;
+
+# uncompletes the latest move in the pattern
+func decrement():
+	if(completed_moves > 0):
+		completed_moves -= 1;
+		var move = get_child(completed_moves);
+		move.modulate = Color(1, 1, 1, 1);
+
+# sets number of completed moves
+func set_completed_moves(num_moves : int):
+	# completing moves
+	while(completed_moves < num_moves && completed_moves < get_child_count()):
+		increment();
+	# uncompleting moves
+	while(completed_moves > num_moves && completed_moves > 0):
+		decrement();
+	
 
 # resets completion of displayed moves
 func reset():
