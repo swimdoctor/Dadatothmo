@@ -11,6 +11,8 @@ const BAR_WIDTH_BEATS = 12;
 
 var arrowRows: Array[HBoxContainer] = []
 
+@onready var arrow_ui = preload("res://Scenes/arrowUI/arrow_ui.tscn");
+
 func _ready() -> void:
 	rhythm.playedNote.connect(playedNote)
 	rhythm.clearedNotes.connect(clearedNotes)
@@ -26,11 +28,10 @@ func display_moves():
 		moveRow.add_child(texnode(move.icon))
 		moveRow.custom_minimum_size.y = 50
 		
-		var arrows = HBoxContainer.new()
-		for dir in move.notes:
-			arrows.add_child(texnode(getNoteSprite(dir)))
-		moveRow.add_child(arrows)
-		arrowRows.append(arrows)
+		var arrows = arrow_ui.instantiate();
+		arrows.set_pattern(move.notes);
+		moveRow.add_child(arrows);
+		arrowRows.append(arrows);
 		
 		$MovesBox.add_child(moveRow)
 
@@ -44,42 +45,25 @@ func texnode(tex: Texture):
 func _process(delta):
 	$BeatText.text = str(rhythm.beat)
 	
-	var m = 0
-	for arrowRow in arrowRows:
-		var a = 0
-		var failedmatch = false
-		for arrow in arrowRow.get_children():
-			if a < rhythm.noteQueue.size() and \
-			   a < rhythm.moveInventory[m].notes.size() and \
-			   rhythm.noteQueue[a] == rhythm.moveInventory[m].notes[a] and \
-			   !failedmatch:
-				arrow.self_modulate = Color(1, 0, 0);
-			else:
-				arrow.self_modulate = Color(1, 1, 1);
-				failedmatch = true
-			
-			a += 1
-			
-			if !failedmatch and a == rhythm.moveInventory[m].notes.size() - 1:
-				if !$BuildupPlayer.is_playing():
-					$BuildupPlayer.play()
-		m += 1
-	
 	$PlayerHealthBar.value = lerp($PlayerHealthBar.value, float(gamemanager.player_health), 0.1);
 	$PlayerHealthBar.max_value = gamemanager.max_player_health;
-		
+
 func playedNote(direction: Move.Direction):
-	$NotesBox.add_child(texnode(getNoteSprite(direction)))
+	# update arrow ui
+	for i in arrowRows.size():
+		arrowRows[i].set_completed_moves(rhythm.move_progress[i]);
+	
 	$NotePlayer.get_stream_playback().play_stream(getNoteSound(direction)) 
 	$BoomPlayer.play()
-	
+
 func clearedNotes():
+	# reset arrow ui
+	for row in arrowRows:
+		row.reset();
+		
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_parallel()
-	for dirtex in $NotesBox.get_children():
-		tween.tween_property(dirtex, "self_modulate:a", 0, 0.02)
-		tween.tween_callback(Callable(dirtex, "queue_free")).set_delay(0.1)
 	
 	$FailurePlayer.play()
 
@@ -95,10 +79,6 @@ func moveCompleted(move: Move):
 	var tween = create_tween()
 	tween.set_ease(Tween.EASE_OUT)
 	tween.set_parallel()
-	for dirtex in $NotesBox.get_children():
-		dirtex.self_modulate = Color(0, 1, 0);
-		tween.tween_property(dirtex, "self_modulate:a", 0, 0.2)
-		tween.tween_callback(Callable(dirtex, "queue_free")).set_delay(0.2)
 		
 	$BuildupPlayer.stop()
 
