@@ -18,6 +18,7 @@ config/icon="res://Images/Test/icon.svg"
 [autoload]
 
 gamemanager="*res://Scripts/GameManager.gd"
+movemanager="*res://Scripts/move_manager.gd"
 
 [dotnet]
 
