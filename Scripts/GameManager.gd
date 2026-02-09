@@ -61,11 +61,9 @@ func _change_scene(newState: GameState) -> void:
 	get_tree().paused = false
 	match newState:
 		GameState.MainMenu:
-      get_tree().change_scene_to_file("res://Scenes/start_menu.tscn")
+			get_tree().change_scene_to_file("res://Scenes/start_menu.tscn")
 		GameState.Map:
 			get_tree().change_scene_to_file("res://Scenes/map.tscn")
-		GameState.Dungeon:
-			get_tree().change_scene_to_file("res://Scenes/main.tscn")
 		GameState.Fighting:
 			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
 		GameState.Upgrading:
@@ -85,8 +83,22 @@ func remove_enemy(enemy):
 func add_card_to_hand(move: Move):
 	if(!movelist.has(move)):
 		movelist.append(move)
+
+func damage_player(damage: int) -> void:
+	# deal damage
+	player_health -= damage;
+	player_health = max(player_health, 0);
 	
+	# check for lose state
+	# might need changing if we implement second lives
+	if(player_health <= 0):
+		game_over();
 
 func game_over() -> void:
 	print("Game Over!")
-	change_gamestate(GameState.MainMenu)
+	change_gamestate(GameState.GameOver)
+
+# reset game to initial state
+# currently only resets health
+func reset_game() -> void:
+	player_health = max_player_health;
