@@ -10,5 +10,6 @@ icon = ExtResource("1_doltd")
 notes = Array[int]([2, 0, 0, 0, 3])
 damage = 0.0
 group_damage = 0.0
+element = ""
 heal = 0.0
 metadata/_custom_type_script = "uid://d03c4402j4mkx"
