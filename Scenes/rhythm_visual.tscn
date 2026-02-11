@@ -254,7 +254,7 @@ position = Vector2(936, 294)
 rotation = -0.00445726
 script = ExtResource("18_jmhar")
 health = 30
-interval = 4
+interval = 20
 attack_pattern = Array[ExtResource("19_gxxu4")]([ExtResource("20_me4b4")])
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]

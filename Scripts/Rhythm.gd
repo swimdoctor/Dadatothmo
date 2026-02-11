@@ -9,6 +9,8 @@ func beat_time():
 
 @export var successThreshold = 0.4
 var timeTillBeat = 0
+var timeOfLastBeat = null
+var timeOfNextBeat = null
 var beat = -1; # start at negative one so first beat is 0
 
 var timeSinceLastNote = 0
@@ -67,31 +69,34 @@ func _process(delta):
 	
 	# handle beat hits
 	timeTillBeat -= delta
+		
 	if timeTillBeat <= 0:
 		while timeTillBeat <= 0:
 			timeTillBeat += beat_time()
 		beat += 1
 		emit_signal("beatHit", beat % 4 == 0)
-	
+		
+		var now = Time.get_ticks_usec() / 1_000_000.0
+		timeOfLastBeat = now
+		timeOfNextBeat = now + beat_time()
+		
 	# if there was no input since last frame, return early
 	if interFrameInput == null:
 		return
 	
-	# plug this baby into desmos
-	# 0 when the input is on the beat
-	# domain is (-timePerBeat/2, timePerBeat/2)
-	# negative when before the beat, positive after
-	var timeFromNearestBeat = fmod(interFrameTimestamp, beat_time()) - beat_time()/2
-	print(timeFromNearestBeat)
+	var timeFromLastBeat = abs(interFrameTimestamp - timeOfLastBeat)
+	var timeToNextBeat   = abs(interFrameTimestamp - timeOfNextBeat)
+	var timeDiff = min(timeFromLastBeat, timeToNextBeat)
+	var earlyOrLate = "late" if timeFromLastBeat < timeToNextBeat else "early"
 	
 	if interFrameInput == KEY_UP:
-		playNote(Move.Direction.UP, timeFromNearestBeat)
+		playNote(Move.Direction.UP, timeDiff, earlyOrLate)
 	elif interFrameInput == KEY_RIGHT:
-		playNote(Move.Direction.RIGHT, timeFromNearestBeat)
+		playNote(Move.Direction.RIGHT, timeDiff, earlyOrLate)
 	elif interFrameInput == KEY_DOWN:
-		playNote(Move.Direction.DOWN, timeFromNearestBeat)
+		playNote(Move.Direction.DOWN, timeDiff, earlyOrLate)
 	elif interFrameInput == KEY_LEFT:
-		playNote(Move.Direction.LEFT, timeFromNearestBeat)
+		playNote(Move.Direction.LEFT, timeDiff, earlyOrLate)
 	
 	interFrameInput = null
 	interFrameTimestamp = null
@@ -103,9 +108,8 @@ func _input(event) -> void:
 		interFrameInput = event.keycode
 
 
-func playNote(direction, timeFromNearestBeat):
-	print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromNearestBeat), " seconds ", 
-		"early" if (timeFromNearestBeat > 0) else "late")
+func playNote(direction, timeFromNearestBeat, earlyOrLate):
+	print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromNearestBeat), " seconds ", earlyOrLate)
 	
 	timeSinceLastNote = 0
 	
