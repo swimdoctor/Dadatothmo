@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Dadatothmo"
-run/main_scene="uid://bp8d4tgc7rt5c"
+run/main_scene="uid://cd0eds7g1al0l"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://Images/Test/icon.svg"
 

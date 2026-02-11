@@ -1,0 +1,75 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd0eds7g1al0l"]
+
+[ext_resource type="Script" uid="uid://betay6xu5lro8" path="res://Scripts/testingScripts/move_switcher_test.gd" id="1_mwowj"]
+
+[node name="MoveSwitcherTest" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_mwowj")
+
+[node name="CurrentMoves" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -821.0
+offset_bottom = -424.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "DDDDD"
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 430.0
+offset_top = 22.0
+offset_right = 733.0
+offset_bottom = 87.0
+text = "Add Move [Strike]"
+
+[node name="Button2" type="Button" parent="."]
+offset_left = 432.0
+offset_top = 103.0
+offset_right = 735.0
+offset_bottom = 168.0
+text = "Add Move [Slash]"
+
+[node name="Button3" type="Button" parent="."]
+offset_left = 752.0
+offset_top = 22.0
+offset_right = 1055.0
+offset_bottom = 87.0
+text = "Remove Move [Strike]"
+
+[node name="Button4" type="Button" parent="."]
+offset_left = 752.0
+offset_top = 102.0
+offset_right = 1055.0
+offset_bottom = 167.0
+text = "Remove Move [Slash]"
+
+[node name="Button5" type="Button" parent="."]
+offset_left = 436.0
+offset_top = 204.0
+offset_right = 739.0
+offset_bottom = 269.0
+text = "Swap Move [Fireball -> Rest]"
+
+[node name="Button6" type="Button" parent="."]
+offset_left = 752.0
+offset_top = 203.0
+offset_right = 1055.0
+offset_bottom = 268.0
+text = "Swap Move [Rest -> Fireball]"
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_button_3_pressed"]
+[connection signal="pressed" from="Button4" to="." method="_on_button_4_pressed"]
+[connection signal="pressed" from="Button5" to="." method="_on_button_5_pressed"]
+[connection signal="pressed" from="Button6" to="." method="_on_button_6_pressed"]
