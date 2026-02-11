@@ -60,6 +60,17 @@ static func getNoteSpriteName(direction: Direction):
 		Direction.RIGHT:
 			return "Images/Test/Arrow_Right.png"
 
+static func getHitNoteSpriteName(direction: Direction):
+	match direction:
+		Direction.UP:
+			return "Images/Test/Arrow_Up_Hit.png";
+		Direction.DOWN:
+			return "Images/Test/Arrow_Down_Hit.png";
+		Direction.LEFT:
+			return "Images/Test/Arrow_Left_Hit.png";
+		Direction.RIGHT:
+			return "Images/Test/Arrow_Right_Hit.png";
+
 
 func do_move(enemies: Array[Enemy], rhythm: Rhythm):
 	# Damage calculation: Damage% * attack Stat * elemental multiplier(not added yet)
