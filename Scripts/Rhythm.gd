@@ -50,6 +50,11 @@ func _ready() -> void:
 		moveInventory.append(move)
 	
 	for move in moveInventory:
+		#Perform the "Rest" move when you start a fight
+		if(move.name == "Rest"):
+			move.recover(move.heal)
+			print("You healed ", move.heal)
+			$Camera2D/Control/NotePlayedText.text = "You start the fight by healing" 
 		print(move.getString())
 	
 	move_progress.resize(moveInventory.size());

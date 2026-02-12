@@ -71,7 +71,9 @@ static func getHitNoteSpriteName(direction: Direction):
 		Direction.RIGHT:
 			return "Images/Test/Arrow_Right_Hit.png";
 
-
+func recover(amount):
+	gamemanager.player_health += amount
+	
 func do_move(enemies: Array[Enemy], rhythm: Rhythm):
 	# Damage calculation: Damage% * attack Stat * elemental multiplier(not added yet)
 	for enemy in enemies:
@@ -83,6 +85,7 @@ func do_move(enemies: Array[Enemy], rhythm: Rhythm):
 	var target: Enemy = enemies[0]
 	
 	target.damage(damage * rhythm.attack)
+	recover(heal) #If the move has a heal amount recover the hp
 	
 	# and then if the player existed we'd apply effects to them too
 	return
