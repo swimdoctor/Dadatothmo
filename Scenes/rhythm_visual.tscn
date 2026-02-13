@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bp8d4tgc7rt5c"]
+[gd_scene load_steps=46 format=3 uid="uid://bp8d4tgc7rt5c"]
 
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_qdjid"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_oyofj"]
@@ -13,14 +13,16 @@
 [ext_resource type="Texture2D" uid="uid://dv5ch70p1auyc" path="res://Images/Test/purple.jpg" id="9_oyofj"]
 [ext_resource type="AudioStream" uid="uid://qr12rn2sntdc" path="res://Sounds/boom1.mp3" id="10_66vxs"]
 [ext_resource type="Theme" uid="uid://b2swf7a3v3ok7" path="res://themes/playertheme.tres" id="10_me4b4"]
+[ext_resource type="Texture2D" uid="uid://c6ukikwwhg5df" path="res://Images/Test/HealthbarUnderPlayer.png" id="11_6h8wf"]
 [ext_resource type="AudioStream" uid="uid://b75reqt5y6bm5" path="res://Sounds/boom2.mp3" id="11_ue8ww"]
 [ext_resource type="AudioStream" uid="uid://cir5rjijdgiqj" path="res://Sounds/boom3.mp3" id="12_75du4"]
+[ext_resource type="Texture2D" uid="uid://d3dh71jbfc684" path="res://Images/Test/HealthbarProgressPlayer.png" id="12_utmfr"]
 [ext_resource type="AudioStream" uid="uid://dyy2tpcuyngj" path="res://Sounds/success.mp3" id="13_75du4"]
 [ext_resource type="AudioStream" uid="uid://drnqc782kf0si" path="res://Sounds/failure.mp3" id="13_ue8ww"]
 [ext_resource type="AudioStream" uid="uid://bxrhkps6jc0nl" path="res://Sounds/buildup.mp3" id="14_75du4"]
 [ext_resource type="Texture2D" uid="uid://wgpvkvwhks0m" path="res://Images/Test/Enemies/GoblinSprites.png" id="16_75du4"]
 [ext_resource type="Script" uid="uid://brg3uxca5dlwy" path="res://Scripts/Enemy.gd" id="18_jmhar"]
-[ext_resource type="Script" path="res://EnemyMove.gd" id="19_gxxu4"]
+[ext_resource type="Script" uid="uid://cmsu2m2hi806b" path="res://EnemyMove.gd" id="19_gxxu4"]
 [ext_resource type="AudioStream" uid="uid://c5w3uc74qb88d" path="res://Sounds/goblindie.wav" id="19_jmhar"]
 [ext_resource type="Theme" uid="uid://qsgq6qeoql70" path="res://themes/goblintheme.tres" id="19_y847q"]
 [ext_resource type="Resource" uid="uid://btsj5hkwacaf0" path="res://EnemyMoves/BasicGoblinAttack.tres" id="20_me4b4"]
@@ -145,6 +147,7 @@ successThreshold = 0.15
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Control" type="Control" parent="Camera2D"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = -575.0
@@ -189,18 +192,21 @@ offset_right = 385.0
 offset_bottom = 50.0
 text = "Beat:"
 
-[node name="PlayerHealthBar" type="ProgressBar" parent="Camera2D/Control"]
+[node name="PlayerHealthBar" type="TextureProgressBar" parent="Camera2D/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -100.0
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 60.0
+offset_left = -576.0
+offset_top = 430.0
+offset_right = -192.0
+offset_bottom = 494.0
 grow_horizontal = 2
 theme = ExtResource("10_me4b4")
-show_percentage = false
+nine_patch_stretch = true
+texture_under = ExtResource("11_6h8wf")
+texture_progress = ExtResource("12_utmfr")
+texture_progress_offset = Vector2(4, 0)
 
 [node name="ClickPlayer" type="AudioStreamPlayer" parent="Camera2D/Control"]
 stream = ExtResource("6_y8efi")
