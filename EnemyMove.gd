@@ -15,4 +15,4 @@ enum EnemyMoveKind
 func enact_on_world():
 	match kind:
 		EnemyMoveKind.PureDamage:
-			gamemanager.player_health -= power
+			gamemanager.player_health -= power;

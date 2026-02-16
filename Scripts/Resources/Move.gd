@@ -72,7 +72,7 @@ static func getHitNoteSpriteName(direction: Direction):
 			return "Images/Test/Arrow_Right_Hit.png";
 
 func recover(amount):
-	gamemanager.player_health += amount
+	gamemanager.player_health = min(gamemanager.player_health + amount, gamemanager.max_player_health);
 	
 func do_move(enemies: Array[Enemy], rhythm: Rhythm):
 	# Damage calculation: Damage% * attack Stat * elemental multiplier(not added yet)
