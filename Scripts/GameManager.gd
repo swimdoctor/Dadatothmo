@@ -99,9 +99,12 @@ func reset() -> void:
 	
 	# reset move list
 	movelist = [];
-	movelist.push_back(load("res://Moves/Strike.tres"));
-	movelist.push_back(load("res://Moves/Fireball.tres"));
-	movelist.push_back(load("res://Moves/Rest.tres"));
+	#movelist.push_back(load("res://Moves/Strike.tres"));
+	#movelist.push_back(load("res://Moves/Fireball.tres"));
+	#movelist.push_back(load("res://Moves/Rest.tres"));
+	
+	# reset enemies
+	current_enemies = [];
 
 func game_over() -> void:
 	print("Game Over!")
