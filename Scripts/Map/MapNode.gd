@@ -79,15 +79,15 @@ func _input_event(viewport, event, shape_idx):
 		#TODO: Add an NPC and a Hidden state change in , then make those nodes not GameOver
 		match nodeType:
 			MapNodeType.Enemy:
-				print("enemy clicked")
-				#gamemanager.change_gamestate(GameManager.GameState.Fighting)
+				gamemanager.change_gamestate(GameManager.GameState.Fighting)
 			MapNodeType.NPC:
+				print("TODO: implement NPC scene")
 				gamemanager.change_gamestate(GameManager.GameState.GameOver)
 			MapNodeType.Loot:
 				gamemanager.change_gamestate(GameManager.GameState.Upgrading)
 			MapNodeType.Hidden:
+				print("TODO: implement hidden scene")
 				gamemanager.change_gamestate(GameManager.GameState.GameOver)
-				
 		playerMovesOn()
 
 func playerMovesOn() -> void:

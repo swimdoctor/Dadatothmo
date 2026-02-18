@@ -1,3 +1,4 @@
+class_name GameMap
 extends Node2D
 
 var mapLength: int = 20
@@ -9,13 +10,12 @@ var mapNodes: Array[Array] = []
 var playerNode: MapNode
 
 func _ready() -> void:
-	buildNodes()
-	connectNodes()
-	#balanceNodes()
+	var map = gamemanager.load_map()
 	
-	# Player starts on first node when the map is built
-	playerNode = mapNodes[0][0]
-	playerNode.playerMovesOn()
+	if map.get_parent():
+		map.get_parent().remove_child(map)
+	
+	add_child(map)
 
 ## Builds a graph made of MapNode objects. Generates in a 1-?-1 structure
 ## where the ? is pseudo randomized using curated parameters to set the number of vertical slices and horizontal slices.
@@ -144,3 +144,12 @@ func balanceNodes() -> void:
 			
 			y /= currentNode.incomingConnections.size();
 			currentNode.position.y = y;
+
+func createMap() -> void:
+	buildNodes()
+	connectNodes()
+	#balanceNodes()
+	
+	# Player starts on first node when the map is built
+	playerNode = mapNodes[0][0]
+	playerNode.playerMovesOn()

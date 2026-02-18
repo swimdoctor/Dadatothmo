@@ -22,6 +22,9 @@ var max_player_health: int = 100
 var current_enemies: Array[Enemy]
 var movelist: Array[Move]
 
+var current_map: GameMap = null
+var map_scene := preload("res://Scenes/map.tscn")
+
 #region Pause Menu
 var pause_menu_scene: PackedScene = preload("res://Scenes/pause_menu.tscn")
 var pause_instance: Control = null
@@ -60,6 +63,10 @@ func _change_scene(newState: GameState) -> void:
 	Changes the current scene to a new one based on the GameState.
 	"""
 	get_tree().paused = false
+	# attach the current map to gamemanager to save it
+	# then turn it off
+	detach_map()
+	
 	match newState:
 		GameState.MainMenu:
 			get_tree().change_scene_to_file("res://Scenes/start_menu.tscn")
@@ -87,7 +94,25 @@ func add_card_to_hand(move: Move):
 	if(!movelist.has(move)):
 		movelist.append(move)
 	
-
 func game_over() -> void:
 	print("Game Over!")
 	change_gamestate(GameState.MainMenu)
+
+# --- Map Creation ---
+func load_map() -> GameMap:
+	if !is_instance_valid(current_map):
+		current_map = map_scene.instantiate()
+		current_map.createMap()
+		
+	current_map.visible = true
+	return current_map
+	
+func detach_map():
+	if !is_instance_valid(current_map):
+		return
+	if current_map.get_parent():
+		current_map.get_parent().remove_child(current_map)
+		
+	add_child(current_map)
+	
+	current_map.visible = false
