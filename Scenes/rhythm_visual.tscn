@@ -302,7 +302,6 @@ grow_horizontal = 2
 grow_vertical = 0
 scale = Vector2(4, 4)
 theme = ExtResource("19_y847q")
-value = 100.0
 nine_patch_stretch = true
 texture_under = ExtResource("28_odh2n")
 texture_progress = ExtResource("29_7mjeq")

@@ -85,8 +85,25 @@ func remove_enemy(enemy):
 func add_card_to_hand(move: Move):
 	if(!movelist.has(move)):
 		movelist.append(move)
+
+func damage_player(damage: int) -> void:
+	player_health = max(player_health - damage, 0);
+	if(player_health <= 0):
+		game_over();
+
+# reset game state
+# most of these should be unnecessary when nodes get restructured
+func reset() -> void:
+	max_player_health = 100;
+	player_health = max_player_health;
 	
+	# reset move list
+	movelist = [];
+	movelist.push_back(load("res://Moves/Strike.tres"));
+	movelist.push_back(load("res://Moves/Fireball.tres"));
+	movelist.push_back(load("res://Moves/Rest.tres"));
 
 func game_over() -> void:
 	print("Game Over!")
-	change_gamestate(GameState.MainMenu)
+	reset();
+	change_gamestate(GameState.GameOver);

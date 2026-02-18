@@ -16,6 +16,10 @@ func _ready() -> void:
 	print("ADDED", self.name)
 	gamemanager.current_enemies.append(self)
 	rhythm.beatHit.connect(enemyBeat)
+	
+	# initialize health bar
+	$HealthBar.max_value = max_health;
+	$HealthBar.value = max_health;
 
 func enemyBeat(downbeat: bool):
 	tick += 1
@@ -39,6 +43,10 @@ func enemyBeat(downbeat: bool):
 var hit_time: float = 0
 func damage(by):
 	health -= by;
+	print(health);
+	# update health bar
+	$HealthBar.value = health;
+	
 	if health <= 0:
 		$DieSound.play()
 		var tween = create_tween()
@@ -58,9 +66,6 @@ func _process(delta):
 		$EnemySprite.frame = 1;
 	else:
 		$EnemySprite.frame = 0;
-		
-	$HealthBar.value = lerp($HealthBar.value, float(health), 0.1);
-	$HealthBar.max_value = max_health;
 	
 # _process (delta)
 	# - fires attacks periodically based on tempo and attack pattern
