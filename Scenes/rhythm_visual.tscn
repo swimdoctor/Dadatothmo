@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bp8d4tgc7rt5c"]
+[gd_scene load_steps=50 format=3 uid="uid://bp8d4tgc7rt5c"]
 
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_qdjid"]
 [ext_resource type="Script" uid="uid://d03c4402j4mkx" path="res://Scripts/Resources/Move.gd" id="2_oyofj"]
@@ -14,7 +14,10 @@
 [ext_resource type="AudioStream" uid="uid://qr12rn2sntdc" path="res://Sounds/boom1.mp3" id="10_66vxs"]
 [ext_resource type="Theme" uid="uid://b2swf7a3v3ok7" path="res://themes/playertheme.tres" id="10_me4b4"]
 [ext_resource type="AudioStream" uid="uid://b75reqt5y6bm5" path="res://Sounds/boom2.mp3" id="11_ue8ww"]
+[ext_resource type="Texture2D" uid="uid://dqwhh1c063r8a" path="res://Images/Test/HealthbarPlayerUnder.png" id="11_utmfr"]
 [ext_resource type="AudioStream" uid="uid://cir5rjijdgiqj" path="res://Sounds/boom3.mp3" id="12_75du4"]
+[ext_resource type="Texture2D" uid="uid://d3dh71jbfc684" path="res://Images/Test/HealthbarProgressPlayer.png" id="12_utmfr"]
+[ext_resource type="Texture2D" uid="uid://fevunmqyciks" path="res://Images/Test/HealthbarPlayerFrame.png" id="13_5t4lc"]
 [ext_resource type="AudioStream" uid="uid://dyy2tpcuyngj" path="res://Sounds/success.mp3" id="13_75du4"]
 [ext_resource type="AudioStream" uid="uid://drnqc782kf0si" path="res://Sounds/failure.mp3" id="13_ue8ww"]
 [ext_resource type="AudioStream" uid="uid://bxrhkps6jc0nl" path="res://Sounds/buildup.mp3" id="14_75du4"]
@@ -26,6 +29,9 @@
 [ext_resource type="Resource" uid="uid://btsj5hkwacaf0" path="res://EnemyMoves/BasicGoblinAttack.tres" id="20_me4b4"]
 [ext_resource type="AudioStream" uid="uid://uogih0ewfwwc" path="res://Sounds/ouch.wav" id="22_7rwv8"]
 [ext_resource type="Texture2D" uid="uid://cxj2t3hvhla3t" path="res://Images/Test/BasicGoblinAttackSpark.png" id="26_sdkp3"]
+[ext_resource type="Texture2D" uid="uid://d2xtvjusda570" path="res://Images/Test/HealthbarSmallUnder.png" id="28_odh2n"]
+[ext_resource type="Texture2D" uid="uid://5tgu8gp1gndn" path="res://Images/Test/HealthbarSmallProgress.png" id="29_7mjeq"]
+[ext_resource type="Texture2D" uid="uid://d3etn5xvvl1w2" path="res://Images/Test/HealthbarSmallFrame.png" id="30_jfvia"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bpf63"]
 atlas = ExtResource("7_75du4")
@@ -145,6 +151,7 @@ successThreshold = 0.15
 [node name="Camera2D" type="Camera2D" parent="."]
 
 [node name="Control" type="Control" parent="Camera2D"]
+texture_filter = 1
 layout_mode = 3
 anchors_preset = 0
 offset_left = -575.0
@@ -189,18 +196,30 @@ offset_right = 385.0
 offset_bottom = 50.0
 text = "Beat:"
 
-[node name="PlayerHealthBar" type="ProgressBar" parent="Camera2D/Control"]
+[node name="PlayerHealthBar" type="TextureProgressBar" parent="Camera2D/Control"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -100.0
-offset_top = 30.0
-offset_right = 100.0
-offset_bottom = 60.0
+offset_left = -568.0
+offset_top = 470.0
+offset_right = -476.0
+offset_bottom = 474.0
 grow_horizontal = 2
+scale = Vector2(4, 4)
 theme = ExtResource("10_me4b4")
-show_percentage = false
+value = 100.0
+nine_patch_stretch = true
+texture_under = ExtResource("11_utmfr")
+texture_progress = ExtResource("12_utmfr")
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D/Control/PlayerHealthBar"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -10.0
+offset_right = 94.0
+offset_bottom = 6.0
+texture = ExtResource("13_5t4lc")
 
 [node name="ClickPlayer" type="AudioStreamPlayer" parent="Camera2D/Control"]
 stream = ExtResource("6_y8efi")
@@ -254,7 +273,7 @@ position = Vector2(936, 294)
 rotation = -0.00445726
 script = ExtResource("18_jmhar")
 health = 30
-interval = 4
+interval = 20
 attack_pattern = Array[ExtResource("19_gxxu4")]([ExtResource("20_me4b4")])
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
@@ -269,13 +288,31 @@ sprite_frames = SubResource("SpriteFrames_utmfr")
 scale = Vector2(7.12, 7.12)
 shape = SubResource("RectangleShape2D_75du4")
 
-[node name="HealthBar" type="ProgressBar" parent="Camera2D/Control/Enemy"]
-offset_left = -99.5533
-offset_top = -100.445
-offset_right = 100.447
-offset_bottom = -73.4447
+[node name="HealthBar" type="TextureProgressBar" parent="Camera2D/Control/Enemy"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -60.0
+offset_top = -88.0
+offset_right = -30.0
+offset_bottom = -86.0
+grow_horizontal = 2
+grow_vertical = 0
+scale = Vector2(4, 4)
 theme = ExtResource("19_y847q")
-show_percentage = false
+nine_patch_stretch = true
+texture_under = ExtResource("28_odh2n")
+texture_progress = ExtResource("29_7mjeq")
+
+[node name="TextureRect" type="TextureRect" parent="Camera2D/Control/Enemy/HealthBar"]
+layout_mode = 0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 31.0
+offset_bottom = 3.0
+texture = ExtResource("30_jfvia")
 
 [node name="OuchSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
 stream = ExtResource("22_7rwv8")

@@ -1,4 +1,6 @@
-[gd_scene format=3 uid="uid://ctnb8i5n1med6"]
+[gd_scene load_steps=2 format=3 uid="uid://ctnb8i5n1med6"]
+
+[ext_resource type="Script" uid="uid://o06dsu4b6dg2" path="res://Scripts/start_menu.gd" id="1_ie4w5"]
 
 [node name="Lose" type="Control"]
 layout_mode = 3
@@ -7,6 +9,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ie4w5")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -26,3 +29,5 @@ offset_right = 863.0
 offset_bottom = 541.0
 theme_override_font_sizes/font_size = 70
 text = "Main Menu"
+
+[connection signal="pressed" from="CanvasLayer/Button" to="." method="_on_menu_button_pressed"]

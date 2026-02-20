@@ -21,6 +21,10 @@ func _ready() -> void:
 	
 	# begin polyphonic audio streams
 	$NotePlayer.play()
+	
+	# initialize health bar
+	$PlayerHealthBar.max_value = gamemanager.max_player_health;
+	$PlayerHealthBar.value = gamemanager.player_health;
 
 func display_moves():
 	for move in rhythm.moveInventory:
@@ -45,7 +49,8 @@ func texnode(tex: Texture):
 func _process(delta):
 	$BeatText.text = str(rhythm.beat)
 	
-	$PlayerHealthBar.value = lerp($PlayerHealthBar.value, float(gamemanager.player_health), 0.1);
+	#$PlayerHealthBar.value = lerp($PlayerHealthBar.value, float(gamemanager.player_health), 0.1);
+	$PlayerHealthBar.value = gamemanager.player_health;
 	$PlayerHealthBar.max_value = gamemanager.max_player_health;
 
 func playedNote(direction: Move.Direction):
