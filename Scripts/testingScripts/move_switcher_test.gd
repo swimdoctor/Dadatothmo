@@ -38,3 +38,7 @@ func _on_button_5_pressed() -> void:
 func _on_button_6_pressed() -> void:
 	movemanager.replaceCard(load("res://Moves/Rest.tres"), load("res://Moves/Fireball.tres"))
 	_print_list()
+
+
+func _on_button_7_pressed() -> void:
+	movemanager.chooseRandomMove()

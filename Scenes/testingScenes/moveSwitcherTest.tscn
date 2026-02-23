@@ -33,6 +33,7 @@ offset_bottom = 87.0
 text = "Add Move [Strike]"
 
 [node name="Button2" type="Button" parent="."]
+layout_mode = 0
 offset_left = 432.0
 offset_top = 103.0
 offset_right = 735.0
@@ -40,6 +41,7 @@ offset_bottom = 168.0
 text = "Add Move [Slash]"
 
 [node name="Button3" type="Button" parent="."]
+layout_mode = 0
 offset_left = 752.0
 offset_top = 22.0
 offset_right = 1055.0
@@ -47,6 +49,7 @@ offset_bottom = 87.0
 text = "Remove Move [Strike]"
 
 [node name="Button4" type="Button" parent="."]
+layout_mode = 0
 offset_left = 752.0
 offset_top = 102.0
 offset_right = 1055.0
@@ -54,6 +57,7 @@ offset_bottom = 167.0
 text = "Remove Move [Slash]"
 
 [node name="Button5" type="Button" parent="."]
+layout_mode = 0
 offset_left = 436.0
 offset_top = 204.0
 offset_right = 739.0
@@ -61,11 +65,19 @@ offset_bottom = 269.0
 text = "Swap Move [Fireball -> Rest]"
 
 [node name="Button6" type="Button" parent="."]
+layout_mode = 0
 offset_left = 752.0
 offset_top = 203.0
 offset_right = 1055.0
 offset_bottom = 268.0
 text = "Swap Move [Rest -> Fireball]"
+
+[node name="Button7" type="Button" parent="."]
+offset_left = 439.0
+offset_top = 326.0
+offset_right = 742.0
+offset_bottom = 391.0
+text = "Random Move"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]
@@ -73,3 +85,4 @@ text = "Swap Move [Rest -> Fireball]"
 [connection signal="pressed" from="Button4" to="." method="_on_button_4_pressed"]
 [connection signal="pressed" from="Button5" to="." method="_on_button_5_pressed"]
 [connection signal="pressed" from="Button6" to="." method="_on_button_6_pressed"]
+[connection signal="pressed" from="Button7" to="." method="_on_button_7_pressed"]
