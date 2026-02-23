@@ -17,7 +17,15 @@ func _ready() -> void:
 	
 	add_child(map)
 
-## Builds a graph made of MapNode objects. Generates in a 1-?-1 structure
+func nodeType() -> MapNode.MapNodeType:
+	var rand = randf();
+	if(rand < 0.6):
+		return MapNode.MapNodeType.Enemy;
+	if(rand < 0.9):
+		return MapNode.MapNodeType.Loot;
+	return MapNode.MapNodeType.NPC;
+
+## Builds a graph made of MapNode objects. Generates in a 1-[?]-1 structure
 ## where the ? is pseudo randomized using curated parameters to set the number of vertical slices and horizontal slices.
 func buildNodes() -> void:
 	for i in range(mapLength):
@@ -43,7 +51,7 @@ func buildNodes() -> void:
 			nodePos.y = 324 - (int)(80 * (sliceHeight - 1) / 2) + 80 * j
 			# TODO: (easily adjustably) randomize NodeType so we can mess with the percentages
 			# TODO: change the Vector2 for size to use variables
-			mapNodes[i].append(MapNode.create(nodePos, Vector2(10, 10), MapNode.MapNodeType.Enemy))
+			mapNodes[i].append(MapNode.create(nodePos, Vector2(10, 10), nodeType()))
 			add_child(mapNodes[i][j])
 
 ## Connects MapNodes in a logical fashion

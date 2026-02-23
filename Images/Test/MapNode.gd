@@ -30,7 +30,13 @@ static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -
 	
 	# Sprite
 	node.sprite = Sprite2D.new()
-	node.sprite.texture = preload("res://Images/Test/Map/Frog.png")
+	match(_nodeType):
+		MapNodeType.Enemy:
+			node.sprite.texture = preload("res://Images/Test/Map/Frog.png");
+		MapNodeType.Loot:
+			node.sprite.texture = preload("res://Images/Test/Map/Loot.png");
+		MapNodeType.NPC:
+			node.sprite.texture = preload("res://Images/Test/Map/NPC.png");
 	
 	# CollisionShape
 	node.collision = CollisionShape2D.new()
@@ -39,11 +45,6 @@ static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -
 	node.collision.shape = shape
 	
 	# MapNode specific stuff
-	match node.nodeType:
-		MapNodeType.Enemy:
-			node.sprite.texture = preload("res://Images/Test/Map/Frog.png")
-		_:
-			print("MapNodeTypes Sprite Not Found")
 			
 	node.add_child(node.sprite)
 	node.add_child(node.collision)

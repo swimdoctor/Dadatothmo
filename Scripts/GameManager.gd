@@ -103,7 +103,8 @@ func load_map() -> GameMap:
 	if !is_instance_valid(current_map):
 		current_map = map_scene.instantiate()
 		current_map.createMap()
-		
+	else:
+		print("Map valid")
 	current_map.visible = true
 	return current_map
 	
