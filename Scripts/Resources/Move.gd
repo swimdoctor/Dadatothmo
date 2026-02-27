@@ -79,13 +79,14 @@ func do_move(enemies: Array[Enemy], rhythm: Rhythm):
 	for enemy in enemies:
 		enemy.damage(group_damage * rhythm.attack)
 	
-	# if there were a targeted enemy, this would
-	# affect them. but theres not a system for that
-	# so we get enemy[0]
-	var target: Enemy = enemies[0]
-	
-	target.damage(damage * rhythm.attack)
-	recover(heal) #If the move has a heal amount recover the hp
+	if enemies.size() > 0:
+		# if there were a targeted enemy, this would
+		# affect them. but theres not a system for that
+		# so we get enemy[0]
+		var target: Enemy = enemies[0]
+		
+		target.damage(damage * rhythm.attack)
+		recover(heal) #If the move has a heal amount recover the hp
 	
 	# and then if the player existed we'd apply effects to them too
 	return
