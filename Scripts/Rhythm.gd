@@ -63,6 +63,10 @@ func _ready() -> void:
 	Input.set_use_accumulated_input(false)
 	
 	(rhythm_visual as RhythmVisuals).display_moves()
+	
+	# TESTING
+	var resource = load("res://Dialogue/test_dialogue.dialogue");
+	DialogueManager.show_dialogue_balloon(resource, "start");
 
 
 func _process(delta):

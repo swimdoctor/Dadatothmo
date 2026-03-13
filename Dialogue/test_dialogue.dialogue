@@ -1,0 +1,9 @@
+~ start
+Player: Don't mind me, just some test dialogue.
+Enemy: Crazy how you can progress to the next line huh.
+Player: Gadzooks! A ruffian!
+- Options Blast
+	Enemy: Oooooooooh your options are too powerful.
+- Choices Beam
+	Enemy: Oooooooooh your choices are too strong.
+=> END
