@@ -1,5 +1,5 @@
 class_name Move
-extends Resource
+extends Moves_implement
 
 enum Direction {
 	UP,
@@ -23,10 +23,13 @@ enum Direction {
 
 @export var heal: float
 
+var move : Callable;
+
 func _init(name = "", icon = null, notes: Array[Direction] = []):
 	self.icon = icon
 	self.name = name
 	self.notes = notes
+	#move = moves_implemented.get_implementation(name)
 
 func getString():
 	var string = "%-12s" %name;
@@ -76,8 +79,22 @@ func recover(amount):
 	
 func do_move(enemies: Array[Enemy], rhythm: Rhythm):
 	# Damage calculation: Damage% * attack Stat * elemental multiplier(not added yet)
+	
+	"When move is initialized in _init it doesn't wok (name isn't loaded in at the time for some reason)
+	Currently everytime a move is cast check every method to pick the right one to use. Need to change that later
+	"
+	if(name == "Rest"):
+		recover(20);
+		return;
+		
+	move = Callable(self, name)
+	move.call(enemies, rhythm)
+	
+	"
+	var results = move.call(self, rhythm)
 	for enemy in enemies:
 		enemy.damage(group_damage * rhythm.attack)
+		enemy.damage(results[0])
 	
 	if enemies.size() > 0:
 		# if there were a targeted enemy, this would
@@ -85,8 +102,9 @@ func do_move(enemies: Array[Enemy], rhythm: Rhythm):
 		# so we get enemy[0]
 		var target: Enemy = enemies[0]
 		
-		target.damage(damage * rhythm.attack)
-		recover(heal) #If the move has a heal amount recover the hp
+		target.damage(results[1])
+		recover(results[2]) #If the move has a heal amount recover the hp
 	
 	# and then if the player existed we'd apply effects to them too
 	return
+	"
