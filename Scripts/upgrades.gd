@@ -37,12 +37,13 @@ func _ready():
 func _process(delta):
 	if Input.is_action_just_pressed("up"):
 		#pickcard(card0)
-		gamemanager.add_card_to_hand(load("res://Moves/MagicMissile.tres"))
+		gamemanager.add_card_to_hand(load("res://Moves/MagicMissile.gd").new())
 		gamemanager.change_gamestate(GameManager.GameState.Fighting)
 		
 	if Input.is_action_just_pressed("left"):
-		print("no")
 		#pickcard(card1)
+		gamemanager.add_card_to_hand(load("res://Moves/DoubleAttack.gd").new());
+		gamemanager.change_gamestate(GameManager.GameState.Fighting);
 	if Input.is_action_just_pressed("right"):
 		print("no")
 

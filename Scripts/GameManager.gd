@@ -15,7 +15,7 @@ enum GameState
 # --- Game State and Global Variables ---
 var _state: GameState = GameState.MainMenu
 
-var player_health: int = 100
+var player_health: int = 1
 var max_player_health: int = 100
 
 var current_enemies: Array[Enemy]
@@ -27,8 +27,7 @@ var pause_instance: Control = null
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		toggle_pause_menu()
-		
+		toggle_pause_menu();
 func toggle_pause_menu() -> void:
 	if not pause_instance:
 		_load_pause_menu()
@@ -107,6 +106,6 @@ func reset() -> void:
 	current_enemies = [];
 
 func game_over() -> void:
-	print("Game Over!")
+	print("Game Over!");
 	reset();
 	change_gamestate(GameState.GameOver);
