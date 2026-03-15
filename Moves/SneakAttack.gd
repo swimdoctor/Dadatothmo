@@ -2,14 +2,17 @@ extends Move
 
 func _init():
 	super(
-		"All In",
+		"Sneak Attack",
 		load("res://Images/Test/IconRoughSword.png"),
 		[Direction.LEFT, Direction.UP, Direction.RIGHT]
 	);
 
-# deal 0.5x attack on crit or 2.5x on crit
+# deal 0.65x attack to lowest health enemy
 func do_move(enemies : Array[Enemy], rhythm : Rhythm):
-	var damage = 2.5 if randf() < 0.166666 else 0.5;
+	var damage = 0.65;
 	var target = enemies[0];
+	for enemy in enemies:
+		if enemy.health < target.health:
+			target = enemy;
 	
 	target.damage(damage * rhythm.attack);
