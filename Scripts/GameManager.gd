@@ -90,6 +90,9 @@ func damage_player(damage: int) -> void:
 	if(player_health <= 0):
 		game_over();
 
+func heal_player(heal: int) -> void:
+	player_health = min(player_health + heal, max_player_health);
+
 # reset game state
 # most of these should be unnecessary when nodes get restructured
 func reset() -> void:
