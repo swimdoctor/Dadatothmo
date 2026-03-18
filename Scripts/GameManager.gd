@@ -15,11 +15,17 @@ enum GameState
 # --- Game State and Global Variables ---
 var _state: GameState = GameState.MainMenu
 
-var player_health: int = 1
+var player_health: int = 100
 var max_player_health: int = 100
 
 var current_enemies: Array[Enemy]
-var movelist: Array[Move]
+var move_list: Array[Move]
+
+# TESTING
+func _ready() -> void:
+	add_card_from_name(movelist.MoveName.HEAL);
+	add_card_from_name(movelist.MoveName.RESTORE);
+	add_card_from_name(movelist.MoveName.LAST_RESORT);
 
 #region Pause Menu
 var pause_menu_scene: PackedScene = preload("res://Scenes/pause_menu.tscn")
@@ -82,8 +88,13 @@ func remove_enemy(enemy):
 		change_gamestate(GameState.Upgrading)
 		
 func add_card_to_hand(move: Move):
-	if(!movelist.has(move)):
-		movelist.append(move)
+	if(!move_list.has(move)):
+		move_list.append(move)
+
+func add_card_from_name(move_name : movelist.MoveName):
+	var new_move = movelist.new_move(move_name);
+	move_list.append(new_move);
+	
 
 func damage_player(damage: int) -> void:
 	player_health = max(player_health - damage, 0);
@@ -100,10 +111,7 @@ func reset() -> void:
 	player_health = max_player_health;
 	
 	# reset move list
-	movelist = [];
-	#movelist.push_back(load("res://Moves/Strike.tres"));
-	#movelist.push_back(load("res://Moves/Fireball.tres"));
-	#movelist.push_back(load("res://Moves/Rest.tres"));
+	move_list = [];
 	
 	# reset enemies
 	current_enemies = [];

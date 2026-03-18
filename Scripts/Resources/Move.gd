@@ -12,6 +12,7 @@ enum Direction {
 @export var name: String = ""
 @export var icon: Texture2D = null
 @export var notes: Array[Direction] = []
+@export var move_func : Callable;
 @export var damage: float
 @export var group_damage: float
 @export var element: String
@@ -23,10 +24,11 @@ enum Direction {
 
 @export var heal: float
 
-func _init(name = "", icon = null, notes: Array[Direction] = []):
+func _init(name = "", icon = null, notes: Array[Direction] = [], move_func : Callable = Callable(self, "default_move")):
 	self.icon = icon
 	self.name = name
 	self.notes = notes
+	self.move_func = move_func;
 
 func getString():
 	var string = "%-12s" %name;
@@ -73,8 +75,11 @@ static func getHitNoteSpriteName(direction: Direction):
 
 func recover(amount):
 	gamemanager.player_health = min(gamemanager.player_health + amount, gamemanager.max_player_health);
+
+func do_move(enemies : Array[Enemy], rhythm : Rhythm):
+	move_func.call(enemies, rhythm);
 	
-func do_move(enemies: Array[Enemy], rhythm: Rhythm):
+func default_move(enemies: Array[Enemy], rhythm: Rhythm):
 	# Damage calculation: Damage% * attack Stat * elemental multiplier(not added yet)
 	for enemy in enemies:
 		enemy.damage(group_damage * rhythm.attack)

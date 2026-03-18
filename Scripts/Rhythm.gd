@@ -46,7 +46,7 @@ var flame_lighting_percent = 100
 func _ready() -> void:
 	Engine.max_fps = 60
 	print("Move Inventory: ");
-	for move in gamemanager.movelist:
+	for move in gamemanager.move_list:
 		moveInventory.append(move)
 	
 	for move in moveInventory:
