@@ -23,9 +23,9 @@ var move_list: Array[Move]
 
 # TESTING
 func _ready() -> void:
-	add_card_from_name(movelist.MoveName.HEAL);
-	add_card_from_name(movelist.MoveName.RESTORE);
-	add_card_from_name(movelist.MoveName.LAST_RESORT);
+	add_card_from_name(movelist.MoveName.STRIKE);
+	add_card_from_name(movelist.MoveName.FIREBALL);
+	add_card_from_name(movelist.MoveName.REST);
 
 #region Pause Menu
 var pause_menu_scene: PackedScene = preload("res://Scenes/pause_menu.tscn")
