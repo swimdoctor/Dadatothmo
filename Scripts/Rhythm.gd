@@ -94,13 +94,13 @@ func _process(delta):
 	var timeDiff = min(timeFromLastBeat, timeToNextBeat)
 	var earlyOrLate = "late" if timeFromLastBeat < timeToNextBeat else "early"
 	
-	if interFrameInput == KEY_UP:
+	if interFrameInput == "Up" || interFrameInput.contains("D-pad Up"):
 		playNote(Move.Direction.UP, timeDiff, earlyOrLate)
-	elif interFrameInput == KEY_RIGHT:
+	elif interFrameInput == "Right" || interFrameInput.contains("D-pad Right"):
 		playNote(Move.Direction.RIGHT, timeDiff, earlyOrLate)
-	elif interFrameInput == KEY_DOWN:
+	elif interFrameInput == "Down" || interFrameInput.contains("D-pad Down"):
 		playNote(Move.Direction.DOWN, timeDiff, earlyOrLate)
-	elif interFrameInput == KEY_LEFT:
+	elif interFrameInput == "Left" || interFrameInput.contains("D-pad Left"):
 		playNote(Move.Direction.LEFT, timeDiff, earlyOrLate)
 	
 	interFrameInput = null
@@ -108,9 +108,10 @@ func _process(delta):
 
 
 func _input(event) -> void:
-	if event is InputEventKey and event.is_pressed():
+	if event.is_pressed():
 		interFrameTimestamp = Time.get_ticks_usec() / 1_000_000.0
-		interFrameInput = event.keycode
+		print(event.as_text());
+		interFrameInput = event.as_text()
 
 
 func playNote(direction, timeFromNearestBeat, earlyOrLate):
