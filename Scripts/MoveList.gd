@@ -20,6 +20,38 @@ enum MoveName {
 	RESTORE
 }
 
+func add_move(move_name : MoveName) -> void:
+	gamemanager.move_list.append(new_move(move_name));
+
+func remove_move(move_name : MoveName) -> bool: 
+	for i in gamemanager.move_list.size():
+		if gamemanager.move_list[i].id == move_name:
+			gamemanager.move_list.remove_at(i);
+			return true;
+	return false;
+
+func remove_at(index : int) -> bool:
+	if(index >= gamemanager.move_list.size()):
+		return false;
+	gamemanager.move_list.remove_at(index);
+	return true;
+
+func replace_move(old_move_name : MoveName, new_move_name : MoveName) -> bool:
+	for i in gamemanager.move_list.size():
+		if gamemanager.move_list[i].id == old_move_name:
+			gamemanager.move_list[i] = new_move(new_move_name);
+			return true;
+	return false;
+
+func replace_at(old_index : int, new_move_name : MoveName) -> bool :
+	if(old_index >= gamemanager.move_list.size()):
+		return false;
+	gamemanager.move_list[old_index] = new_move(new_move_name);
+	return true;
+
+func random_move() -> MoveName:
+	return randi() % MoveName.size();
+
 func new_move(move : MoveName):
 	var name : String;
 	var path : String;
@@ -108,10 +140,13 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.LEFT, Move.Direction.UP];
 			method = "restore";
 	
-	return Move.new(name, load(path), pattern, Callable(self, method));
+	return Move.new(move, name, load(path), pattern, Callable(self, method));
 
 # deal 0.5x attack stat to first enemy
 func strike(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 0.5;
 	var target = enemies[0];
 	
@@ -119,6 +154,9 @@ func strike(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 1x attack stat to first enemy
 func fireball(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 1;
 	var target = enemies[0];
 	
@@ -132,6 +170,9 @@ func rest(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 0.4x attack stat to all enemies
 func magic_missile(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 0.4;
 	
 	for enemy in enemies:
@@ -139,6 +180,9 @@ func magic_missile(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 0.4x attack to first enemy twice
 func double_attack(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 0.4;
 	var target = enemies[0];
 	
@@ -147,6 +191,9 @@ func double_attack(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 1-4 * 0.4x attack
 func simple_die(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = randi_range(1, 5) * 0.4;
 	var target = enemies[0];
 	
@@ -154,6 +201,9 @@ func simple_die(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 1.2x or 0.5x attack to first enemy
 func coin_flip(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 1.2 if randf() < 0.5 else 0.5;
 	var target = enemies[0];
 	
@@ -161,6 +211,9 @@ func coin_flip(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 1-12 * 0.5x attack
 func high_roller(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = randi_range(1, 13) * 0.5;
 	var target = enemies[0];
 	
@@ -168,6 +221,9 @@ func high_roller(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 0.5x attack on crit or 2.5x on crit
 func all_in(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 2.5 if randf() < 0.166666 else 0.5;
 	var target = enemies[0];
 	
@@ -175,6 +231,9 @@ func all_in(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 0.5x attack plus 1.5x for each crit
 func moneymaker(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 0.5;
 	for i in 2:
 		damage += 1.5 if randf() < 0.166666 else 0;
@@ -184,6 +243,9 @@ func moneymaker(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 0.65x attack to lowest health enemy
 func sneak_attack(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 0.65;
 	var target = enemies[0];
 	for enemy in enemies:
@@ -194,6 +256,9 @@ func sneak_attack(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 0.5x attack and 1.5x attack to second enemy, or 1x attack if none
 func snipe(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage1 = 0.5;
 	var target1 = enemies[0];
 	
@@ -209,6 +274,9 @@ func snipe(enemies : Array[Enemy], rhythm : Rhythm):
 
 # deal 1x attack, 0.05x max health self damage if no kill
 func daylight_job(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 1;
 	var target = enemies[0];
 	var self_damage = 0.05;
@@ -219,6 +287,9 @@ func daylight_job(enemies : Array[Enemy], rhythm : Rhythm):
 
 # im not even attempting to describe this move here just delete when we get literally any better option
 func last_resort(enemies : Array[Enemy], rhythm : Rhythm):
+	if(enemies.size() < 1):
+		return;
+	
 	var damage = 1.5;
 	var self_damage = 0.15;
 	var target = enemies[0];
