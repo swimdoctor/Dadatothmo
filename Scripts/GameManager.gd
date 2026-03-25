@@ -63,6 +63,10 @@ func _change_scene(newState: GameState) -> void:
 	Don't use outside of GameManager. Instead use change_gamestate.
 	Changes the current scene to a new one based on the GameState.
 	"""
+	
+	# Clear current list of enemies to avoid null references
+	current_enemies = []
+	
 	get_tree().paused = false
 	match newState:
 		GameState.MainMenu:
@@ -70,7 +74,7 @@ func _change_scene(newState: GameState) -> void:
 		#GameState.Map:
 			#get_tree().change_scene_to_file("res://Scenes/map.tscn")
 		GameState.Map:
-			get_tree().change_scene_to_file("res://Scenes/main.tscn")
+			get_tree().change_scene_to_file("res://Scenes/map.tscn")
 		GameState.Fighting:
 			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
 		GameState.Upgrading:
