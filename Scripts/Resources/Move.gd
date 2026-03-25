@@ -9,6 +9,7 @@ enum Direction {
 	REST
 }
 
+@export var id: movelist.MoveName;
 @export var name: String = ""
 @export var icon: Texture2D = null
 @export var notes: Array[Direction] = []
@@ -24,7 +25,8 @@ enum Direction {
 
 @export var heal: float
 
-func _init(name = "", icon = null, notes: Array[Direction] = [], move_func : Callable = Callable(self, "default_move")):
+func _init(id = null, name = "", icon = null, notes: Array[Direction] = [], move_func : Callable = Callable(self, "default_move")):
+	self.id = id;
 	self.icon = icon
 	self.name = name
 	self.notes = notes
