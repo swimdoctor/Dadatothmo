@@ -250,6 +250,7 @@ offset_left = 461.0
 offset_top = 201.0
 offset_right = 783.0
 offset_bottom = 332.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
 
 [node name="SuccessPlayer" type="AudioStreamPlayer2D" parent="Camera2D/Control"]
 stream = ExtResource("13_75du4")

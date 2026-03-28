@@ -83,15 +83,15 @@ text = "Magic Missile"
 horizontal_alignment = 1
 selection_enabled = true
 
-[node name="Title2" type="RichTextLabel" parent="TopCard"]
+[node name="Description" type="RichTextLabel" parent="TopCard"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
-offset_top = -2.5
+offset_top = -2.0
 offset_right = 620.0
-offset_bottom = 270.5
+offset_bottom = 489.0
 grow_horizontal = 2
 scale = Vector2(0.063, 0.063)
 pivot_offset = Vector2(0, 35)
@@ -145,7 +145,7 @@ text = "Double Attack"
 horizontal_alignment = 1
 selection_enabled = true
 
-[node name="Title2" type="RichTextLabel" parent="LeftCard"]
+[node name="Description" type="RichTextLabel" parent="LeftCard"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -153,7 +153,7 @@ anchor_right = 0.5
 offset_left = -20.0
 offset_top = -3.0
 offset_right = 620.0
-offset_bottom = 348.0
+offset_bottom = 491.0
 grow_horizontal = 2
 scale = Vector2(0.063, 0.063)
 pivot_offset = Vector2(0, 35)
@@ -207,15 +207,15 @@ text = "Sharpen"
 horizontal_alignment = 1
 selection_enabled = true
 
-[node name="Title2" type="RichTextLabel" parent="RightCard"]
+[node name="Description" type="RichTextLabel" parent="RightCard"]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
 offset_left = -20.0
-offset_top = -2.5
+offset_top = -2.0
 offset_right = 620.0
-offset_bottom = 270.5
+offset_bottom = 472.0
 grow_horizontal = 2
 scale = Vector2(0.063, 0.063)
 pivot_offset = Vector2(0, 35)

@@ -22,7 +22,7 @@ enum MoveName {
 
 func add_move(move_name : MoveName) -> void:
 	gamemanager.move_list.append(new_move(move_name));
-
+	
 func remove_move(move_name : MoveName) -> bool: 
 	for i in gamemanager.move_list.size():
 		if gamemanager.move_list[i].id == move_name:
@@ -57,6 +57,7 @@ func new_move(move : MoveName):
 	var path : String;
 	var pattern : Array[Move.Direction];
 	var method : String;
+	var description : String
 	
 	match move:
 		MoveName.STRIKE: 
@@ -64,83 +65,99 @@ func new_move(move : MoveName):
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.LEFT, Move.Direction.UP, Move.Direction.RIGHT];
 			method = "strike";
+			description = "Deal 50% Attack stat to first enemy."
 		MoveName.FIREBALL:
 			name = "Fireball";
 			path = "res://Images/Test/IconRoughFire.png";
 			pattern = [Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.LEFT, Move.Direction.RIGHT];
 			method = "fireball";
+			description = "Deal 100% Attack stat to the first enemy."
 		MoveName.REST:
 			name = "Rest";
 			path = "res://Images/Test/IconRoughHealth.png";
 			pattern = [Move.Direction.LEFT, Move.Direction.UP, Move.Direction.UP, Move.Direction.UP, Move.Direction.RIGHT];
 			method = "rest";
+			description = "Heal 20HP."
 		MoveName.MAGIC_MISSILE:
 			name = "Magic Missile";
 			path = "res://Images/Test/IconRoughFire.png"
 			pattern = [Move.Direction.UP, Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.UP];
 			method = "magic_missile";
+			description = "Deal 40% Attack stat to all enemies."
 		MoveName.DOUBLE_ATTACK:
 			name = "Double Attack";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.UP, Move.Direction.LEFT, Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.DOWN];
 			method = "double_attack";
+			description = "Deal 40% Attack stat twice to the first enemy."
 		MoveName.SIMPLE_DIE:
 			name = "Simple Die";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.LEFT, Move.Direction.UP, Move.Direction.RIGHT];
 			method = "simple_die";
+			description = "Roll a 4 sided die. Deal 40% Attack stat times the outcome to the first enemy."
 		MoveName.COIN_FLIP:
 			name = "Coin Flip";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.UP, Move.Direction.DOWN, Move.Direction.UP];
 			method = "coin_flip";
+			description = "Flip a coin. If heads, deal 120% Attack stat. If tails, deal 50% Attack stat."
 		MoveName.HIGH_ROLLER:
 			name = "High Roller";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.LEFT, Move.Direction.UP, Move.Direction.DOWN, Move.Direction.RIGHT];
 			method = "high_roller";
+			description = "Roll a twelve sided die. Deal 50% Attack stat times the outcome of the roll."
 		MoveName.ALL_IN:
 			name = "All In";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.RIGHT, Move.Direction.UP, Move.Direction.LEFT, Move.Direction.DOWN];
 			method = "all_in";
+			description = "Roll a six sided die. If the roll is 6, deal 250% Attack stat. Otherwise deal 50% Attack stat."
 		MoveName.MONEYMAKER:
 			name = "Moneymaker";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.DOWN, Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.LEFT, Move.Direction.UP];
 			method = "moneymaker";
+			description = "Deal 50% Attack and roll two six sided dice. For each 6 that is rolled, increase the damage of this attack by an additive 150% Attack."
 		MoveName.SNEAK_ATTACK:
 			name = "Sneak Attack";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.LEFT];
 			method = "sneak_attack";
+			description = "Deal 65% Attack stat to the enemy with the lowest HP."
 		MoveName.SNIPE:
 			name = "Snipe";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.UP, Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.DOWN];
 			method = "snipe";
+			description = "Deal 50% Attack. Deal 150% Attack to the second enemy. If there is only one enemy, instead deal 100% Attack"
 		MoveName.DAYLIGHT_JOB:
 			name = "Daylight Job";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.DOWN];
 			method = "daylight_job";
+			description = "Deal 100% Attack to the enemy with the lowest HP. If this damage fails to kill, take 5% Max HP self damage."
 		MoveName.LAST_RESORT:
 			name = "Last Resort";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.UP, Move.Direction.DOWN, Move.Direction.LEFT, Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.RIGHT];
 			method = "last_resort";
+			description = "Go big or go home."
 		MoveName.HEAL:
 			name = "Heal";
 			path = "res://Images/Test/IconRoughHealth.png";
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.DOWN, Move.Direction.LEFT, Move.Direction.UP];
 			method = "heal";
+			description = "Heal 10% Max HP."
 		MoveName.RESTORE:
 			name = "Restore";
 			path = "res://Images/Test/IconRoughHealth.png";
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.LEFT, Move.Direction.UP];
 			method = "restore";
+			description = "Heal 20% missing HP."
 	
-	return Move.new(move, name, load(path), pattern, Callable(self, method));
+	return Move.new(move, name, description, load(path), pattern, Callable(self, method));
 
 # deal 0.5x attack stat to first enemy
 func strike(enemies : Array[Enemy], rhythm : Rhythm):
