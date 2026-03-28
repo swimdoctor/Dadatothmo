@@ -52,6 +52,12 @@ func replace_at(old_index : int, new_move_name : MoveName) -> bool :
 func random_move() -> MoveName:
 	return randi() % MoveName.size();
 
+func has_move(move_name : MoveName) -> bool:
+	for move in gamemanager.move_list:
+		if(move.id == move_name):
+			return true;
+	return false;
+
 func new_move(move : MoveName):
 	var name : String;
 	var path : String;
