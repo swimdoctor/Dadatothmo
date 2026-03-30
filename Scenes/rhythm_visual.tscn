@@ -268,7 +268,7 @@ texture = ExtResource("9_oyofj")
 position = Vector2(936, 294)
 rotation = -0.00445726
 script = ExtResource("18_jmhar")
-health = 30
+health = 1
 interval = 20
 attack_pattern = Array[ExtResource("19_gxxu4")]([ExtResource("20_me4b4")])
 
