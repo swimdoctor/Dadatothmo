@@ -150,8 +150,3 @@ func detach_map():
 	current_map.visible = false
 	# reset enemies
 	current_enemies = [];
-
-func game_over() -> void:
-	print("Game Over!");
-	reset();
-	change_gamestate(GameState.GameOver);
