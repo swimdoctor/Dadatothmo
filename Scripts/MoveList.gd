@@ -15,7 +15,7 @@ enum MoveName {
 	SNEAK_ATTACK,
 	SNIPE,
 	DAYLIGHT_JOB,
-	LAST_RESORT,
+	#LAST_RESORT,
 	HEAL,
 	RESTORE
 }
@@ -144,12 +144,12 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.DOWN];
 			method = "daylight_job";
 			description = "Deal 100% Attack to the enemy with the lowest HP. If this damage fails to kill, take 5% Max HP self damage."
-		MoveName.LAST_RESORT:
-			name = "Last Resort";
-			path = "res://Images/Test/IconRoughSword.png";
-			pattern = [Move.Direction.UP, Move.Direction.DOWN, Move.Direction.LEFT, Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.RIGHT];
-			method = "last_resort";
-			description = "Go big or go home."
+		#MoveName.LAST_RESORT:
+			#name = "Last Resort";
+			#path = "res://Images/Test/IconRoughSword.png";
+			#pattern = [Move.Direction.UP, Move.Direction.DOWN, Move.Direction.LEFT, Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.RIGHT];
+			#method = "last_resort";
+			#description = "Go big or go home."
 		MoveName.HEAL:
 			name = "Heal";
 			path = "res://Images/Test/IconRoughHealth.png";

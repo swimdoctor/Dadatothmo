@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://cinnlrmg7b4yj"]
 
-[ext_resource type="Script" uid="uid://2snu4cpq85sr" path="res://Scripts/arrow_ui.gd" id="1_cbkq3"]
+[ext_resource type="Script" path="res://Scripts/arrow_ui.gd" id="1_cbkq3"]
 [ext_resource type="Texture2D" uid="uid://b01svoqskuvws" path="res://Images/Test/Arrow_Right.png" id="2_ergmq"]
 [ext_resource type="Texture2D" uid="uid://xy8feraxucnr" path="res://Images/Test/Arrow_Up.png" id="3_gqm15"]
 [ext_resource type="Texture2D" uid="uid://bdqgfo24nj8ed" path="res://Images/Test/Arrow_Left.png" id="4_4ei21"]

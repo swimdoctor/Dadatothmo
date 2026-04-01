@@ -110,6 +110,12 @@ text = "Deal 40% AD (4) Damage to all enemies"
 horizontal_alignment = 1
 selection_enabled = true
 
+[node name="Arrows" type="HBoxContainer" parent="TopCard"]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 92.0
+
 [node name="LeftCard" type="TextureRect" parent="."]
 texture_filter = 1
 layout_mode = 1
@@ -183,6 +189,12 @@ theme_override_font_sizes/normal_font_size = 70
 text = "Deal 40% AD (4) Damage to the closest enemy twice"
 horizontal_alignment = 1
 selection_enabled = true
+
+[node name="Arrows" type="HBoxContainer" parent="LeftCard"]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 92.0
 
 [node name="RightCard" type="TextureRect" parent="."]
 texture_filter = 1
@@ -259,18 +271,24 @@ text = "Increase damage dealt by 10% for 5 seconds
 horizontal_alignment = 1
 selection_enabled = true
 
+[node name="Arrows" type="HBoxContainer" parent="RightCard"]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 92.0
+
 [node name="HP" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 520.0
-offset_top = 379.0
+offset_top = 450.0
 offset_right = 770.0
-offset_bottom = 429.0
+offset_bottom = 500.0
 theme_override_font_sizes/normal_font_size = 20
 
 [node name="Attack" type="RichTextLabel" parent="."]
 layout_mode = 0
 offset_left = 520.0
-offset_top = 419.0
+offset_top = 490.0
 offset_right = 770.0
-offset_bottom = 469.0
+offset_bottom = 540.0
 theme_override_font_sizes/normal_font_size = 20

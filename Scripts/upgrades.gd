@@ -47,7 +47,11 @@ func _ready():
 	#Display stats
 	$HP.text = "HP: %s / %s"  % [gamemanager.player_health, gamemanager.max_player_health]
 	$Attack.text = "Attack: %s" % gamemanager.player_attack
-
+	
+	display_arrows("LeftCard", move0)
+	display_arrows("TopCard", move1)
+	display_arrows("RightCard", move2)
+	
 func _process(delta):
 	if Input.is_action_just_pressed("up"):
 		#pickcard(card0)
@@ -62,6 +66,16 @@ func _process(delta):
 		gamemanager.add_card_from_name(movelist.MoveName.get((move2.name.to_upper().replace(" ", "_"))));
 		gamemanager.change_gamestate(GameManager.GameState.Map);
 
+func display_arrows(cardName: String, move: Move):
+	var arrowRow = HBoxContainer.new()
+	var arrow_ui = preload("res://Scenes/arrowUI/arrow_ui.tscn").instantiate()
+	arrow_ui.set_pattern(move.notes)
+	arrowRow.add_child(arrow_ui)
+	
+	var arrowSection = get_node(cardName + "/Arrows")
+	arrowSection.add_child(arrowRow)
+	
+	
 func generate_card(cardName: String, move: Move):
 	move = movelist.new_move(movelist.random_move());
 	
