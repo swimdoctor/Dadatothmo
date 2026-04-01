@@ -9,9 +9,12 @@ enum Direction {
 	REST
 }
 
+@export var id: movelist.MoveName;
 @export var name: String = ""
 @export var icon: Texture2D = null
 @export var notes: Array[Direction] = []
+@export var move_func : Callable;
+@export var description: String
 @export var damage: float
 @export var group_damage: float
 @export var element: String
@@ -23,10 +26,13 @@ enum Direction {
 
 @export var heal: float
 
-func _init(name = "", icon = null, notes: Array[Direction] = []):
+func _init(id = null, name = "", description = "", icon = null, notes: Array[Direction] = [], move_func : Callable = Callable(self, "default_move")):
+	self.id = id;
 	self.icon = icon
 	self.name = name
+	self.description = description
 	self.notes = notes
+	self.move_func = move_func;
 
 func getString():
 	var string = "%-12s" %name;
@@ -60,18 +66,36 @@ static func getNoteSpriteName(direction: Direction):
 		Direction.RIGHT:
 			return "Images/Test/Arrow_Right.png"
 
+static func getHitNoteSpriteName(direction: Direction):
+	match direction:
+		Direction.UP:
+			return "Images/Test/Arrow_Up_Hit.png";
+		Direction.DOWN:
+			return "Images/Test/Arrow_Down_Hit.png";
+		Direction.LEFT:
+			return "Images/Test/Arrow_Left_Hit.png";
+		Direction.RIGHT:
+			return "Images/Test/Arrow_Right_Hit.png";
 
-func do_move(enemies: Array[Enemy], rhythm: Rhythm):
+func recover(amount):
+	gamemanager.player_health = min(gamemanager.player_health + amount, gamemanager.max_player_health);
+
+func do_move(enemies : Array[Enemy], rhythm : Rhythm):
+	move_func.call(enemies, rhythm);
+	
+func default_move(enemies: Array[Enemy], rhythm: Rhythm):
 	# Damage calculation: Damage% * attack Stat * elemental multiplier(not added yet)
 	for enemy in enemies:
-		enemy.damage(group_damage * rhythm.attack)
+		enemy.damage(group_damage * gamemanager.player_attack)
 	
-	# if there were a targeted enemy, this would
-	# affect them. but theres not a system for that
-	# so we get enemy[0]
-	var target: Enemy = enemies[0]
-	
-	target.damage(damage * rhythm.attack)
+	if enemies.size() > 0:
+		# if there were a targeted enemy, this would
+		# affect them. but theres not a system for that
+		# so we get enemy[0]
+		var target: Enemy = enemies[0]
+		
+		target.damage(damage * gamemanager.player_attack)
+		recover(heal) #If the move has a heal amount recover the hp
 	
 	# and then if the player existed we'd apply effects to them too
 	return

@@ -7,12 +7,15 @@ extends Node2D
 func beat_time():
 	return 60 / beats_per_minute
 
-@export var successThreshold = 0.4
+@export var successThreshold = 1.0
 var timeTillBeat = 0
+var timeOfLastBeat = null
+var timeOfNextBeat = null
 var beat = -1; # start at negative one so first beat is 0
 
 var timeSinceLastNote = 0
-var noteQueue: Array[Move.Direction] = []
+#tracking move completion directly instead of relying on a queue of inputs
+var move_progress: Array[int] = [];
 
 var interFrameInput
 # this stores a number of seconds
@@ -29,7 +32,6 @@ signal moveCompleted(name:String)
 #Can move to a different script later
 #Player base stats
 var hp = 100
-var attack = 10
 var defense = 10
 @export var speed = 50
 
@@ -43,11 +45,19 @@ var flame_lighting_percent = 100
 func _ready() -> void:
 	Engine.max_fps = 60
 	print("Move Inventory: ");
-	for move in gamemanager.movelist:
+	for move in gamemanager.move_list:
 		moveInventory.append(move)
 	
 	for move in moveInventory:
+		#Perform the "Rest" move when you start a fight
+		if(move.name == "Rest"):
+			move.recover(move.heal)
+			print("You healed ", move.heal)
+			$Camera2D/Control/NotePlayedText.text = "You start the fight by healing" 
 		print(move.getString())
+	
+	move_progress.resize(moveInventory.size());
+	move_progress.fill(0);
 	
 	Input.set_use_accumulated_input(false)
 	
@@ -57,81 +67,74 @@ func _ready() -> void:
 func _process(delta):
 	# if it has been a while since last keypress clear the cache
 	timeSinceLastNote += delta
-	if !noteQueue.is_empty() && timeSinceLastNote > (beat_time() + successThreshold * 2):
-		noteQueue.clear()
+	if move_progress.any(func(num): return num > 0) && timeSinceLastNote > (beat_time() + successThreshold * 2):
+		move_progress.fill(0);
 		emit_signal("clearedNotes")
 	
 	# handle beat hits
 	timeTillBeat -= delta
+		
 	if timeTillBeat <= 0:
 		while timeTillBeat <= 0:
 			timeTillBeat += beat_time()
 		beat += 1
 		emit_signal("beatHit", beat % 4 == 0)
-	
+		
+		var now = Time.get_ticks_usec() / 1_000_000.0
+		timeOfLastBeat = now
+		timeOfNextBeat = now + beat_time()
+		
 	# if there was no input since last frame, return early
 	if interFrameInput == null:
 		return
 	
-	# plug this baby into desmos
-	# 0 when the input is on the beat
-	# domain is (-timePerBeat/2, timePerBeat/2)
-	# negative when before the beat, positive after
-	var timeFromNearestBeat = fmod(interFrameTimestamp, beat_time()) - beat_time()/2
-	print(timeFromNearestBeat)
+	var timeFromLastBeat = abs(interFrameTimestamp - timeOfLastBeat)
+	var timeToNextBeat   = abs(interFrameTimestamp - timeOfNextBeat)
+	var timeDiff = min(timeFromLastBeat, timeToNextBeat)
+	var earlyOrLate = "late" if timeFromLastBeat < timeToNextBeat else "early"
 	
-	if interFrameInput == KEY_UP:
-		playNote(Move.Direction.UP, timeFromNearestBeat)
-	elif interFrameInput == KEY_RIGHT:
-		playNote(Move.Direction.RIGHT, timeFromNearestBeat)
-	elif interFrameInput == KEY_DOWN:
-		playNote(Move.Direction.DOWN, timeFromNearestBeat)
-	elif interFrameInput == KEY_LEFT:
-		playNote(Move.Direction.LEFT, timeFromNearestBeat)
+	if interFrameInput == "Up" || interFrameInput.contains("D-pad Up"):
+		playNote(Move.Direction.UP, timeDiff, earlyOrLate)
+	elif interFrameInput == "Right" || interFrameInput.contains("D-pad Right"):
+		playNote(Move.Direction.RIGHT, timeDiff, earlyOrLate)
+	elif interFrameInput == "Down" || interFrameInput.contains("D-pad Down"):
+		playNote(Move.Direction.DOWN, timeDiff, earlyOrLate)
+	elif interFrameInput == "Left" || interFrameInput.contains("D-pad Left"):
+		playNote(Move.Direction.LEFT, timeDiff, earlyOrLate)
 	
 	interFrameInput = null
 	interFrameTimestamp = null
 
 
 func _input(event) -> void:
-	if event is InputEventKey and event.is_pressed():
+	if event.is_pressed():
 		interFrameTimestamp = Time.get_ticks_usec() / 1_000_000.0
-		interFrameInput = event.keycode
+		print(event.as_text());
+		interFrameInput = event.as_text()
 
 
-func playNote(direction, timeFromNearestBeat):
-	print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromNearestBeat), " seconds ", 
-		"early" if (timeFromNearestBeat > 0) else "late")
+func playNote(direction, timeFromNearestBeat, earlyOrLate):
+	print("You pressed ", Move.getNoteString(direction), " ", abs(timeFromNearestBeat), " seconds ", earlyOrLate)
 	
 	timeSinceLastNote = 0
 	
 	# return on invalid input times
 	if abs(timeFromNearestBeat) > successThreshold:
-		noteQueue.clear()
+		move_progress.fill(0);
 		emit_signal("clearedNotes")
 		return
 	
-	noteQueue.append(direction)
+	# update move progress
+	
+	for i in moveInventory.size():
+		if(moveInventory[i].notes[move_progress[i]] == direction):
+			move_progress[i] += 1;
+			# check to see if move should be completed
+			if(move_progress[i] == moveInventory[i].notes.size()):
+				#do the move
+				move_progress[i] = 0;
+				moveInventory[i].do_move(gamemanager.current_enemies, self)
+				moveCompleted.emit(moveInventory[i])
+		else:
+			move_progress[i] = 0;
 	emit_signal("playedNote", direction)
-	
-	#if noteQueue.size() > 4:
-		#noteQueue.pop_front()
-	
-	# Check every move to see if one should be executed
-	for move in moveInventory:
-		# Ensure note queue is the right size
-		if noteQueue.size() != move.notes.size():
-			continue;
-		
-		# Check that the note queue matches
-		var exactMatch = true
-		for i in range(move.notes.size()):
-			if noteQueue[i] != move.notes[i]:
-				exactMatch = false
-		if (!exactMatch):
-			continue;
-		
-		# do the move
-		noteQueue.clear()
-		move.do_move(gamemanager.current_enemies, self)
-		moveCompleted.emit(move)

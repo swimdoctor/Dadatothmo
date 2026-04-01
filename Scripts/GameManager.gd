@@ -18,9 +18,17 @@ var _state: GameState = GameState.MainMenu
 
 var player_health: int = 100
 var max_player_health: int = 100
+var player_attack = 10
+
 
 var current_enemies: Array[Enemy]
-var movelist: Array[Move]
+var move_list: Array[Move]
+
+# TESTING
+func _ready() -> void:
+	add_card_from_name(movelist.MoveName.STRIKE);
+	add_card_from_name(movelist.MoveName.FIREBALL);
+	add_card_from_name(movelist.MoveName.REST);
 
 var current_map: GameMap = null
 var map_scene := preload("res://Scenes/map.tscn")
@@ -31,8 +39,7 @@ var pause_instance: Control = null
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
-		toggle_pause_menu()
-		
+		toggle_pause_menu();
 func toggle_pause_menu() -> void:
 	if not pause_instance:
 		_load_pause_menu()
@@ -62,6 +69,10 @@ func _change_scene(newState: GameState) -> void:
 	Don't use outside of GameManager. Instead use change_gamestate.
 	Changes the current scene to a new one based on the GameState.
 	"""
+	
+	# Clear current list of enemies to avoid null references
+	current_enemies = []
+	
 	get_tree().paused = false
 	# attach the current map to gamemanager to save it
 	# then turn it off
@@ -72,8 +83,6 @@ func _change_scene(newState: GameState) -> void:
 			get_tree().change_scene_to_file("res://Scenes/start_menu.tscn")
 		GameState.Map:
 			get_tree().change_scene_to_file("res://Scenes/map.tscn")
-		GameState.Dungeon:
-			get_tree().change_scene_to_file("res://Scenes/main.tscn")
 		GameState.Fighting:
 			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
 		GameState.Upgrading:
@@ -91,8 +100,30 @@ func remove_enemy(enemy):
 		change_gamestate(GameState.Upgrading)
 		
 func add_card_to_hand(move: Move):
-	if(!movelist.has(move)):
-		movelist.append(move)
+	if(!move_list.has(move)):
+		move_list.append(move)
+
+func add_card_from_name(move_name : movelist.MoveName):
+	var new_move = movelist.new_move(move_name);
+	move_list.append(new_move);
+	
+
+func damage_player(damage: int) -> void:
+	player_health = max(player_health - damage, 0);
+	if(player_health <= 0):
+		game_over();
+
+func heal_player(heal: int) -> void:
+	player_health = min(player_health + heal, max_player_health);
+
+# reset game state
+# most of these should be unnecessary when nodes get restructured
+func reset() -> void:
+	max_player_health = 100;
+	player_health = max_player_health;
+	
+	# reset move list
+	move_list = [];
 	
 func game_over() -> void:
 	print("Game Over!")
@@ -117,3 +148,10 @@ func detach_map():
 	add_child(current_map)
 	
 	current_map.visible = false
+	# reset enemies
+	current_enemies = [];
+
+func game_over() -> void:
+	print("Game Over!");
+	reset();
+	change_gamestate(GameState.GameOver);
