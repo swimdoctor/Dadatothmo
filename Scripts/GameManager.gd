@@ -23,6 +23,7 @@ var player_attack = 10
 
 var current_enemies: Array[Enemy]
 var move_list: Array[Move]
+var hand_limit: int = 15 # Max number of cards in hand
 
 # TESTING
 func _ready() -> void:
@@ -100,10 +101,18 @@ func remove_enemy(enemy):
 		change_gamestate(GameState.Upgrading)
 		
 func add_card_to_hand(move: Move):
+	# Limit number of cards in hand
+	if move_list.size() >= hand_limit:
+		move_list.remove_at(0)
+		
 	if(!move_list.has(move)):
 		move_list.append(move)
 
 func add_card_from_name(move_name : movelist.MoveName):
+	# Limit number of cards in hand
+	if move_list.size() >= hand_limit:
+		move_list.remove_at(0)
+		
 	var new_move = movelist.new_move(move_name)
 	move_list.append(new_move)
 
