@@ -38,7 +38,7 @@ func display_moves():
 		moveRow.add_child(arrows);
 		arrowRows.append(arrows);
 		
-		if i > 8:
+		if i > 9:
 			$MovesBox3.add_child(moveRow)
 		elif i > 4:
 			$MovesBox2.add_child(moveRow)
