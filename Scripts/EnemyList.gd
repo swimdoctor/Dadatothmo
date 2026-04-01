@@ -39,7 +39,7 @@ func new_enemy(enemy : EnemyName):
 			description = "Can strike";
 			path = "res://Images/Test/IconRoughSword.png";
 			max_health = 100;
-			attack_pattern = [];
+			attack_pattern = [enemymovelist.new_enemy_move(enemymovelist.EnemyMoveName.STRIKE)];
 			return;
 		EnemyName.BARDIC_BOYS:
 			enemy_name = "Bardic Boys";

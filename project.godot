@@ -19,6 +19,8 @@ config/icon="res://Images/Test/icon.svg"
 
 gamemanager="*res://Scripts/GameManager.gd"
 movelist="*res://Scripts/MoveList.gd"
+enemymovelist="*res://Scripts/EnemyMoveList.gd"
+enemylist="*res://Scripts/EnemyList.gd"
 
 [dotnet]
 

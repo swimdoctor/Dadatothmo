@@ -279,6 +279,7 @@ stream = ExtResource("19_jmhar")
 texture_filter = 1
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_utmfr")
+frame_progress = 0.364005
 
 [node name="EnemyBox" type="CollisionShape2D" parent="Camera2D/Control/Enemy"]
 scale = Vector2(7.12, 7.12)
