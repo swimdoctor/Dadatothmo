@@ -19,7 +19,7 @@ func new_enemy_move(enemy_move : EnemyMoveName):
 			name = "Strike";
 			path = "res://Images/Test/IconRoughSword.png";
 			method = "strike";
-			description = "Deal 30 damage to player"
+			description = "Deals 30 damage."
 
 	return EnemyMove.new(enemy_move, name, description, load(path), Callable(self, method));
 
