@@ -86,7 +86,7 @@ func do_move(enemies : Array[Enemy], rhythm : Rhythm):
 func default_move(enemies: Array[Enemy], rhythm: Rhythm):
 	# Damage calculation: Damage% * attack Stat * elemental multiplier(not added yet)
 	for enemy in enemies:
-		enemy.damage(group_damage * rhythm.attack)
+		enemy.damage(group_damage * gamemanager.player_attack)
 	
 	if enemies.size() > 0:
 		# if there were a targeted enemy, this would
@@ -94,7 +94,7 @@ func default_move(enemies: Array[Enemy], rhythm: Rhythm):
 		# so we get enemy[0]
 		var target: Enemy = enemies[0]
 		
-		target.damage(damage * rhythm.attack)
+		target.damage(damage * gamemanager.player_attack)
 		recover(heal) #If the move has a heal amount recover the hp
 	
 	# and then if the player existed we'd apply effects to them too

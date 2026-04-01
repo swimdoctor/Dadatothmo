@@ -43,20 +43,24 @@ func _ready():
 	#generate_card("TopCard", move1);
 	#generate_card("RightCard", move2);
 	generate_cards();
+	
+	#Display stats
+	$HP.text = "HP: %s / %s"  % [gamemanager.player_health, gamemanager.max_player_health]
+	$Attack.text = "Attack: %s" % gamemanager.player_attack
 
 func _process(delta):
 	if Input.is_action_just_pressed("up"):
 		#pickcard(card0)
 		gamemanager.add_card_from_name(movelist.MoveName.get((move1.name.to_upper().replace(" ", "_"))));
-		gamemanager.change_gamestate(GameManager.GameState.Fighting)
+		gamemanager.change_gamestate(GameManager.GameState.Map)
 		
 	if Input.is_action_just_pressed("left"):
 		#pickcard(card1)
 		gamemanager.add_card_from_name(movelist.MoveName.get((move0.name.to_upper().replace(" ", "_"))));
-		gamemanager.change_gamestate(GameManager.GameState.Fighting);
+		gamemanager.change_gamestate(GameManager.GameState.Map);
 	if Input.is_action_just_pressed("right"):
 		gamemanager.add_card_from_name(movelist.MoveName.get((move2.name.to_upper().replace(" ", "_"))));
-		gamemanager.change_gamestate(GameManager.GameState.Fighting);
+		gamemanager.change_gamestate(GameManager.GameState.Map);
 
 func generate_card(cardName: String, move: Move):
 	move = movelist.new_move(movelist.random_move());
@@ -66,20 +70,33 @@ func generate_card(cardName: String, move: Move):
 	get_node(cardName + "/Description").text = move.description;
 
 func generate_cards():
+	# There are no duplicate cards generated
 	#move0
 	move0 = movelist.new_move(movelist.random_move());
 	get_node("LeftCard/Icon").texture = move0.icon;
 	get_node("LeftCard/Title").text = move0.name;
 	get_node("LeftCard/Description").text = move0.description;
 
-	#move1
-	move1 = movelist.new_move(movelist.random_move());
+	#move1	
+	# Keep randomizing till a different move is rolled
+	while true:
+		move1 = movelist.new_move(movelist.random_move());
+
+		if(move1.name != move0.name):
+			break;
+
 	get_node("TopCard/Icon").texture = move1.icon;
 	get_node("TopCard/Title").text = move1.name;
 	get_node("TopCard/Description").text = move1.description;
 
 	#move2
-	move2 = movelist.new_move(movelist.random_move());
+	# Keep randomizing till a different move is rolled
+	while true:
+		move2 = movelist.new_move(movelist.random_move());
+		
+		if(move2.name != move1.name):
+			break;
+
 	get_node("RightCard/Icon").texture = move2.icon;
 	get_node("RightCard/Title").text = move2.name;
 	get_node("RightCard/Description").text = move2.description;

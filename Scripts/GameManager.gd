@@ -17,6 +17,8 @@ var _state: GameState = GameState.MainMenu
 
 var player_health: int = 100
 var max_player_health: int = 100
+var player_attack = 10
+
 
 var current_enemies: Array[Enemy]
 var move_list: Array[Move]

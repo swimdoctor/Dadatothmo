@@ -7,7 +7,7 @@ extends Node2D
 func beat_time():
 	return 60 / beats_per_minute
 
-@export var successThreshold = 0.4
+@export var successThreshold = 1.0
 var timeTillBeat = 0
 var timeOfLastBeat = null
 var timeOfNextBeat = null
@@ -32,7 +32,6 @@ signal moveCompleted(name:String)
 #Can move to a different script later
 #Player base stats
 var hp = 100
-var attack = 10
 var defense = 10
 @export var speed = 50
 

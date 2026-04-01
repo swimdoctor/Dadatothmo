@@ -173,7 +173,7 @@ func strike(enemies : Array[Enemy], rhythm : Rhythm):
 	var damage = 0.5;
 	var target = enemies[0];
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 
 # deal 1x attack stat to first enemy
 func fireball(enemies : Array[Enemy], rhythm : Rhythm):
@@ -183,7 +183,7 @@ func fireball(enemies : Array[Enemy], rhythm : Rhythm):
 	var damage = 1;
 	var target = enemies[0];
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 
 # heal 20 health
 func rest(enemies : Array[Enemy], rhythm : Rhythm):
@@ -199,7 +199,7 @@ func magic_missile(enemies : Array[Enemy], rhythm : Rhythm):
 	var damage = 0.4;
 	
 	for enemy in enemies:
-		enemy.damage(damage * rhythm.attack);
+		enemy.damage(damage * gamemanager.player_attack);
 
 # deal 0.4x attack to first enemy twice
 func double_attack(enemies : Array[Enemy], rhythm : Rhythm):
@@ -210,7 +210,7 @@ func double_attack(enemies : Array[Enemy], rhythm : Rhythm):
 	var target = enemies[0];
 	
 	for i in 2:
-		target.damage(damage * rhythm.attack);
+		target.damage(damage * gamemanager.player_attack);
 
 # deal 1-4 * 0.4x attack
 func simple_die(enemies : Array[Enemy], rhythm : Rhythm):
@@ -220,7 +220,7 @@ func simple_die(enemies : Array[Enemy], rhythm : Rhythm):
 	var damage = randi_range(1, 5) * 0.4;
 	var target = enemies[0];
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 
 # deal 1.2x or 0.5x attack to first enemy
 func coin_flip(enemies : Array[Enemy], rhythm : Rhythm):
@@ -230,7 +230,7 @@ func coin_flip(enemies : Array[Enemy], rhythm : Rhythm):
 	var damage = 1.2 if randf() < 0.5 else 0.5;
 	var target = enemies[0];
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 
 # deal 1-12 * 0.5x attack
 func high_roller(enemies : Array[Enemy], rhythm : Rhythm):
@@ -240,7 +240,7 @@ func high_roller(enemies : Array[Enemy], rhythm : Rhythm):
 	var damage = randi_range(1, 13) * 0.5;
 	var target = enemies[0];
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 
 # deal 0.5x attack on crit or 2.5x on crit
 func all_in(enemies : Array[Enemy], rhythm : Rhythm):
@@ -250,7 +250,7 @@ func all_in(enemies : Array[Enemy], rhythm : Rhythm):
 	var damage = 2.5 if randf() < 0.166666 else 0.5;
 	var target = enemies[0];
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 
 # deal 0.5x attack plus 1.5x for each crit
 func moneymaker(enemies : Array[Enemy], rhythm : Rhythm):
@@ -262,7 +262,7 @@ func moneymaker(enemies : Array[Enemy], rhythm : Rhythm):
 		damage += 1.5 if randf() < 0.166666 else 0;
 	var target = enemies[0];
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 
 # deal 0.65x attack to lowest health enemy
 func sneak_attack(enemies : Array[Enemy], rhythm : Rhythm):
@@ -275,7 +275,7 @@ func sneak_attack(enemies : Array[Enemy], rhythm : Rhythm):
 		if enemy.health < target.health:
 			target = enemy;
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 
 # deal 0.5x attack and 1.5x attack to second enemy, or 1x attack if none
 func snipe(enemies : Array[Enemy], rhythm : Rhythm):
@@ -289,11 +289,11 @@ func snipe(enemies : Array[Enemy], rhythm : Rhythm):
 		var damage2 = 1.5;
 		var target2 = enemies[1];
 		
-		target2.damage(damage2 * rhythm.attack);
+		target2.damage(damage2 * gamemanager.player_attack);
 	else:
 		damage1 = 1;
 	
-	target1.damage(damage1 * rhythm.attack);
+	target1.damage(damage1 * gamemanager.player_attack);
 
 # deal 1x attack, 0.05x max health self damage if no kill
 func daylight_job(enemies : Array[Enemy], rhythm : Rhythm):
@@ -304,7 +304,7 @@ func daylight_job(enemies : Array[Enemy], rhythm : Rhythm):
 	var target = enemies[0];
 	var self_damage = 0.05;
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 	if target.health > 0:
 		gamemanager.damage_player(self_damage * gamemanager.max_player_health);
 
@@ -323,7 +323,7 @@ func last_resort(enemies : Array[Enemy], rhythm : Rhythm):
 		damage *= 2;
 		self_damage *= 2;
 	
-	target.damage(damage * rhythm.attack);
+	target.damage(damage * gamemanager.player_attack);
 	if target.health > 0:
 		gamemanager.damage_player(self_damage * gamemanager.max_player_health);
 
