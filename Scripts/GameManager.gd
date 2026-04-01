@@ -7,6 +7,7 @@ enum GameState
 {
 	MainMenu,
 	Map,
+	Dungeon,
 	Fighting,
 	Upgrading,
 	GameOver
@@ -28,6 +29,9 @@ func _ready() -> void:
 	add_card_from_name(movelist.MoveName.STRIKE);
 	add_card_from_name(movelist.MoveName.FIREBALL);
 	add_card_from_name(movelist.MoveName.REST);
+
+var current_map: GameMap = null
+var map_scene := preload("res://Scenes/map.tscn")
 
 #region Pause Menu
 var pause_menu_scene: PackedScene = preload("res://Scenes/pause_menu.tscn")
@@ -70,11 +74,13 @@ func _change_scene(newState: GameState) -> void:
 	current_enemies = []
 	
 	get_tree().paused = false
+	# attach the current map to gamemanager to save it
+	# then turn it off
+	detach_map()
+	
 	match newState:
 		GameState.MainMenu:
 			get_tree().change_scene_to_file("res://Scenes/start_menu.tscn")
-		#GameState.Map:
-			#get_tree().change_scene_to_file("res://Scenes/map.tscn")
 		GameState.Map:
 			get_tree().change_scene_to_file("res://Scenes/map.tscn")
 		GameState.Fighting:
@@ -119,6 +125,29 @@ func reset() -> void:
 	# reset move list
 	move_list = [];
 	
+func game_over() -> void:
+	print("Game Over!")
+	change_gamestate(GameState.MainMenu)
+
+# --- Map Creation ---
+func load_map() -> GameMap:
+	if !is_instance_valid(current_map):
+		current_map = map_scene.instantiate()
+		current_map.createMap()
+	else:
+		print("Map valid")
+	current_map.visible = true
+	return current_map
+	
+func detach_map():
+	if !is_instance_valid(current_map):
+		return
+	if current_map.get_parent():
+		current_map.get_parent().remove_child(current_map)
+		
+	add_child(current_map)
+	
+	current_map.visible = false
 	# reset enemies
 	current_enemies = [];
 
