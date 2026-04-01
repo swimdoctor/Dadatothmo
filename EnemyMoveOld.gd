@@ -1,4 +1,4 @@
-class_name EnemyMove
+class_name EnemyMoveOld
 extends Resource
 
 enum EnemyMoveKind

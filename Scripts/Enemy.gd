@@ -10,7 +10,21 @@ extends Area2D
 @export var attack_pattern: Array[EnemyMove] # a list of strings for the enemies attack pattern
 var curr_attack: int
 
+var enemy_name: String = ""
+var description: String = ""
+var id: int
+
 var tick: int = 0
+
+"""
+func _init(id = null, name = "", description = "", sprite = null, health = 0, attacks = Array[EnemyMove]) -> void:
+	self.id = id
+	self.enemy_name = name
+	self.description = description
+	self.sprite = null
+	self.health = health
+	self.attack_pattern = attacks
+"""
 
 func _ready() -> void:
 	print("ADDED", self.name)
