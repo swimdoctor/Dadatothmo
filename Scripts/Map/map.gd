@@ -12,11 +12,6 @@ var playerNode: MapNode
 
 func _ready() -> void:
 	var map = gamemanager.load_map()
-	
-	if map.get_parent():
-		map.get_parent().remove_child(map)
-	
-	add_child(map)
 
 func nodeType() -> MapNode.MapNodeType:
 	var rand = randf();

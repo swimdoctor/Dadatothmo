@@ -104,26 +104,25 @@ func add_card_to_hand(move: Move):
 		move_list.append(move)
 
 func add_card_from_name(move_name : movelist.MoveName):
-	var new_move = movelist.new_move(move_name);
-	move_list.append(new_move);
-	
+	var new_move = movelist.new_move(move_name)
+	move_list.append(new_move)
 
 func damage_player(damage: int) -> void:
-	player_health = max(player_health - damage, 0);
+	player_health = max(player_health - damage, 0)
 	if(player_health <= 0):
-		game_over();
+		game_over()
 
 func heal_player(heal: int) -> void:
-	player_health = min(player_health + heal, max_player_health);
+	player_health = min(player_health + heal, max_player_health)
 
 # reset game state
 # most of these should be unnecessary when nodes get restructured
 func reset() -> void:
-	max_player_health = 100;
-	player_health = max_player_health;
+	max_player_health = 100
+	player_health = max_player_health
 	
 	# reset move list
-	move_list = [];
+	move_list = []
 	
 func game_over() -> void:
 	print("Game Over!")
@@ -136,7 +135,13 @@ func load_map() -> GameMap:
 		current_map.createMap()
 	else:
 		print("Map valid")
+		
 	current_map.visible = true
+	
+	if current_map.get_parent():
+		current_map.get_parent().remove_child(current_map)
+	add_child(current_map)
+	
 	return current_map
 	
 func detach_map():
@@ -149,4 +154,4 @@ func detach_map():
 	
 	current_map.visible = false
 	# reset enemies
-	current_enemies = [];
+	current_enemies = []
