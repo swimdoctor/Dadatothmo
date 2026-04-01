@@ -6,6 +6,7 @@ var mapMaxHeight: int = 15
 var mapMaxDelta: int = 2
 
 var mapNodes: Array[Array] = []
+var startNode: MapNode = MapNode.new()
 
 var playerNode: MapNode
 
@@ -141,6 +142,10 @@ func connectNodes() -> void:
 				node.connections.clear();
 			for node in nextColumn:
 				node.incomingConnections.clear();
+				
+	# make invisible start node for player to be on and connect it
+	startNode.appendNode(mapNodes[0][0])
+	mapNodes[0][0].incomingConnections[0] = startNode
 
 func balanceNodes() -> void:
 	for i in range(1, mapLength):
@@ -159,5 +164,5 @@ func createMap() -> void:
 	#balanceNodes()
 	
 	# Player starts on first node when the map is built
-	playerNode = mapNodes[0][0]
+	playerNode = startNode
 	playerNode.playerMovesOn()
