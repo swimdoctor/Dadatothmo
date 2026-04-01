@@ -27,17 +27,25 @@ func _ready() -> void:
 	$PlayerHealthBar.value = gamemanager.player_health;
 
 func display_moves():
+	var i = 0;
 	for move in rhythm.moveInventory:
 		var moveRow = HBoxContainer.new()
 		moveRow.add_child(texnode(move.icon))
-		moveRow.custom_minimum_size.y = 50
+		moveRow.custom_minimum_size.y = 40
 		
 		var arrows = arrow_ui.instantiate();
 		arrows.set_pattern(move.notes);
 		moveRow.add_child(arrows);
 		arrowRows.append(arrows);
 		
-		$MovesBox.add_child(moveRow)
+		if i > 8:
+			$MovesBox3.add_child(moveRow)
+		elif i > 4:
+			$MovesBox2.add_child(moveRow)
+		else:
+			$MovesBox1.add_child(moveRow)
+		
+		i += 1
 
 func texnode(tex: Texture):
 	var arrow = TextureRect.new()
