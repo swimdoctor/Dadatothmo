@@ -32,4 +32,4 @@ func new_enemy_move(enemy_move : EnemyMoveName):
 
 # deal 30 damage to player
 func strike(enemies : Array[Enemy], rhythm : Rhythm):
-	gamemanager.damage_player(30)
+	gamemanager.damage_player(10)

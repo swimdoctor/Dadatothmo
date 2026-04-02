@@ -1,6 +1,8 @@
 extends Control
 
 func _on_play_button_pressed() -> void:
+	print("PLAY")
+	gamemanager.reset()
 	gamemanager.change_gamestate(gamemanager.GameState.Map)
 	print_debug("Play!")
 

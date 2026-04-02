@@ -125,8 +125,17 @@ func reset() -> void:
 	# reset move list
 	move_list = []
 	
+	add_card_from_name(movelist.MoveName.STRIKE);
+	add_card_from_name(movelist.MoveName.FIREBALL);
+	add_card_from_name(movelist.MoveName.REST);
+	
+	if current_map:
+		current_map.queue_free()
+	load_map()
+	
 func game_over() -> void:
 	print("Game Over!")
+	
 	change_gamestate(GameState.MainMenu)
 
 # --- Map Creation ---

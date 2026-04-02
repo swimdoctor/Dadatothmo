@@ -18,7 +18,7 @@ func set_enemy(enemy_name : EnemyName) -> void:
 	#Later need to support multi-enemy combats
 
 func random_enemy() -> EnemyName:
-	return randi() % EnemyName.size()
+	return randi() % (EnemyName.size() - 1) + 1
 
 func random_enemy_data() -> EnemyData:
 	return new_enemy(random_enemy())

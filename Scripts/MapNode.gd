@@ -90,6 +90,8 @@ func _input(event) -> void:
 		elif connections.size() == 1:
 			moveToType(connections[0].nodeType)
 			connections[0].playerMovesOn()
+		elif connections.size() == 0:
+			gamemanager.change_gamestate(GameManager.GameState.MainMenu)
 	elif (event.as_text() == "Up" || event.as_text().contains("D-pad Up")) && occupied:
 		if connections.size() >= 2:
 			moveToType(connections[0].nodeType)
