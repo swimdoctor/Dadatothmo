@@ -33,56 +33,72 @@ func new_enemy(enemy : EnemyName):
 	## Amount of health the enemy spawns with
 	var max_health : int;
 	
+	## enemy move variable for making this next bit more compact
+	var em = enemymovelist.EnemyMoveName;
+	
 	## Enemy will perform attacks in this order
 	var attack_pattern : Array[EnemyMove];
-
+	var attack_names : Array[enemymovelist.EnemyMoveName];
+	
+	
 	match enemy:
 		EnemyName.GOBLIN:
-			enemy_name = "Golbin the Gobbin"
-			description = "Can strike"
-			sprite_path = "res://Images/Test/IconRoughSword.png"
-			max_health = 100
-			attack_pattern = [enemymovelist.new_enemy_move(EnemyMoveList.EnemyMoveName.STRIKE)]
+			enemy_name = "Golbin the Gobbin";
+			description = "Can strike";
+			sprite_path = "res://Images/Test/IconRoughSword.png";
+			max_health = 100;
+			attack_names = [em.STRIKE];
+			
 		EnemyName.BARDIC_BOYS:
-			enemy_name = "Bardic Boys"
-			description = "They've got each other's backs"
-			sprite_path = "res://Images/Test/Enemies/BardBoyMarisa.png"
-			max_health = 200
+			enemy_name = "Bardic Boys";
+			description = "They've got each other's backs";
+			sprite_path = "res://Images/Test/IconRoughSword.png";
+			max_health = 200;
+			attack_names = [em.STRIKE];
+			
 		EnemyName.FROGLINSPLODE:
-			enemy_name = "His Royal Magesty, Froginsplode"
-			description = "King of the goblin sect. Wields explosives."
-			sprite_path = "res://Images/Test/Froglinsplode.png"
-			max_health = 500
+			enemy_name = "His Royal Magesty, Froginsplode";
+			description = "King of the goblin sect. Wields explosives.";
+			sprite_path = "res://Images/Test/IconRoughSword.png";
+			max_health = 500;
+			attack_names = [em.STRIKE];
+		
 		EnemyName.ROADIE:
-			enemy_name = "Roadie"
-			description = "Not the musical type."
-			sprite_path = "res://Images/Test/Roadie.png"
-			max_health = 150
+			enemy_name = "Roadie";
+			description = "Not the musical type.";
+			sprite_path = "res://Images/Test/IconRoughSword.png";
+			max_health = 150;
+			attack_names = [em.STRIKE];
+		
 		EnemyName.GREG_TEMPLE:
-			enemy_name = "Greg Temple"
-			description = "The Temple name is renowned throughout the Underground."
-			sprite_path = "res://Images/Test/GregTemple.png"
-			max_health = 600
+			enemy_name = "Greg Temple";
+			description = "The Temple name is renowned throughout the Underground.";
+			sprite_path = "res://Images/Test/IconRoughSword.png";
+			max_health = 600;
+			attack_names = [em.STRIKE];
+		
 		EnemyName.MIKE_WIRE:
-			enemy_name = "Mike Wire"
-			description = "Leader of the Choir"
-			sprite_path = "res://Images/Test/MikeWire.png"
-			max_health = 80
+			enemy_name = "Mike Wire";
+			description = "Leader of the Choir";
+			sprite_path = "res://Images/Test/IconRoughSword.png";
+			max_health = 80;
+			attack_names = [em.STRIKE];
+		
 		EnemyName.TODD_BEARSOOS:
-			enemy_name = "Todd Bearsoos"
-			description = "Wants to make you sledepy"
-			sprite_path = "res://Images/Test/ToddBearsoos.png"
-			max_health = 150
+			enemy_name = "Todd Bearsoos";
+			description = "Wants to make you sledepy";
+			sprite_path = "res://Images/Test/IconRoughSword.png";
+			max_health = 150;
+			attack_names = [em.STRIKE];
+		
 		EnemyName.ICE_SPIDER:
-			enemy_name = "Ice Spider"
-			description = "ICE. SPIDER."
-			sprite_path = "res://Images/Test/IceSpider.png"
-			max_health = 300
+			enemy_name = "Ice Spider";
+			description = "ICE. SPIDER.";
+			sprite_path = "res://Images/Test/IconRoughSword.png";
+			max_health = 300;
+			attack_names = [em.STRIKE];
+			
+	for attack in attack_names:
+		attack_pattern.append(enemymovelist.new_enemy_move(attack));
 
-	var data = EnemyData.new()
-	data.enemy_name = enemy_name
-	data.description = description
-	data.sprite_path = sprite_path
-	data.max_health = max_health
-	data.attack_pattern = attack_pattern
-	return data
+	return #Enemy.new(enemy, enemy_name, description, load(path), max_health, attack_pattern);

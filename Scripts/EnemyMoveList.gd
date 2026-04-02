@@ -2,7 +2,8 @@ class_name EnemyMoveList
 extends Node
 
 enum EnemyMoveName {
-	STRIKE
+	STRIKE,
+	OTHER
 }
 
 func get_enemy_move(enemy_move_name : EnemyMoveName) -> EnemyMove:
@@ -12,14 +13,20 @@ func new_enemy_move(enemy_move : EnemyMoveName):
 	var name : String;
 	var path : String;
 	var method : String;
-	var description : String
+	var description : String;
 	
 	match enemy_move:
 		EnemyMoveName.STRIKE: 
 			name = "Strike";
 			path = "res://Images/Test/IconRoughSword.png";
 			method = "strike";
-			description = "Deals 30 damage."
+			description = "Deals 30 damage.";
+			
+		EnemyMoveName.OTHER: 
+			name = "Strike";
+			path = "res://Images/Test/IconRoughSword.png";
+			method = "strike";
+			description = "Deals 30 damage.";
 
 	return EnemyMove.new(enemy_move, name, description, load(path), Callable(self, method));
 
