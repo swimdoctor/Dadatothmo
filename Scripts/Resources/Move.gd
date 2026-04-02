@@ -18,6 +18,9 @@ enum Direction {
 @export var damage: float
 @export var group_damage: float
 @export var element: String
+
+@export var spark_image: Texture2D
+@export var sound: AudioStream
 # effects don't exist, but here's my idea for putting them in attacks
 # you would select an effect from a dropdown and each one would take
 # number arguments for things and everything is peachy

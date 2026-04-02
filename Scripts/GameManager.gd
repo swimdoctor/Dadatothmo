@@ -20,10 +20,9 @@ var player_health: int = 100
 var max_player_health: int = 100
 var player_attack = 10
 
-
+var pending_enemy_data: Array[EnemyData] = []
 var current_enemies: Array[Enemy]
 var move_list: Array[Move]
-var hand_limit: int = 15 # Max number of cards in hand
 
 # TESTING
 func _ready() -> void:
@@ -85,6 +84,7 @@ func _change_scene(newState: GameState) -> void:
 		GameState.Map:
 			get_tree().change_scene_to_file("res://Scenes/map.tscn")
 		GameState.Fighting:
+			pending_enemy_data = [enemylist.random_enemy_data()]
 			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
 		GameState.Upgrading:
 			get_tree().change_scene_to_file("res://Scenes/upgrades.tscn")
@@ -101,18 +101,10 @@ func remove_enemy(enemy):
 		change_gamestate(GameState.Upgrading)
 		
 func add_card_to_hand(move: Move):
-	# Limit number of cards in hand
-	if move_list.size() >= hand_limit:
-		move_list.remove_at(0)
-		
 	if(!move_list.has(move)):
 		move_list.append(move)
 
 func add_card_from_name(move_name : movelist.MoveName):
-	# Limit number of cards in hand
-	if move_list.size() >= hand_limit:
-		move_list.remove_at(0)
-		
 	var new_move = movelist.new_move(move_name)
 	move_list.append(new_move)
 

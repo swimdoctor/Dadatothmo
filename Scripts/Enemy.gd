@@ -31,27 +31,46 @@ func _ready() -> void:
 	gamemanager.current_enemies.append(self)
 	rhythm.beatHit.connect(enemyBeat)
 	
+	if gamemanager.pending_enemy_data.size() > 0:
+		apply_data(gamemanager.pending_enemy_data[0])
+	
 	# initialize health bar
-	$HealthBar.max_value = max_health;
-	$HealthBar.value = max_health;
+	$HealthBar.max_value = max_health
+	$HealthBar.value = max_health
+
+func apply_data(data: EnemyData) -> void:
+	enemy_name = data.enemy_name
+	description = data.description
+	max_health = data.max_health
+	health = data.max_health
+	attack_pattern = data.attack_pattern
+	
+	var sprite_frames = SpriteFrames.new()
+	sprite_frames.add_frame("default", load(data.sprite_path), 0)
+	$EnemySprite.sprite_frames = sprite_frames
+	$EnemySprite.play("default")
 
 func enemyBeat(downbeat: bool):
 	tick += 1
 	if tick >= interval:
 		tick = 0
 		
+		if attack_pattern.size() == 0:
+			return
 		# do da move
 		var move = attack_pattern[curr_attack]
 		
-		$AttackSound.stream = move.sound
-		$AttackSound.play()
+		if(move.sound):
+			$AttackSound.stream = move.sound
+			$AttackSound.play()
 		
-		$Spark.texture = move.spark_image
-		$Spark.self_modulate.a = 1.0
-		print($Spark.self_modulate.a)
-		create_tween().tween_property($Spark, "self_modulate:a", 0, 1)
+		if(move.spark_image):
+			$Spark.texture = move.spark_image
+			$Spark.self_modulate.a = 1.0
+			print($Spark.self_modulate.a)
+			create_tween().tween_property($Spark, "self_modulate:a", 0, 1)
 		
-		move.enact_on_world()
+		move.do_move(gamemanager.current_enemies, rhythm)
 		curr_attack = (curr_attack + 1) % len(attack_pattern)
 
 var hit_time: float = 0

@@ -77,19 +77,41 @@ func _input_event(viewport, event, shape_idx):
 	and event.button_index == MOUSE_BUTTON_LEFT
 	and event.pressed
 	and highlighted):
-		#TODO: Add an NPC and a Hidden state change in , then make those nodes not GameOver
-		match nodeType:
-			MapNodeType.Enemy:
-				gamemanager.change_gamestate(GameManager.GameState.Fighting)
-			MapNodeType.NPC:
-				print("TODO: implement NPC scene")
-				gamemanager.change_gamestate(GameManager.GameState.GameOver)
-			MapNodeType.Loot:
-				gamemanager.change_gamestate(GameManager.GameState.Upgrading)
-			MapNodeType.Hidden:
-				print("TODO: implement hidden scene")
-				gamemanager.change_gamestate(GameManager.GameState.GameOver)
+		moveToType(nodeType)
 		playerMovesOn()
+
+func _input(event) -> void:
+	if !event.is_pressed() || gamemanager._state != gamemanager.GameState.Map:
+		return;
+	if (event.as_text() == "Right" || event.as_text().contains("D-pad Right")) && occupied:
+		if connections.size() == 3:
+			moveToType(connections[1].nodeType)
+			connections[1].playerMovesOn()
+		elif connections.size() == 1:
+			moveToType(connections[0].nodeType)
+			connections[0].playerMovesOn()
+	elif (event.as_text() == "Up" || event.as_text().contains("D-pad Up")) && occupied:
+		if connections.size() >= 2:
+			moveToType(connections[0].nodeType)
+			connections[0].playerMovesOn()
+	elif (event.as_text() == "Down" || event.as_text().contains("D-pad Down")) && occupied:
+		if connections.size() >= 2:
+			moveToType(connections[connections.size()-1].nodeType)
+			connections[connections.size()-1].playerMovesOn()
+
+func moveToType(nodeType: MapNodeType) -> void:
+	#TODO: Add an NPC and a Hidden state change in , then make those nodes not GameOver
+	match nodeType:
+		MapNodeType.Enemy:
+			gamemanager.change_gamestate(GameManager.GameState.Fighting)
+		MapNodeType.NPC:
+			print("TODO: implement NPC scene")
+			gamemanager.change_gamestate(GameManager.GameState.Fighting)
+		MapNodeType.Loot:
+			gamemanager.change_gamestate(GameManager.GameState.Upgrading)
+		MapNodeType.Hidden:
+			print("TODO: implement hidden scene")
+			gamemanager.change_gamestate(GameManager.GameState.GameOver)
 
 func playerMovesOn() -> void:
 	occupied = true

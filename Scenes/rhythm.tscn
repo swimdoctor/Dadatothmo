@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_lg58s"]
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="2_b12pq"]
 
-[node name="Rhythm" type="Node2D"]
+[node name="Rhythm2" type="Node2D"]
 script = ExtResource("1_lg58s")
 
 [node name="ClickPlayer" type="AudioStreamPlayer" parent="."]
