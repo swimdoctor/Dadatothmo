@@ -1,7 +1,7 @@
 class_name GameMap
 extends Node2D
 
-var mapLength: int = 20
+var mapLength: int = 12
 var mapMaxHeight: int = 15
 var mapMaxDelta: int = 2
 
@@ -15,9 +15,9 @@ func _ready() -> void:
 
 func nodeType() -> MapNode.MapNodeType:
 	var rand = randf();
-	if(rand < 0.6):
-		return MapNode.MapNodeType.Enemy;
 	if(rand < 0.8):
+		return MapNode.MapNodeType.Enemy;
+	if(rand < 1.0):
 		return MapNode.MapNodeType.Loot;
 	return MapNode.MapNodeType.NPC;
 
@@ -43,14 +43,14 @@ func buildNodes() -> void:
 		mapNodes.append([])
 		for j in range(sliceHeight):
 			var nodePos: Vector2 = Vector2()
-			nodePos.x = 100 + i * 50
+			nodePos.x = 100 + i * 75
 			nodePos.y = 324 - (int)(80 * (sliceHeight - 1) / 2) + 80 * j
 			# TODO: (easily adjustably) randomize NodeType so we can mess with the percentages
 			# TODO: change the Vector2 for size to use variables
-			mapNodes[i].append(MapNode.create(nodePos, Vector2(10, 10), nodeType()))
+			mapNodes[i].append(MapNode.create(nodePos, Vector2(30, 30), nodeType()))
 			add_child(mapNodes[i][j])
 	
-	startNode = MapNode.create(Vector2(100, 324), Vector2(10, 10), MapNode.MapNodeType.Hidden)
+	startNode = MapNode.create(Vector2(100, 324), Vector2(50, 50), MapNode.MapNodeType.Hidden)
 	add_child(startNode)
 
 ## Connects MapNodes in a logical fashion

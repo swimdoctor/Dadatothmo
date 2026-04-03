@@ -40,6 +40,8 @@ static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -
 	
 	# CollisionShape
 	node.collision = CollisionShape2D.new()
+	node.sprite.scale = _size / 10
+	node.sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var shape = RectangleShape2D.new()
 	shape.size = _size
 	node.collision.shape = shape
