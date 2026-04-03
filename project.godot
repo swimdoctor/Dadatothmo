@@ -22,6 +22,10 @@ movelist="*res://Scripts/MoveList.gd"
 enemymovelist="*res://Scripts/EnemyMoveList.gd"
 enemylist="*res://Scripts/EnemyList.gd"
 
+[display]
+
+window/stretch/mode="viewport"
+
 [dotnet]
 
 project/assembly_name="Dadatothmo"

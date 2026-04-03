@@ -52,6 +52,8 @@ static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -
 	return node
 
 func _draw() -> void:
+	if nodeType == MapNodeType.Hidden:
+		return
 	for i in range(connections.size()):
 		draw_line(
 			Vector2.ZERO,
@@ -82,8 +84,10 @@ func _input_event(viewport, event, shape_idx):
 
 func _input(event) -> void:
 	if !event.is_pressed() || gamemanager._state != gamemanager.GameState.Map:
-		return;
-	if (event.as_text() == "Right" || event.as_text().contains("D-pad Right")) && occupied:
+		return
+	if !occupied:
+		return
+	if (event.as_text() == "Right" || event.as_text().contains("D-pad Right")):
 		if connections.size() == 3:
 			moveToType(connections[1].nodeType)
 			connections[1].playerMovesOn()
@@ -92,11 +96,11 @@ func _input(event) -> void:
 			connections[0].playerMovesOn()
 		elif connections.size() == 0:
 			gamemanager.change_gamestate(GameManager.GameState.MainMenu)
-	elif (event.as_text() == "Up" || event.as_text().contains("D-pad Up")) && occupied:
+	elif (event.as_text() == "Up" || event.as_text().contains("D-pad Up")):
 		if connections.size() >= 2:
 			moveToType(connections[0].nodeType)
 			connections[0].playerMovesOn()
-	elif (event.as_text() == "Down" || event.as_text().contains("D-pad Down")) && occupied:
+	elif (event.as_text() == "Down" || event.as_text().contains("D-pad Down")):
 		if connections.size() >= 2:
 			moveToType(connections[connections.size()-1].nodeType)
 			connections[connections.size()-1].playerMovesOn()

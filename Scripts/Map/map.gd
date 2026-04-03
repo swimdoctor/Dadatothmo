@@ -6,7 +6,7 @@ var mapMaxHeight: int = 15
 var mapMaxDelta: int = 2
 
 var mapNodes: Array[Array] = []
-var startNode: MapNode = MapNode.new()
+var startNode: MapNode
 
 var playerNode: MapNode
 
@@ -17,7 +17,7 @@ func nodeType() -> MapNode.MapNodeType:
 	var rand = randf();
 	if(rand < 0.6):
 		return MapNode.MapNodeType.Enemy;
-	if(rand < 0.9):
+	if(rand < 0.8):
 		return MapNode.MapNodeType.Loot;
 	return MapNode.MapNodeType.NPC;
 
@@ -49,6 +49,9 @@ func buildNodes() -> void:
 			# TODO: change the Vector2 for size to use variables
 			mapNodes[i].append(MapNode.create(nodePos, Vector2(10, 10), nodeType()))
 			add_child(mapNodes[i][j])
+	
+	startNode = MapNode.create(Vector2(100, 324), Vector2(10, 10), MapNode.MapNodeType.Hidden)
+	add_child(startNode)
 
 ## Connects MapNodes in a logical fashion
 func connectNodes() -> void:
@@ -140,7 +143,6 @@ func connectNodes() -> void:
 				
 	# make invisible start node for player to be on and connect it
 	startNode.appendNode(mapNodes[0][0])
-	mapNodes[0][0].incomingConnections[0] = startNode
 
 func balanceNodes() -> void:
 	for i in range(1, mapLength):
@@ -161,3 +163,5 @@ func createMap() -> void:
 	# Player starts on first node when the map is built
 	playerNode = startNode
 	playerNode.playerMovesOn()
+	
+	print("Hidden Node has ", startNode.occupied)

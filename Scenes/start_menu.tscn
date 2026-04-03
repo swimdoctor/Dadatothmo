@@ -22,27 +22,41 @@ texture = ExtResource("1_juhg0")
 
 [node name="Game Title" type="RichTextLabel" parent="CanvasLayer"]
 modulate = Color(0.88516, 0.832339, 0.972868, 1)
-offset_left = 168.0
-offset_top = 72.0
-offset_right = 1028.0
-offset_bottom = 285.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -430.0
+offset_top = 40.0
+offset_right = 430.0
+offset_bottom = 253.0
+grow_horizontal = 2
 theme_override_font_sizes/normal_font_size = 83
-text = "Bardic Underground"
+text = "Bardic Underground
+"
 tab_size = 13
+horizontal_alignment = 1
 
 [node name="Play Button" type="Button" parent="CanvasLayer"]
-offset_left = 433.0
-offset_top = 281.0
-offset_right = 798.0
-offset_bottom = 414.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -182.5
+offset_top = 288.0
+offset_right = 182.5
+offset_bottom = 421.0
+grow_horizontal = 2
 theme_override_font_sizes/font_size = 90
 text = "Play"
 
 [node name="Quit Button" type="Button" parent="CanvasLayer"]
-offset_left = 434.0
-offset_top = 437.0
-offset_right = 801.0
-offset_bottom = 569.0
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -183.5
+offset_top = 440.0
+offset_right = 183.5
+offset_bottom = 572.0
+grow_horizontal = 2
 theme_override_font_sizes/font_size = 90
 text = "Quit"
 
