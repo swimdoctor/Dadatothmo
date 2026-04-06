@@ -28,7 +28,6 @@ var move_list: Array[Move]
 func _ready() -> void:
 	add_card_from_name(movelist.MoveName.STRIKE);
 	add_card_from_name(movelist.MoveName.FIREBALL);
-	add_card_from_name(movelist.MoveName.REST);
 
 var current_map: GameMap = null
 var map_scene := preload("res://Scenes/map.tscn")

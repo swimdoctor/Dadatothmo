@@ -15,10 +15,29 @@ enum MoveName {
 	SNEAK_ATTACK,
 	SNIPE,
 	DAYLIGHT_JOB,
-	#LAST_RESORT,
+	LAST_RESORT,
 	HEAL,
 	RESTORE
 }
+
+var move_weights = [
+	0, #STRIKE
+	0, #FIREBALL
+	0, #REST
+	0, #MAGIC MISSILE
+	0, #DOUBLE ATTACK
+	1, #SIMPLE DIE
+	1, #COIN FLIP
+	1, #HIGH ROLLER
+	1, #ALL IN
+	1, #MONEYMAKER
+	1, #SNEAK ATTACK
+	1, #SNIPE
+	1, #DAYLIGHT JOB
+	0, #LAST RESORT
+	1, #HEAL
+	1, #RESTORE 
+];
 
 func add_move(move_name : MoveName) -> void:
 	gamemanager.move_list.append(new_move(move_name));
@@ -50,7 +69,19 @@ func replace_at(old_index : int, new_move_name : MoveName) -> bool :
 	return true;
 
 func random_move() -> MoveName:
-	return randi() % MoveName.size();
+	# calculate sum of weights
+	var sum_weights = 0;
+	for weight in move_weights:
+		sum_weights += weight;
+	
+	# pick move from weights
+	var rng = randf_range(0, sum_weights);
+	var curr_weight = 0;
+	for i in move_weights.size():
+		curr_weight += move_weights[i]
+		if rng < curr_weight:
+			return i;
+	return MoveName.STRIKE;
 
 func has_move(move_name : MoveName) -> bool:
 	for move in gamemanager.move_list:
@@ -144,12 +175,12 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.DOWN];
 			method = "daylight_job";
 			description = "Deal 100% Attack to the enemy with the lowest HP. If this damage fails to kill, take 5% Max HP self damage."
-		#MoveName.LAST_RESORT:
-			#name = "Last Resort";
-			#path = "res://Images/Test/IconRoughSword.png";
-			#pattern = [Move.Direction.UP, Move.Direction.DOWN, Move.Direction.LEFT, Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.RIGHT];
-			#method = "last_resort";
-			#description = "Go big or go home."
+		MoveName.LAST_RESORT:
+			name = "Last Resort";
+			path = "res://Images/Test/IconRoughSword.png";
+			pattern = [Move.Direction.UP, Move.Direction.DOWN, Move.Direction.LEFT, Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.RIGHT];
+			method = "last_resort";
+			description = "Go big or go home."
 		MoveName.HEAL:
 			name = "Heal";
 			path = "res://Images/Test/IconRoughHealth.png";
