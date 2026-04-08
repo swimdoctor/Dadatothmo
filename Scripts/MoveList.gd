@@ -69,16 +69,21 @@ func replace_at(old_index : int, new_move_name : MoveName) -> bool :
 	return true;
 
 func random_move() -> MoveName:
+	#calculate weights w/o held moves
+	var new_weights = [];
+	for move_index in MoveName.values():
+		new_weights.push_back(0 if has_move(move_index) else move_weights[move_index]);
+	
 	# calculate sum of weights
 	var sum_weights = 0;
-	for weight in move_weights:
+	for weight in new_weights:
 		sum_weights += weight;
 	
 	# pick move from weights
 	var rng = randf_range(0, sum_weights);
 	var curr_weight = 0;
 	for i in move_weights.size():
-		curr_weight += move_weights[i]
+		curr_weight += new_weights[i]
 		if rng < curr_weight:
 			return i;
 	return MoveName.STRIKE;
@@ -211,7 +216,7 @@ func fireball(enemies : Array[Enemy], rhythm : Rhythm):
 	if(enemies.size() < 1):
 		return;
 	
-	var damage = 1;
+	var damage = 800;
 	var target = enemies[0];
 	
 	target.damage(damage * gamemanager.player_attack);
