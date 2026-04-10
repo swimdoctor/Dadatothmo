@@ -1,0 +1,87 @@
+[gd_scene load_steps=5 format=3 uid="uid://c122irtad2yuy"]
+
+[ext_resource type="Texture2D" uid="uid://cdd2hq6wtpecd" path="res://Images/Test/UnlockCard.png" id="1_wf8id"]
+[ext_resource type="Texture2D" uid="uid://biekfo5wfuttp" path="res://Images/Test/IconRoughs.png" id="2_brehn"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sy0g7"]
+atlas = ExtResource("2_brehn")
+region = Rect2(128, 0, 16, 16)
+
+[sub_resource type="Theme" id="Theme_copim"]
+default_font_size = 60
+
+[node name="TopCard" type="TextureRect"]
+texture_filter = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -576.0
+offset_right = -516.0
+offset_bottom = 80.0
+grow_horizontal = 2
+scale = Vector2(4, 4)
+texture = ExtResource("1_wf8id")
+
+[node name="Icon" type="TextureRect" parent="."]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -10.0
+offset_top = 6.0
+offset_right = 7.0
+offset_bottom = 22.0
+grow_horizontal = 2
+scale = Vector2(1.25, 1.25)
+texture = SubResource("AtlasTexture_sy0g7")
+stretch_mode = 2
+
+[node name="Title" type="RichTextLabel" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_top = 4.0
+offset_right = 616.0
+offset_bottom = 101.0
+grow_horizontal = 2
+scale = Vector2(0.083, 0.083)
+pivot_offset = Vector2(0, 25)
+focus_mode = 2
+theme = SubResource("Theme_copim")
+theme_override_font_sizes/bold_italics_font_size = 70
+theme_override_font_sizes/normal_font_size = 70
+bbcode_enabled = true
+text = "Magic Missile"
+horizontal_alignment = 1
+selection_enabled = true
+
+[node name="Description" type="RichTextLabel" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -27.0
+offset_top = 4.0
+offset_right = 813.0
+offset_bottom = 627.0
+grow_horizontal = 2
+scale = Vector2(0.063, 0.063)
+pivot_offset = Vector2(0, 35)
+focus_mode = 2
+theme = SubResource("Theme_copim")
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/normal_font_size = 70
+text = "Deal 40% AD (4) Damage to all enemies"
+horizontal_alignment = 1
+selection_enabled = true
+
+[node name="Arrows" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 80.0
+offset_right = 60.0
+offset_bottom = 92.0

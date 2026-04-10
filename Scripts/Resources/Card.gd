@@ -1,9 +1,7 @@
-class_name Card
-extends Resource
+class_name Card;
+extends Node;
 
-enum CardType {
-	MOVE,
-	STAT
-}
-
-@export var cardType: CardType = CardType.MOVE
+func load_move(move : Move) -> void:
+	$Icon.texture = move.icon;
+	$Title.text = move.name;
+	$Description.text = move.description;
