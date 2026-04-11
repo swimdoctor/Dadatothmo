@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://bp8d4tgc7rt5c"]
+[gd_scene load_steps=46 format=3 uid="uid://bp8d4tgc7rt5c"]
 
 [ext_resource type="Script" uid="uid://djikahsshf4bs" path="res://Scripts/Rhythm.gd" id="1_qdjid"]
 [ext_resource type="AudioStream" uid="uid://uvfqlar1xvtb" path="res://Sounds/metronomeClick.mp3" id="6_y8efi"]
@@ -136,6 +136,17 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_75du4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sdkp3"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 10
+border_width_top = 10
+border_width_right = 10
+border_width_bottom = 10
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sdkp3"]
+size = Vector2(62, 160)
 
 [node name="Rhythm" type="Node2D"]
 script = ExtResource("1_qdjid")
@@ -334,3 +345,21 @@ texture_filter = 1
 position = Vector2(-150, 0)
 scale = Vector2(4, 4)
 texture = ExtResource("26_sdkp3")
+
+[node name="Box" type="Panel" parent="Camera2D/Control"]
+layout_mode = 0
+offset_left = 551.0
+offset_top = 492.0
+offset_right = 616.0
+offset_bottom = 654.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_sdkp3")
+
+[node name="BoxArea" type="Area2D" parent="Camera2D/Control/Box" groups=["markers"]]
+disable_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Camera2D/Control/Box/BoxArea"]
+position = Vector2(32, 80)
+shape = SubResource("RectangleShape2D_sdkp3")
+
+[connection signal="area_shape_entered" from="Camera2D/Control/Box/BoxArea" to="." method="_on_box_area_area_shape_entered"]
+[connection signal="area_shape_exited" from="Camera2D/Control/Box/BoxArea" to="." method="_on_box_area_area_shape_exited"]

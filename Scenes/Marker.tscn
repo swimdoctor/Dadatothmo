@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://dullgl7mnw701"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wk06g"]
+
+[node name="Marker" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1142.0
+offset_bottom = -548.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 10.0
+offset_bottom = 100.0
+color = Color(0, 0, 0, 1)
+
+[node name="MarkerArea" type="Area2D" parent="." groups=["markers"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="MarkerArea"]
+shape = SubResource("RectangleShape2D_wk06g")
+
+[connection signal="area_entered" from="MarkerArea" to="." method="_on_area_2d_area_entered"]
+[connection signal="area_shape_entered" from="MarkerArea" to="." method="_on_area_2d_area_shape_entered"]

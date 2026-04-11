@@ -41,6 +41,8 @@ var ice_percent = 100
 var nature_percent = 100
 var flame_lighting_percent = 100
 
+var collisionBox
+
 
 func _ready() -> void:
 	Engine.max_fps = 60
@@ -62,6 +64,8 @@ func _ready() -> void:
 	Input.set_use_accumulated_input(false)
 	
 	(rhythm_visual as RhythmVisuals).display_moves()
+	
+	collisionBox = false
 
 
 func _process(delta):
@@ -119,7 +123,12 @@ func playNote(direction, timeFromNearestBeat, earlyOrLate):
 	timeSinceLastNote = 0
 	
 	# return on invalid input times
-	if abs(timeFromNearestBeat) > successThreshold:
+	
+	#if abs(timeFromNearestBeat) > successThreshold:
+		#move_progress.fill(0);
+		#emit_signal("clearedNotes")
+		#return
+	if(!collisionBox):
 		move_progress.fill(0);
 		emit_signal("clearedNotes")
 		return
@@ -138,3 +147,15 @@ func playNote(direction, timeFromNearestBeat, earlyOrLate):
 		else:
 			move_progress[i] = 0;
 	emit_signal("playedNote", direction)
+
+
+func _on_box_area_area_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	if(area.is_in_group("markers")):
+		collisionBox = true
+	pass # Replace with function body.
+
+
+func _on_box_area_area_shape_exited(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	if(area.is_in_group("markers")):
+		collisionBox = false
+	pass # Replace with function body.

@@ -12,6 +12,7 @@ const BAR_WIDTH_BEATS = 12;
 var arrowRows: Array[HBoxContainer] = []
 
 @onready var arrow_ui = preload("res://Scenes/arrowUI/arrow_ui.tscn");
+var collisionBox
 
 func _ready() -> void:
 	rhythm.playedNote.connect(playedNote)
@@ -25,6 +26,8 @@ func _ready() -> void:
 	# initialize health bar
 	$PlayerHealthBar.max_value = gamemanager.max_player_health;
 	$PlayerHealthBar.value = gamemanager.player_health;
+	
+	collisionBox = $Box/BoxArea
 
 func display_moves():
 	var i = 0;
@@ -60,6 +63,11 @@ func _process(delta):
 	#$PlayerHealthBar.value = lerp($PlayerHealthBar.value, float(gamemanager.player_health), 0.1);
 	$PlayerHealthBar.value = gamemanager.player_health;
 	$PlayerHealthBar.max_value = gamemanager.max_player_health;
+	
+	var array = collisionBox.get_overlapping_bodies();
+	for body in array:
+		if body.is_in_group("markers"):
+			print("Colliding with: ", body.name)
 
 func playedNote(direction: Move.Direction):
 	# update arrow ui
@@ -118,11 +126,13 @@ func move_across_screen(node: Node):
 	tween.tween_callback(Callable(node, "queue_free"))
 	
 func spawn_marker(downbeat: bool, start_x: float):
-	var marker = ColorRect.new()
-	marker.color = Color.BLACK if downbeat else Color.GRAY
-	marker.size = Vector2(10, marker_size)
+	var marker = preload("res://Scenes/Marker.tscn").instantiate();
+	#marker.color = Color.BLACK if downbeat else Color.GRAY
+	#marker.size = Vector2(10, marker_size)
 	marker.position = Vector2(start_x, spawn_y)
 	 
+	marker.add_to_group("markers")
+	#marker
 	add_child(marker)
 	move_across_screen(marker)
 	
