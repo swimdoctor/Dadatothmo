@@ -1,11 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://bvlbjv3qwv5rx"]
+[gd_scene load_steps=9 format=3 uid="uid://bvlbjv3qwv5rx"]
 
 [ext_resource type="Script" uid="uid://dc76tjuk8q5u5" path="res://Scripts/upgrades.gd" id="1_lisd6"]
 [ext_resource type="Script" uid="uid://bafiecs8lgh7k" path="res://Scripts/Resources/Card.gd" id="2_rmsmy"]
 [ext_resource type="Texture2D" uid="uid://cdd2hq6wtpecd" path="res://Images/Test/UnlockCard.png" id="2_ua6wq"]
-[ext_resource type="Resource" uid="uid://sxa5gatyktok" path="res://Cards/BasicAttackCard.tres" id="3_sy0g7"]
-[ext_resource type="Resource" uid="uid://c2ayfbx6p72he" path="res://Cards/FireballCard.tres" id="4_copim"]
-[ext_resource type="Resource" uid="uid://x634foxkhkeu" path="res://Cards/HealCard.tres" id="5_bbjwf"]
 [ext_resource type="Texture2D" uid="uid://biekfo5wfuttp" path="res://Images/Test/IconRoughs.png" id="7_rmsmy"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_sy0g7"]
@@ -33,7 +30,7 @@ offset_right = -2.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_lisd6")
-cards = Array[ExtResource("2_rmsmy")]([ExtResource("3_sy0g7"), ExtResource("4_copim"), ExtResource("5_bbjwf")])
+cards = Array[ExtResource("2_rmsmy")]([])
 topcard = NodePath("TopCard")
 leftcard = NodePath("LeftCard")
 rightcard = NodePath("RightCard")
