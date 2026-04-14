@@ -42,6 +42,7 @@ var nature_percent = 100
 var flame_lighting_percent = 100
 
 var collisionBox
+var moveSprite
 
 
 func _ready() -> void:
@@ -66,6 +67,7 @@ func _ready() -> void:
 	(rhythm_visual as RhythmVisuals).display_moves()
 	
 	collisionBox = false
+	moveSprite = %MoveSprite
 
 
 func _process(delta):
@@ -108,6 +110,8 @@ func _process(delta):
 	
 	interFrameInput = null
 	interFrameTimestamp = null
+	
+
 
 
 func _input(event) -> void:
@@ -144,6 +148,10 @@ func playNote(direction, timeFromNearestBeat, earlyOrLate):
 				move_progress[i] = 0;
 				moveInventory[i].do_move(gamemanager.current_enemies, self)
 				moveCompleted.emit(moveInventory[i])
+				moveSprite.texture = moveInventory[i].sprite
+				moveSprite.self_modulate.a = 1.0;
+				create_tween().tween_property(moveSprite, "self_modulate:a", 0, 1)
+
 		else:
 			move_progress[i] = 0;
 	emit_signal("playedNote", direction)

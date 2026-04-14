@@ -15,6 +15,7 @@ enum Direction {
 @export var notes: Array[Direction] = []
 @export var move_func : Callable;
 @export var description: String
+@export var sprite: Texture2D;
 @export var damage: float
 @export var group_damage: float
 @export var element: String
@@ -29,13 +30,14 @@ enum Direction {
 
 @export var heal: float
 
-func _init(id = null, name = "", description = "", icon = null, notes: Array[Direction] = [], move_func : Callable = Callable(self, "default_move")):
+func _init(id = null, name = "", description = "", icon = null, notes: Array[Direction] = [], move_func : Callable = Callable(self, "default_move"), sprite = null):
 	self.id = id;
 	self.icon = icon
 	self.name = name
 	self.description = description
 	self.notes = notes
 	self.move_func = move_func;
+	self.sprite = sprite
 
 func getString():
 	var string = "%-12s" %name;

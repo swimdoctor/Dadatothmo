@@ -100,6 +100,7 @@ func new_move(move : MoveName):
 	var pattern : Array[Move.Direction];
 	var method : String;
 	var description : String
+	var sprite: String
 	
 	match move:
 		MoveName.STRIKE: 
@@ -108,24 +109,28 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.LEFT, Move.Direction.UP, Move.Direction.RIGHT];
 			method = "strike";
 			description = "Deal 50% Attack stat to first enemy."
+			sprite = "res://Images/Test/Moves/hit.png"
 		MoveName.FIREBALL:
 			name = "Fireball";
 			path = "res://Images/Test/IconRoughFire.png";
 			pattern = [Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.LEFT, Move.Direction.RIGHT];
 			method = "fireball";
 			description = "Deal 100% Attack stat to the first enemy."
+			sprite = "res://Images/Test/Moves/fire.png"
 		MoveName.REST:
 			name = "Rest";
 			path = "res://Images/Test/IconRoughHealth.png";
 			pattern = [Move.Direction.LEFT, Move.Direction.UP, Move.Direction.UP, Move.Direction.UP, Move.Direction.RIGHT];
 			method = "rest";
 			description = "Heal 20HP."
+			sprite = "res://Images/Test/Moves/heal.png"
 		MoveName.MAGIC_MISSILE:
 			name = "Magic Missile";
 			path = "res://Images/Test/IconRoughFire.png"
 			pattern = [Move.Direction.UP, Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.UP];
 			method = "magic_missile";
 			description = "Deal 40% Attack stat to all enemies."
+			sprite = "res://Images/Test/Moves/magic_missile.png"
 		MoveName.DOUBLE_ATTACK:
 			name = "Double Attack";
 			path = "res://Images/Test/IconRoughSword.png";
@@ -138,30 +143,35 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.LEFT, Move.Direction.UP, Move.Direction.RIGHT];
 			method = "simple_die";
 			description = "Roll a 4 sided die. Deal 40% Attack stat times the outcome to the first enemy."
+			sprite = "res://Images/Test/Moves/dice.png"
 		MoveName.COIN_FLIP:
 			name = "Coin Flip";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.UP, Move.Direction.DOWN, Move.Direction.UP];
 			method = "coin_flip";
 			description = "Flip a coin. If heads, deal 120% Attack stat. If tails, deal 50% Attack stat."
+			sprite = "res://Images/Test/Moves/coin.png"
 		MoveName.HIGH_ROLLER:
 			name = "High Roller";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.LEFT, Move.Direction.UP, Move.Direction.DOWN, Move.Direction.RIGHT];
 			method = "high_roller";
 			description = "Roll a twelve sided die. Deal 50% Attack stat times the outcome of the roll."
+			sprite = "res://Images/Test/Moves/dice.png"
 		MoveName.ALL_IN:
 			name = "All In";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.RIGHT, Move.Direction.UP, Move.Direction.LEFT, Move.Direction.DOWN];
 			method = "all_in";
 			description = "Roll a six sided die. If the roll is 6, deal 250% Attack stat. Otherwise deal 50% Attack stat."
+			sprite = "res://Images/Test/Moves/dice.png"
 		MoveName.MONEYMAKER:
 			name = "Moneymaker";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.DOWN, Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.LEFT, Move.Direction.UP];
 			method = "moneymaker";
 			description = "Deal 50% Attack and roll two six sided dice. For each 6 that is rolled, increase the damage of this attack by an additive 150% Attack."
+			sprite = "res://Images/Test/Moves/dice.png"
 		MoveName.SNEAK_ATTACK:
 			name = "Sneak Attack";
 			path = "res://Images/Test/IconRoughSword.png";
@@ -174,6 +184,7 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.UP, Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.DOWN];
 			method = "snipe";
 			description = "Deal 50% Attack. Deal 150% Attack to the second enemy. If there is only one enemy, instead deal 100% Attack"
+			sprite = "res://Images/Test/Moves/snipe.png"
 		MoveName.DAYLIGHT_JOB:
 			name = "Daylight Job";
 			path = "res://Images/Test/IconRoughSword.png";
@@ -192,14 +203,16 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.DOWN, Move.Direction.LEFT, Move.Direction.UP];
 			method = "heal";
 			description = "Heal 10% Max HP."
+			sprite = "res://Images/Test/Moves/heal.png"
 		MoveName.RESTORE:
 			name = "Restore";
 			path = "res://Images/Test/IconRoughHealth.png";
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.LEFT, Move.Direction.UP];
 			method = "restore";
 			description = "Heal 20% missing HP."
+			sprite = "res://Images/Test/Moves/heal.png"
 	
-	return Move.new(move, name, description, load(path), pattern, Callable(self, method));
+	return Move.new(move, name, description, load(path), pattern, Callable(self, method), load(sprite));
 
 # deal 0.5x attack stat to first enemy
 func strike(enemies : Array[Enemy], rhythm : Rhythm):
