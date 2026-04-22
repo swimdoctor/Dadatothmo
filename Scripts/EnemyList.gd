@@ -40,6 +40,10 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 	var attack_pattern : Array[EnemyMove];
 	var attack_names : Array[enemymovelist.EnemyMoveName];
 	
+	## Individual frequencies of moves
+	var interval : Array[int];
+	var base_interval : Array[int];
+	
 	
 	match enemy:
 		EnemyName.GOBLIN:
@@ -48,6 +52,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/GoblinSprites.png"
 			max_health = 30
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 			
 		EnemyName.BARDIC_BOYS:
 			enemy_name = "Bardic Boys"
@@ -55,6 +61,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/BardBoyMarisa.png"
 			max_health = 50
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 			
 		EnemyName.FROGLINSPLODE:
 			enemy_name = "His Royal Magesty, Froginsplode"
@@ -62,6 +70,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/Froglinsplode.png"
 			max_health = 90
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 		
 		EnemyName.ROADIE:
 			enemy_name = "Roadie"
@@ -69,6 +79,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/Roadie.png"
 			max_health = 40
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 		
 		EnemyName.GREG_TEMPLE:
 			enemy_name = "Greg Temple"
@@ -76,6 +88,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/GregTemple.png"
 			max_health = 100
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 		
 		EnemyName.MIKE_WIRE:
 			enemy_name = "Mike Wire"
@@ -83,6 +97,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/MikeWire.png"
 			max_health = 25
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 		
 		EnemyName.TODD_BEARSOOS:
 			enemy_name = "Todd Bearsoos"
@@ -90,6 +106,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/ToddBearsoos.png"
 			max_health = 45
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 		
 		EnemyName.ICE_SPIDER:
 			enemy_name = "Ice Spider"
@@ -97,6 +115,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/IceSpider.png"
 			max_health = 70
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 			
 	for attack in attack_names:
 		attack_pattern.append(enemymovelist.new_enemy_move(attack));
@@ -107,4 +127,6 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 	data.sprite_path = sprite_path
 	data.max_health = max_health
 	data.attack_pattern = attack_pattern
+	data.interval = interval
+	data.base_interval = base_interval;
 	return data
