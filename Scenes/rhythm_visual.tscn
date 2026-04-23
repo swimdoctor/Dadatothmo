@@ -302,7 +302,6 @@ position = Vector2(936, 294)
 rotation = -0.00445726
 script = ExtResource("18_jmhar")
 health = 1
-interval = 20
 
 [node name="DieSound" type="AudioStreamPlayer2D" parent="Camera2D/Control/Enemy"]
 stream = ExtResource("19_jmhar")
