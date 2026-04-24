@@ -40,6 +40,10 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 	var attack_pattern : Array[EnemyMove];
 	var attack_names : Array[enemymovelist.EnemyMoveName];
 	
+	## Individual frequencies of moves
+	var interval : Array[int];
+	var base_interval : Array[int];
+	
 	
 	match enemy:
 		EnemyName.GOBLIN:
@@ -48,48 +52,62 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/GoblinSprites.png"
 			max_health = 30
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 			
 		EnemyName.BARDIC_BOYS:
 			enemy_name = "Bardic Boys"
 			description = "They've got each other's backs"
-			sprite_path = "res://Images/Test/Enemies/BardBoyMarisa.png"
-			max_health = 50
+			sprite_path = "res://Images/Test/Enemies/BardBoyMarisa/BardBoyMarisaSprites.png"
+			max_health = 45
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 			
 		EnemyName.FROGLINSPLODE:
-			enemy_name = "His Royal Magesty, Froginsplode"
+			enemy_name = "His Royal Magesty, Froglinsplode"
 			description = "King of the goblin sect. Wields explosives."
-			sprite_path = "res://Images/Test/Enemies/Froglinsplode.png"
-			max_health = 90
-			attack_names = [em.STRIKE]
+			sprite_path = "res://Images/Test/Enemies/Frogsplode/FrogsplodeSprites.png"
+			max_health = 74
+			attack_names = [em.FROGLINSPLODE_STRIKE, em.FROGLINSPLODE_EXPLODE]
+			interval = [12, 48];
+			base_interval = [12, 48];
 		
 		EnemyName.ROADIE:
 			enemy_name = "Roadie"
 			description = "Not the musical type."
-			sprite_path = "res://Images/Test/Enemies/Roadie.png"
-			max_health = 40
-			attack_names = [em.STRIKE]
+			sprite_path = "res://Images/Test/Enemies/Roadie/RoadieSprites.png"
+			max_health = 30
+			attack_names = [em.ROADIE_STRIKE]
+			interval = [12];
+			base_interval = [24];
 		
 		EnemyName.GREG_TEMPLE:
 			enemy_name = "Greg Temple"
 			description = "The Temple name is renowned throughout the Underground."
-			sprite_path = "res://Images/Test/Enemies/GregTemple.png"
-			max_health = 100
-			attack_names = [em.STRIKE]
+			sprite_path = "res://Images/Test/Enemies/GregTemple/GregTempleSprites.png"
+			max_health = 30
+			attack_names = [em.GREG_STRIKE]
+			interval = [8];
+			base_interval = [16];
 		
 		EnemyName.MIKE_WIRE:
 			enemy_name = "Mike Wire"
 			description = "Leader of the Choir"
 			sprite_path = "res://Images/Test/Enemies/MikeWire.png"
-			max_health = 25
-			attack_names = [em.STRIKE]
+			max_health = 70
+			attack_names = [em.MIKE_STRIKE, em.MIKE_HEAL]
+			interval = [8, 4];
+			base_interval = [8, 8];
 		
 		EnemyName.TODD_BEARSOOS:
 			enemy_name = "Todd Bearsoos"
 			description = "Wants to make you sledepy"
-			sprite_path = "res://Images/Test/Enemies/ToddBearsoos.png"
+			sprite_path = "res://Images/Test/Enemies/ToddBearsoos/ToddBearsoosSprites.png"
 			max_health = 45
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 		
 		EnemyName.ICE_SPIDER:
 			enemy_name = "Ice Spider"
@@ -97,6 +115,8 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			sprite_path = "res://Images/Test/Enemies/IceSpider.png"
 			max_health = 70
 			attack_names = [em.STRIKE]
+			interval = [4];
+			base_interval = [8];
 			
 	for attack in attack_names:
 		attack_pattern.append(enemymovelist.new_enemy_move(attack));
@@ -107,4 +127,6 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 	data.sprite_path = sprite_path
 	data.max_health = max_health
 	data.attack_pattern = attack_pattern
+	data.interval = interval
+	data.base_interval = base_interval;
 	return data

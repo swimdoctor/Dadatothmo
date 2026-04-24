@@ -85,8 +85,11 @@ static func getHitNoteSpriteName(direction: Direction):
 func recover(amount):
 	gamemanager.player_health = min(gamemanager.player_health + amount, gamemanager.max_player_health);
 
-func do_move(enemies : Array[Enemy], rhythm : Rhythm):
-	move_func.call(enemies, rhythm);
+func do_move(enemies : Array[Enemy], rhythm : Rhythm, user : Enemy = null):
+	if user == null:
+		move_func.call(enemies, rhythm);
+	else:
+		move_func.call(enemies, rhythm, user);
 	
 func default_move(enemies: Array[Enemy], rhythm: Rhythm):
 	# Damage calculation: Damage% * attack Stat * elemental multiplier(not added yet)

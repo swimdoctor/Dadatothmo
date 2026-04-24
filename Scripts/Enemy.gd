@@ -5,7 +5,8 @@ extends Area2D
 
 @export var max_health = 30
 @export var health: int # how many times the enemy can be hit
-@export var interval: int
+@export var interval: Array[int];
+@export var base_interval: Array[int];
 
 @export var attack_pattern: Array[EnemyMove] # a list of strings for the enemies attack pattern
 var curr_attack: int
@@ -15,6 +16,7 @@ var description: String = ""
 var id: int
 
 var tick: int = 0
+var attacking: float = 0
 
 """
 func _init(id = null, name = "", description = "", sprite = null, health = 0, attacks = Array[EnemyMove]) -> void:
@@ -44,34 +46,47 @@ func apply_data(data: EnemyData) -> void:
 	max_health = data.max_health
 	health = data.max_health
 	attack_pattern = data.attack_pattern
+	interval = data.interval;
+	base_interval = data.base_interval;
 	
 	var sprite_frames = SpriteFrames.new()
-	sprite_frames.add_frame("default", load(data.sprite_path), 0)
+	#sprite_frames.add_frame("default", load(data.sprite_path), 0)
+	var spriteSheet = load(data.sprite_path)
+	for i in range(5):
+		var atlas = AtlasTexture.new()
+		atlas.atlas = spriteSheet
+		atlas.region = Rect2(64 * i, 0, 64, 64)
+		sprite_frames.add_frame("default", atlas)
 	$EnemySprite.sprite_frames = sprite_frames
-	$EnemySprite.play("default")
+	#$EnemySprite.play("default")
 
 func enemyBeat(downbeat: bool):
 	tick += 1
-	if tick >= interval:
-		tick = 0
+	
+	for i in interval.size():
+		interval[i] -= 1;
+		if(interval[i] <= 0):
+			var move = attack_pattern[i];
+			
+			if(move.sound):
+				$AttackSound.stream = move.sound
+				$AttackSound.play()
 		
-		if attack_pattern.size() == 0:
-			return
-		# do da move
-		var move = attack_pattern[curr_attack]
-		
-		if(move.sound):
-			$AttackSound.stream = move.sound
-			$AttackSound.play()
-		
-		if(move.spark_image):
-			$Spark.texture = move.spark_image
+			if(move.spark_image):
+				$Spark.texture = move.spark_image
+				$Spark.self_modulate.a = 1.0
+				print($Spark.self_modulate.a)
+				create_tween().tween_property($Spark, "self_modulate:a", 0, 1)
+				
+			#if(move.sprite):
+			$Spark.texture = move.sprite
 			$Spark.self_modulate.a = 1.0
-			print($Spark.self_modulate.a)
 			create_tween().tween_property($Spark, "self_modulate:a", 0, 1)
-		
-		move.do_move(gamemanager.current_enemies, rhythm)
-		curr_attack = (curr_attack + 1) % len(attack_pattern)
+			move.do_move(gamemanager.current_enemies, rhythm, self)
+			curr_attack = (curr_attack + 1) % len(attack_pattern)
+			
+			interval[i] = base_interval[i];
+			attacking = 1
 
 var hit_time: float = 0
 func damage(by):
@@ -79,6 +94,10 @@ func damage(by):
 	print(health);
 	# update health bar
 	$HealthBar.value = health;
+	$EnemySprite.self_modulate.g = 0.0
+	$EnemySprite.self_modulate.b = 0.0
+	create_tween().tween_property($EnemySprite, "self_modulate:g", 1, 0.75)
+	create_tween().tween_property($EnemySprite, "self_modulate:b", 1, 0.75)
 	
 	if health <= 0:
 		$DieSound.play()
@@ -94,9 +113,9 @@ func damage(by):
 		$OuchSound.play()
 
 func _process(delta):
-	if hit_time > 0:
-		hit_time -= delta;
-		$EnemySprite.frame = 1;
+	if attacking > 0:
+		$EnemySprite.play("default")
+		attacking -= delta
 	else:
 		$EnemySprite.frame = 0;
 	
