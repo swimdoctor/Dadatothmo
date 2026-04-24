@@ -13,6 +13,8 @@ var timeOfLastBeat = null
 var timeOfNextBeat = null
 var beat = -1; # start at negative one so first beat is 0
 
+@export var timingOffset: float = 0.04
+
 var timeSinceLastNote = 0
 #tracking move completion directly instead of relying on a queue of inputs
 var move_progress: Array[int] = [];
@@ -87,8 +89,9 @@ func _process(delta):
 		emit_signal("beatHit", beat % 4 == 0)
 		
 		var now = Time.get_ticks_usec() / 1_000_000.0
-		timeOfLastBeat = now
-		timeOfNextBeat = now + beat_time()
+		var overshoot = beat_time() - timeTillBeat
+		timeOfLastBeat = (now - overshoot) + timingOffset
+		timeOfNextBeat = timeOfLastBeat + beat_time()
 		
 	# if there was no input since last frame, return early
 	if interFrameInput == null:
@@ -128,14 +131,14 @@ func playNote(direction, timeFromNearestBeat, earlyOrLate):
 	
 	# return on invalid input times
 	
-	#if abs(timeFromNearestBeat) > successThreshold:
-		#move_progress.fill(0);
-		#emit_signal("clearedNotes")
-		#return
-	if(!collisionBox):
+	if abs(timeFromNearestBeat) > successThreshold:
 		move_progress.fill(0);
 		emit_signal("clearedNotes")
 		return
+	#if(!collisionBox):
+		#move_progress.fill(0);
+		#emit_signal("clearedNotes")
+		#return
 	
 	# update move progress
 	
