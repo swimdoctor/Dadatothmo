@@ -71,7 +71,7 @@ func enemyBeat(downbeat: bool):
 				print($Spark.self_modulate.a)
 				create_tween().tween_property($Spark, "self_modulate:a", 0, 1)
 			
-			move.do_move(gamemanager.current_enemies, rhythm)
+			move.do_move(gamemanager.current_enemies, rhythm, self)
 			curr_attack = (curr_attack + 1) % len(attack_pattern)
 			
 			interval[i] = base_interval[i];
