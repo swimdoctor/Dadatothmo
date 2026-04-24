@@ -137,6 +137,7 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.UP, Move.Direction.LEFT, Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.DOWN];
 			method = "double_attack";
 			description = "Deal 40% Attack stat twice to the first enemy."
+			sprite = "res://Images/Test/Moves/double_hit.png"
 		MoveName.SIMPLE_DIE:
 			name = "Simple Die";
 			path = "res://Images/Test/IconRoughSword.png";
@@ -172,12 +173,14 @@ func new_move(move : MoveName):
 			method = "moneymaker";
 			description = "Deal 50% Attack and roll two six sided dice. For each 6 that is rolled, increase the damage of this attack by an additive 150% Attack."
 			sprite = "res://Images/Test/Moves/dice.png"
+			sprite = "res://Images/Test/Moves/coin_splash.png"
 		MoveName.SNEAK_ATTACK:
 			name = "Sneak Attack";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.LEFT];
 			method = "sneak_attack";
 			description = "Deal 65% Attack stat to the enemy with the lowest HP."
+			sprite = "res://Images/Test/Moves/dark_hit.png"
 		MoveName.SNIPE:
 			name = "Snipe";
 			path = "res://Images/Test/IconRoughSword.png";
@@ -191,12 +194,14 @@ func new_move(move : MoveName):
 			pattern = [Move.Direction.UP, Move.Direction.RIGHT, Move.Direction.RIGHT, Move.Direction.DOWN];
 			method = "daylight_job";
 			description = "Deal 100% Attack to the enemy with the lowest HP. If this damage fails to kill, take 5% Max HP self damage."
+			sprite = "res://Images/Test/Moves/shiny.png"
 		MoveName.LAST_RESORT:
 			name = "Last Resort";
 			path = "res://Images/Test/IconRoughSword.png";
 			pattern = [Move.Direction.UP, Move.Direction.DOWN, Move.Direction.LEFT, Move.Direction.LEFT, Move.Direction.RIGHT, Move.Direction.RIGHT];
 			method = "last_resort";
 			description = "Go big or go home."
+			sprite = "res://Images/Test/Moves/mess_hit.png"
 		MoveName.HEAL:
 			name = "Heal";
 			path = "res://Images/Test/IconRoughHealth.png";

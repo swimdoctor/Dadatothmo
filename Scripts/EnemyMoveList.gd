@@ -80,36 +80,32 @@ func new_enemy_move(enemy_move : EnemyMoveName):
 	return EnemyMove.new(enemy_move, name, description, load(path), Callable(self, method), load(sprite));
 
 # deal 30 damage to player
-func strike(enemies : Array[Enemy], rhythm : Rhythm):
+func strike(enemies : Array[Enemy], rhythm : Rhythm, user : Enemy):
 	gamemanager.damage_player(15)
 
 # deal 12 damage to player
-func roadie_strike(enemies : Array[Enemy], rhythm : Rhythm):
+func roadie_strike(enemies : Array[Enemy], rhythm : Rhythm, user : Enemy):
 	gamemanager.damage_player(12);
 
 # deal 5 damage to player
-func froglinsplode_strike(enemies : Array[Enemy], rhythm: Rhythm):
+func froglinsplode_strike(enemies : Array[Enemy], rhythm: Rhythm, user : Enemy):
 	gamemanager.damage_player(5);
 
 # deal 50 damage to player and die
-func froglinsplode_explode(enemies : Array[Enemy], rhythm: Rhythm):	
-	# scuffed, but works so long as there are no other enemies
-	var target = enemies[0];
-	target.damage(99999);
+func froglinsplode_explode(enemies : Array[Enemy], rhythm: Rhythm, user : Enemy):	
+	user.damage(99999);
 	
 	gamemanager.damage_player(50);
 
 # deal 8 damage to player
-func greg_strike(enemies : Array[Enemy], rhythm : Rhythm):
+func greg_strike(enemies : Array[Enemy], rhythm : Rhythm, user : Enemy):
 	gamemanager.damage_player(8);
 
 # deal 8 damage
-func mike_strike(enemies : Array[Enemy], rhythm : Rhythm):
+func mike_strike(enemies : Array[Enemy], rhythm : Rhythm, user : Enemy):
 	gamemanager.damage_player(8);
 
 # heal for 5
-func mike_heal(enemies : Array[Enemy], rhythm : Rhythm):
-	# same as froglinsplode
-	var target = enemies[0];
+func mike_heal(enemies : Array[Enemy], rhythm : Rhythm, user : Enemy):
 	# replace with heal function eventually
-	target.health = max(target.health + 5, target.max_health);
+	user.health = min(user.health + 5, user.max_health);
