@@ -39,6 +39,13 @@ var pause_instance: Control = null
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		toggle_pause_menu();
+	if event.is_pressed():
+		print("SDJHFKJSHDFKJ " + event.as_text())
+		if(event.as_text().contains("Q") and current_enemies[0]):
+			current_enemies[0].damage(100)
+		if(event.as_text().contains("W")):
+			player_health = max_player_health
+		
 func toggle_pause_menu() -> void:
 	if not pause_instance:
 		_load_pause_menu()
@@ -125,7 +132,6 @@ func reset() -> void:
 	move_list = []
 	
 	add_card_from_name(movelist.MoveName.STRIKE);
-	add_card_from_name(movelist.MoveName.FIREBALL);
 	add_card_from_name(movelist.MoveName.REST);
 	
 	if current_map:

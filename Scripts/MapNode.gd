@@ -65,10 +65,10 @@ func _draw() -> void:
 		)
 		
 	if (highlighted):
-		draw_circle(Vector2.ZERO, 15, Color.YELLOW)
+		draw_circle(Vector2.ZERO, 30, Color.YELLOW)
 		
 	if (occupied):
-		draw_circle(Vector2.ZERO, 15, Color.BLACK)
+		draw_circle(Vector2.ZERO, 30, Color.DARK_RED)
 
 ## Adds a node to connections array and increases count of connections
 func appendNode(_node: MapNode) -> void:

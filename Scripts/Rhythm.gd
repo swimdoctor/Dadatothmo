@@ -101,7 +101,7 @@ func _process(delta):
 	var timeToNextBeat   = abs(interFrameTimestamp - timeOfNextBeat)
 	var timeDiff = min(timeFromLastBeat, timeToNextBeat)
 	var earlyOrLate = "late" if timeFromLastBeat < timeToNextBeat else "early"
-	
+	print(interFrameInput)
 	if interFrameInput == "Up" || interFrameInput.contains("D-pad Up"):
 		playNote(Move.Direction.UP, timeDiff, earlyOrLate)
 	elif interFrameInput == "Right" || interFrameInput.contains("D-pad Right"):
