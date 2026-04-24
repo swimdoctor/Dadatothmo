@@ -20,6 +20,7 @@ func new_enemy_move(enemy_move : EnemyMoveName):
 	var path : String;
 	var method : String;
 	var description : String;
+	var sprite: String
 	
 	match enemy_move:
 		EnemyMoveName.STRIKE: 
@@ -27,6 +28,7 @@ func new_enemy_move(enemy_move : EnemyMoveName):
 			path = "res://Images/Test/IconRoughSword.png";
 			method = "strike";
 			description = "Deals 30 damage.";
+			sprite = "res://Images/Test/Moves/hit.png"
 			
 		EnemyMoveName.OTHER: 
 			name = "Strike";
@@ -39,18 +41,21 @@ func new_enemy_move(enemy_move : EnemyMoveName):
 			path = 'res://Images/Test/IconRoughSword.png';
 			method = 'roadie_strike';
 			description = "Deals 12 damage.";
+			sprite = "res://Images/Test/Moves/hit.png"
 		
 		EnemyMoveName.FROGLINSPLODE_STRIKE:
 			name = "Froglinsplode Strike";
 			path = 'res://Images/Test/IconRoughSword.png';
 			method = 'froglinsplode_strike';
 			description = "Deals 5 damage.";
+			sprite = "res://Images/Test/Moves/dynamite.png"
 		
 		EnemyMoveName.FROGLINSPLODE_EXPLODE:
 			name = "Froglinsplode Explode";
 			path= 'res://Images/Test/IconRoughSword.png';
 			method = 'froglinsplode_explode';
 			description = "Deals 50 damage and explodes.";
+			sprite = "res://Images/Test/Moves/explosion.png"
 		
 		EnemyMoveName.GREG_STRIKE:
 			name = 'Greg Strike';
@@ -63,14 +68,16 @@ func new_enemy_move(enemy_move : EnemyMoveName):
 			path = 'res://Images/Test/IconRoughSword.png';
 			method = 'mike_strike';
 			description = 'Deals 8 damage';
+			sprite = "res://Images/Test/Moves/ghosts.png"
 		
 		EnemyMoveName.MIKE_HEAL:
 			name = 'Mike Heal';
 			path = 'res://Images/Test/IconRoughSword.png';
 			method = 'mike_heal';
 			description = 'Heals 5 health';
+			sprite = "res://Images/Test/Moves/heal.png"
 
-	return EnemyMove.new(enemy_move, name, description, load(path), Callable(self, method));
+	return EnemyMove.new(enemy_move, name, description, load(path), Callable(self, method), load(sprite));
 
 # deal 30 damage to player
 func strike(enemies : Array[Enemy], rhythm : Rhythm):

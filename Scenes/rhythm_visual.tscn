@@ -350,8 +350,8 @@ stream = ExtResource("22_7rwv8")
 [node name="Spark" type="Sprite2D" parent="Camera2D/Control/Enemy"]
 self_modulate = Color(1, 1, 1, 0)
 texture_filter = 1
-position = Vector2(-150, 0)
-scale = Vector2(4, 4)
+position = Vector2(-600, 0)
+scale = Vector2(2, 2)
 texture = ExtResource("26_sdkp3")
 
 [node name="Box" type="Panel" parent="Camera2D/Control"]

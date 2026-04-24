@@ -58,7 +58,7 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 		EnemyName.BARDIC_BOYS:
 			enemy_name = "Bardic Boys"
 			description = "They've got each other's backs"
-			sprite_path = "res://Images/Test/Enemies/BardBoyMarisa.png"
+			sprite_path = "res://Images/Test/Enemies/BardBoyMarisa/BardBoyMarisaSprites.png"
 			max_health = 45
 			attack_names = [em.STRIKE]
 			interval = [4];
@@ -67,7 +67,7 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 		EnemyName.FROGLINSPLODE:
 			enemy_name = "His Royal Magesty, Froglinsplode"
 			description = "King of the goblin sect. Wields explosives."
-			sprite_path = "res://Images/Test/Enemies/Froglinsplode.png"
+			sprite_path = "res://Images/Test/Enemies/Frogsplode/FrogsplodeSprites.png"
 			max_health = 74
 			attack_names = [em.FROGLINSPLODE_STRIKE, em.FROGLINSPLODE_EXPLODE]
 			interval = [12, 48];
@@ -76,7 +76,7 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 		EnemyName.ROADIE:
 			enemy_name = "Roadie"
 			description = "Not the musical type."
-			sprite_path = "res://Images/Test/Enemies/Roadie.png"
+			sprite_path = "res://Images/Test/Enemies/Roadie/RoadieSprites.png"
 			max_health = 30
 			attack_names = [em.ROADIE_STRIKE]
 			interval = [12];
@@ -85,7 +85,7 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 		EnemyName.GREG_TEMPLE:
 			enemy_name = "Greg Temple"
 			description = "The Temple name is renowned throughout the Underground."
-			sprite_path = "res://Images/Test/Enemies/GregTemple.png"
+			sprite_path = "res://Images/Test/Enemies/GregTemple/GregTempleSprites.png"
 			max_health = 30
 			attack_names = [em.GREG_STRIKE]
 			interval = [8];
@@ -103,7 +103,7 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 		EnemyName.TODD_BEARSOOS:
 			enemy_name = "Todd Bearsoos"
 			description = "Wants to make you sledepy"
-			sprite_path = "res://Images/Test/Enemies/ToddBearsoos.png"
+			sprite_path = "res://Images/Test/Enemies/ToddBearsoos/ToddBearsoosSprites.png"
 			max_health = 45
 			attack_names = [em.STRIKE]
 			interval = [4];
