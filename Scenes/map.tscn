@@ -1,6 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://c58dgocxatd5b"]
+[gd_scene load_steps=4 format=3 uid="uid://c58dgocxatd5b"]
 
 [ext_resource type="Script" uid="uid://cbmyblp8ej187" path="res://Scripts/Map/map.gd" id="1_ci6au"]
+[ext_resource type="Texture2D" uid="uid://rhog8myrxmt" path="res://Images/Test/Map/TempMapBackground.png" id="2_p3ir5"]
+[ext_resource type="Texture2D" uid="uid://1xixqct8p4wm" path="res://Images/Test/Map/TempMap.png" id="3_myvm1"]
 
 [node name="map" type="Node2D"]
 script = ExtResource("1_ci6au")
+
+[node name="TempMapBackground" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(576, 324)
+scale = Vector2(80, 80)
+texture = ExtResource("2_p3ir5")
+
+[node name="TempMap" type="Sprite2D" parent="."]
+z_index = -10
+texture_filter = 1
+position = Vector2(576, 324)
+scale = Vector2(3, 3)
+texture = ExtResource("3_myvm1")

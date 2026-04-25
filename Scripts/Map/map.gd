@@ -2,8 +2,8 @@ class_name GameMap
 extends Node2D
 
 # ── Grid / world dimensions ───────────────────────────────────────────────────
-const CHUNK_HEIGHT: int = 11
-var chunk_width: int = 25          # X tiles; adjust freely
+const CHUNK_HEIGHT: int = 13
+var chunk_width: int = 23          # X tiles; adjust freely
 
 # ── Poisson disc parameters ───────────────────────────────────────────────────
 var min_dist: float = 3.0
@@ -21,7 +21,7 @@ const TILE_SCALE: float = DRAW_SCALE / TILE_SIZE  # sprite scale factor (3.0)
 
 # ── Debug drawing ─────────────────────────────────────────────────────────────
 var draw_scale: float = DRAW_SCALE
-var draw_offset: Vector2 = Vector2(30, 30)
+var draw_offset: Vector2 = Vector2(24, 12)
 
 # ── Tile grid (phase 2+) ──────────────────────────────────────────────────────
 # Sparse dict: Vector2i(tile_x, tile_y) -> Sprite2D
@@ -50,6 +50,7 @@ func _ready() -> void:
 # ═════════════════════════════════════════════════════════════════════════════
 
 func create_map() -> void:
+	seed(68)
 	_grid_cell_size = min_dist / sqrt(2.0)
 	_init_grid()
 	_generate_points()
@@ -67,6 +68,7 @@ func start_map() -> void:
 	if _map_nodes.size() == 0:
 		return
 	_map_nodes[0].playerMovesOn()
+	_map_nodes[0].sprite.texture = preload("res://Images/Test/Map/NPC.png");
 
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -371,11 +373,11 @@ func _place_node_tiles() -> void:
 	_tile_sprites.clear()
 	_tile_ids.clear()
 	_node_tile_origins.clear()
-
+	
 	for i in range(_points.size()):
 		var snapped := _snap_to_node_origin(_points[i])
 		_node_tile_origins.append(snapped)
-		_write_node_block(snapped)
+		#_write_node_block(snapped)
 
 
 ## Snaps a float point position to the nearest even tile coordinate so the
@@ -431,6 +433,7 @@ func _make_tile_sprite(tile_id: int, transform: Dictionary, tile_pos: Vector2i) 
 	sprite.flip_h = transform["flip_h"]
 	sprite.flip_v = transform["flip_v"]
 	sprite.rotation = transform["rot"]
+	sprite.z_index = -1
 	# Sprite2D position is its center; offset by half a tile so tile_pos is top-left
 	sprite.position = draw_offset + Vector2(tile_pos) * DRAW_SCALE + Vector2(DRAW_SCALE * 0.5, DRAW_SCALE * 0.5)
 	return sprite
@@ -445,19 +448,19 @@ func _draw() -> void:
 		draw_offset,
 		Vector2(chunk_width, CHUNK_HEIGHT) * draw_scale
 	)
-	draw_rect(grid_rect, Color(0.15, 0.15, 0.15), false, 1.0)
+	#draw_rect(grid_rect, Color(0.15, 0.15, 0.15), false, 1.0)
 
 	# Draw connections — highlight if the source node is occupied
 	for c in _connections:
 		var src: MapNode = _map_nodes[c[0]]
 		var a := draw_offset + (Vector2(_node_tile_origins[c[0]]) + Vector2(1.0, 1.0)) * DRAW_SCALE
 		var b := draw_offset + (Vector2(_node_tile_origins[c[1]]) + Vector2(1.0, 1.0)) * DRAW_SCALE
-		var col := Color.YELLOW if src.occupied else Color.DIM_GRAY
-		draw_line(a, b, col, 2.0)
+		var col := Color.GOLDENROD if src.occupied else Color.BLUE
+		draw_line(a, b, col, 8.0)
 
 	# Draw points — colour by traversal state, centered on the 2x2 tile block
 	for i in range(_points.size()):
-		var origin : Vector2 = _node_tile_origins[i]
+		var origin : Vector2= _node_tile_origins[i]
 		var pos := draw_offset + (Vector2(origin) + Vector2(1.0, 1.0)) * DRAW_SCALE
 		var node: MapNode = _map_nodes[i]
 		var col: Color
