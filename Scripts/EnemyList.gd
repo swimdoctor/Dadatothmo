@@ -12,13 +12,41 @@ enum EnemyName {
 	ICE_SPIDER
 }
 
+var enemy_weights = [
+	0, # GOBLIN
+	0, # BARDIC_BOYS
+	1, # ROADIE
+	1, # FROGLINSPLODE
+	1, # GREG TEMPLE
+	1, # MIKE WIRE
+	0, # TODD_BEARSOOS
+	0 # ICE_SPIDER
+];
+
 func set_enemy(enemy_name : EnemyName) -> void:
 	return;
 	#Set current opponent to enemy
 	#Later need to support multi-enemy combats
 
 func random_enemy() -> EnemyName:
-	return randi() % (EnemyName.size() - 1) + 1
+	#calculate weights w/o held moves
+	var new_weights = [];
+	for enemy_index in EnemyName.values():
+		new_weights.push_back(enemy_weights[enemy_index]);
+	
+	# calculate sum of weights
+	var sum_weights = 0;
+	for weight in new_weights:
+		sum_weights += weight;
+	
+	# pick move from weights
+	var rng = randf_range(0, sum_weights);
+	var curr_weight = 0;
+	for i in enemy_weights.size():
+		curr_weight += new_weights[i]
+		if rng < curr_weight:
+			return i;
+	return EnemyName.GOBLIN;
 
 func random_enemy_data() -> EnemyData:
 	return new_enemy(random_enemy())
