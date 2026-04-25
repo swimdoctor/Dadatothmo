@@ -14,9 +14,23 @@ var max_dist_mult: float = 3.0
 var max_path_length: float = 8.0
 var purge_percent: float = 0.15
 
+# ── Tile rendering ───────────────────────────────────────────────────────────
+const TILE_SIZE: int = 16                      # sprite native size in px
+const DRAW_SCALE: float = 48.0                 # rendered size in px (3x)
+const TILE_SCALE: float = DRAW_SCALE / TILE_SIZE  # sprite scale factor (3.0)
+
 # ── Debug drawing ─────────────────────────────────────────────────────────────
-var draw_scale: float = 40.0       # pixels per tile unit
+var draw_scale: float = DRAW_SCALE
 var draw_offset: Vector2 = Vector2(30, 30)
+
+# ── Tile grid (phase 2+) ──────────────────────────────────────────────────────
+# Sparse dict: Vector2i(tile_x, tile_y) -> Sprite2D
+# Populated in _place_node_tiles(); used by phase 3 path routing.
+var _tile_sprites: Dictionary = {}
+# Parallel dict: Vector2i -> int tile ID, for routing logic to read
+var _tile_ids: Dictionary = {}
+# Snapped 2x2 tile origins per point index (Vector2i, top-left of 2x2 block)
+var _node_tile_origins: Array = []
 
 # ── Internal state ────────────────────────────────────────────────────────────
 var _grid: Array = []              # [x][y] -> Vector2 point or null
@@ -27,12 +41,13 @@ var _connections: Array = []       # Array of [i, j] index pairs
 var _map_nodes: Array = []         # MapNode objects, parallel to _points
 
 
+func _ready() -> void:
+	var map = gamemanager.load_map()
+
+
 # ═════════════════════════════════════════════════════════════════════════════
 #  PUBLIC ENTRY POINTS  (called by gamemanager, not _ready)
 # ═════════════════════════════════════════════════════════════════════════════
-
-func _ready() -> void:
-	var map = gamemanager.load_map()
 
 func create_map() -> void:
 	_grid_cell_size = min_dist / sqrt(2.0)
@@ -42,6 +57,7 @@ func create_map() -> void:
 	_delete_intersecting_connections()
 	_enforce_connectivity()
 	_build_map_nodes()
+	_place_node_tiles()
 	queue_redraw()
 
 
@@ -320,7 +336,11 @@ func _build_map_nodes() -> void:
 
 	# Create one MapNode per point
 	for i in range(_points.size()):
-		var world_pos := _tile_to_world(_points[i])
+		# Position MapNode at the center of its snapped 2x2 tile block.
+		# _node_tile_origins isn't populated yet at this point, so we compute
+		# it inline here; _place_node_tiles() will populate the array afterward.
+		var snapped := _snap_to_node_origin(_points[i])
+		var world_pos := draw_offset + (Vector2(snapped) + Vector2(1.0, 1.0)) * DRAW_SCALE
 		var node_type := _node_type()
 		# Index 0 = entry, index 1 = exit — could assign special types later
 		var map_node := MapNode.create(world_pos, Vector2(20, 20), node_type)
@@ -335,6 +355,85 @@ func _build_map_nodes() -> void:
 	for n in _map_nodes:
 		n.map = self
 
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+#  PHASE 2: NODE TILE PLACEMENT
+#  Snaps each node to an even 2x2 tile boundary and writes four tile-6
+#  quarter-circle sprites into the scene. Connection-aware tile variants
+#  (7, 8, 9) will be assigned in a later pass once path routing is complete.
+# ═════════════════════════════════════════════════════════════════════════════
+
+func _place_node_tiles() -> void:
+	# Clear any previously placed tile sprites
+	for sprite in _tile_sprites.values():
+		sprite.queue_free()
+	_tile_sprites.clear()
+	_tile_ids.clear()
+	_node_tile_origins.clear()
+
+	for i in range(_points.size()):
+		var snapped := _snap_to_node_origin(_points[i])
+		_node_tile_origins.append(snapped)
+		_write_node_block(snapped)
+
+
+## Snaps a float point position to the nearest even tile coordinate so the
+## 2x2 block always aligns to tile boundaries.
+func _snap_to_node_origin(p: Vector2) -> Vector2i:
+	var tx: int = int(round(p.x))
+	var ty: int = int(round(p.y))
+	# Clamp so the 2x2 block (origin + 1) stays within bounds
+	tx = clampi(tx, 0, chunk_width - 2)
+	ty = clampi(ty, 0, CHUNK_HEIGHT - 2)
+	return Vector2i(tx, ty)
+
+
+## Writes a 2x2 block of tile-6 sprites at the given top-left tile origin.
+## Quadrant layout (all tile 6 for now — variants added in a later phase):
+##   [0] top-left     [1] top-right
+##   [2] bottom-left  [3] bottom-right
+## Each quarter is a rotated/flipped copy of the base tile-6 sprite so the
+## circle center of every quarter lands at the shared corner of the 2x2.
+func _write_node_block(origin: Vector2i) -> void:
+	# Rotation and flip for each of the 4 quadrant positions.
+	# The base tile has its circle center at the bottom-right corner, so:
+	#   top-left     -> rotate 180°
+	#   top-right    -> flip horizontal (mirror)
+	#   bottom-left  -> flip vertical
+	#   bottom-right -> no transform
+	const TRANSFORMS: Array = [
+		{"rot": 0.0, "flip_h": false, "flip_v": false},  # top-left
+		{"rot": 0.0, "flip_h": true,  "flip_v": false},  # top-right
+		{"rot": 0.0, "flip_h": false, "flip_v": true},   # bottom-left
+		{"rot": 0.0, "flip_h": true,  "flip_v": true},   # bottom-right
+	]
+
+	var offsets: Array = [
+		Vector2i(0, 0), Vector2i(1, 0),
+		Vector2i(0, 1), Vector2i(1, 1),
+	]
+
+	for q in range(4):
+		var tile_pos : Vector2i = origin + offsets[q]
+		var sprite := _make_tile_sprite(6, TRANSFORMS[q], tile_pos)
+		add_child(sprite)
+		_tile_sprites[tile_pos] = sprite
+		_tile_ids[tile_pos] = 6
+
+
+## Creates a positioned and transformed Sprite2D for a given tile ID.
+func _make_tile_sprite(tile_id: int, transform: Dictionary, tile_pos: Vector2i) -> Sprite2D:
+	var sprite := Sprite2D.new()
+	sprite.texture = load("res://Images/Test/Map/Tiles/Tile_%d_0.png" % tile_id)
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	sprite.scale = Vector2(TILE_SCALE, TILE_SCALE)
+	sprite.flip_h = transform["flip_h"]
+	sprite.flip_v = transform["flip_v"]
+	sprite.rotation = transform["rot"]
+	# Sprite2D position is its center; offset by half a tile so tile_pos is top-left
+	sprite.position = draw_offset + Vector2(tile_pos) * DRAW_SCALE + Vector2(DRAW_SCALE * 0.5, DRAW_SCALE * 0.5)
+	return sprite
 
 # ═════════════════════════════════════════════════════════════════════════════
 #  DEBUG DRAWING
@@ -351,14 +450,15 @@ func _draw() -> void:
 	# Draw connections — highlight if the source node is occupied
 	for c in _connections:
 		var src: MapNode = _map_nodes[c[0]]
-		var a := _tile_to_world(_points[c[0]])
-		var b := _tile_to_world(_points[c[1]])
+		var a := draw_offset + (Vector2(_node_tile_origins[c[0]]) + Vector2(1.0, 1.0)) * DRAW_SCALE
+		var b := draw_offset + (Vector2(_node_tile_origins[c[1]]) + Vector2(1.0, 1.0)) * DRAW_SCALE
 		var col := Color.YELLOW if src.occupied else Color.DIM_GRAY
 		draw_line(a, b, col, 2.0)
 
-	# Draw points — colour by traversal state
+	# Draw points — colour by traversal state, centered on the 2x2 tile block
 	for i in range(_points.size()):
-		var pos := _tile_to_world(_points[i])
+		var origin : Vector2 = _node_tile_origins[i]
+		var pos := draw_offset + (Vector2(origin) + Vector2(1.0, 1.0)) * DRAW_SCALE
 		var node: MapNode = _map_nodes[i]
 		var col: Color
 		if node.occupied:
