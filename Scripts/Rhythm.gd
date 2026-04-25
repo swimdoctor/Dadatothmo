@@ -75,7 +75,7 @@ func _ready() -> void:
 func _process(delta):
 	# if it has been a while since last keypress clear the cache
 	timeSinceLastNote += delta
-	if move_progress.any(func(num): return num > 0) && timeSinceLastNote > (beat_time() + successThreshold * 2):
+	if move_progress.any(func(num): return num > 0) && timeSinceLastNote > (beat_time() + successThreshold * 2 + gamemanager.timeout):
 		move_progress.fill(0);
 		emit_signal("clearedNotes")
 	

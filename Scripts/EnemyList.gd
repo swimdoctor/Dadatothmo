@@ -97,9 +97,9 @@ func new_enemy(enemy : EnemyName) -> EnemyData:
 			description = "King of the goblin sect. Wields explosives."
 			sprite_path = "res://Images/Test/Enemies/Frogsplode/FrogsplodeSprites.png"
 			max_health = 74
-			attack_names = [em.FROGLINSPLODE_STRIKE, em.FROGLINSPLODE_EXPLODE]
-			interval = [12, 48];
-			base_interval = [12, 48];
+			attack_names = [em.FROGLINSPLODE_STRIKE]#, em.FROGLINSPLODE_EXPLODE]
+			interval = [12]#, 48];
+			base_interval = [12]#, 48];
 		
 		EnemyName.ROADIE:
 			enemy_name = "Roadie"

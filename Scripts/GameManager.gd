@@ -19,8 +19,10 @@ var _state: GameState = GameState.MainMenu
 var player_health: int = 100
 var max_player_health: int = 100
 var player_attack = 10
-var tolerance = 1;
+var tolerance = .15;
 var bpm = 120;
+var metroVisual = true;
+var timeout = 0
 
 var pending_enemy_data: Array[EnemyData] = []
 var current_enemies: Array[Enemy]
@@ -55,6 +57,14 @@ func _input(event: InputEvent) -> void:
 			tolerance *= 2
 		if(event.as_text() == 'Y'):
 			tolerance /= 2
+		if(event.as_text() == 'U'):
+			metroVisual = false
+		if(event.as_text() == 'I'):
+			metroVisual = true
+		if(event.as_text() == 'O'):
+			timeout += 1
+		if(event.as_text() == 'P'):
+			timeout -= 1
 				
 		
 		for i in range(10):
