@@ -455,7 +455,7 @@ func _draw() -> void:
 		var src: MapNode = _map_nodes[c[0]]
 		var a := draw_offset + (Vector2(_node_tile_origins[c[0]]) + Vector2(1.0, 1.0)) * DRAW_SCALE
 		var b := draw_offset + (Vector2(_node_tile_origins[c[1]]) + Vector2(1.0, 1.0)) * DRAW_SCALE
-		var col := Color.GOLDENROD if src.occupied else Color.BLUE
+		var col := Color.GOLDENROD if src.occupied else Color.TRANSPARENT
 		draw_line(a, b, col, 8.0)
 
 	# Draw points — colour by traversal state, centered on the 2x2 tile block

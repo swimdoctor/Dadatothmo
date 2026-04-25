@@ -19,6 +19,8 @@ var _state: GameState = GameState.MainMenu
 var player_health: int = 100
 var max_player_health: int = 100
 var player_attack = 10
+var tolerance = 1;
+var bpm = 120;
 
 var pending_enemy_data: Array[EnemyData] = []
 var current_enemies: Array[Enemy]
@@ -40,11 +42,31 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("pause"):
 		toggle_pause_menu();
 	if event.is_pressed():
-		print("SDJHFKJSHDFKJ " + event.as_text())
+		print("SDJHFKJSHDFKJ |" + event.as_text() + "|")
 		if(event.as_text().contains("Q") and current_enemies.size() > 0):
 			current_enemies[0].damage(100)
-		if(event.as_text().contains("W")):
+		if(event.as_text() == 'W'):
 			player_health = max_player_health
+		if(event.as_text() == 'E'):
+			player_attack *= 2
+		if(event.as_text() == 'R'):
+			player_attack = 10
+		if(event.as_text() == 'T'):
+			tolerance *= 2
+		if(event.as_text() == 'Y'):
+			tolerance /= 2
+				
+		
+		for i in range(10):
+			if(event.as_text() == char("0".unicode_at(0) + i)):
+				print("BPM" + event.as_text())
+				bpm = 20 * i
+				if(i == 0):
+					bpm = 200
+		if($"../Rhythm" != null):
+			print("Attack: ", player_attack, " Tolerance: ", tolerance, " BPM: ", bpm)
+			$"../Rhythm".successThreshold = tolerance
+			$"../Rhythm".beats_per_minute = bpm
 		
 func toggle_pause_menu() -> void:
 	if not pause_instance:
@@ -92,6 +114,10 @@ func _change_scene(newState: GameState) -> void:
 		GameState.Fighting:
 			pending_enemy_data = [enemylist.random_enemy_data()]
 			get_tree().change_scene_to_file("res://Scenes/rhythm_visual.tscn")
+			
+			if($"../Rhythm" != null):
+				$"../Rhythm".successThreshold = tolerance
+				$"../Rhythm".beats_per_minute = bpm
 		GameState.Upgrading:
 			get_tree().change_scene_to_file("res://Scenes/upgrades.tscn")
 		GameState.GameOver:
