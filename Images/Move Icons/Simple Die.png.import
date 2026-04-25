@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://61mns4wyxsm4"
-path="res://.godot/imported/IconRoughHealth.png-f4ac965c012b44e6412d132dcb6fb712.ctex"
+uid="uid://bb25waqeb2xrx"
+path="res://.godot/imported/Simple Die.png-2ad6278db5e30d8493191bfedcf89b20.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Images/Test/IconRoughHealth.png"
-dest_files=["res://.godot/imported/IconRoughHealth.png-f4ac965c012b44e6412d132dcb6fb712.ctex"]
+source_file="res://Images/Move Icons/Simple Die.png"
+dest_files=["res://.godot/imported/Simple Die.png-2ad6278db5e30d8493191bfedcf89b20.ctex"]
 
 [params]
 
