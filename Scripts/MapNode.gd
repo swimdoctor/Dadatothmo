@@ -1,25 +1,28 @@
 class_name MapNode
 extends Area2D
-
+ 
 # Children of the area2d
 var sprite: Sprite2D
 var collision: CollisionShape2D
-
+ 
 enum MapNodeType {
 	Enemy,
 	NPC,
 	Loot,
 	Hidden
 }
-
+ 
 var highlighted: bool = false
 var occupied: bool = false
-
+ 
 var nodeType: MapNodeType = MapNodeType.Enemy
 var connections: Array[MapNode] = []
 var incomingConnections: Array[MapNode] = []
-
+ 
 var connectionCount: int = 0
+ 
+## Reference to the parent GameMap for redraw callbacks.
+var map: Node2D = null
 
 ## Map node factory constructor.
 static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -> MapNode:
@@ -56,23 +59,19 @@ static func create(_position: Vector2, _size: Vector2, _nodeType: MapNodeType) -
 func _draw() -> void:
 	if nodeType == MapNodeType.Hidden:
 		return
-	for i in range(connections.size()):
-		draw_line(
-			Vector2.ZERO,
-			Vector2(connections[i].position - self.position),
-			Color.BLACK,
-			4.0
-		)
-		
-	if (highlighted):
+ 
+	# Connection lines are drawn by map.gd._draw() which has access to all
+	# node world positions. Only draw state indicators here.
+	if highlighted:
 		draw_circle(Vector2.ZERO, 30, Color.YELLOW)
-		
-	if (occupied):
+ 
+	if occupied:
 		draw_circle(Vector2.ZERO, 30, Color.DARK_RED)
-
+ 
 ## Adds a node to connections array and increases count of connections
 func appendNode(_node: MapNode) -> void:
 	connections.append(_node)
+	connections.sort_custom(func(a, b): return a.position.y < b.position.y)
 	_node.incomingConnections.append(self)
 
 # When node is clicked
@@ -83,7 +82,7 @@ func _input_event(viewport, event, shape_idx):
 	and highlighted):
 		moveToType(nodeType)
 		playerMovesOn()
-
+ 
 func _input(event) -> void:
 	if !event.is_pressed() || gamemanager._state != gamemanager.GameState.Map:
 		return
@@ -124,16 +123,17 @@ func moveToType(nodeType: MapNodeType) -> void:
 func playerMovesOn() -> void:
 	occupied = true
 	
-	for connection in connections:
-		connection.highlighted = true
-		connection.queue_redraw()
-		
 	for connection in incomingConnections:
-		if (connection.occupied):
+		if connection.occupied:
 			for c in connection.connections:
 				c.highlighted = false
-				c.queue_redraw()
 		connection.occupied = false
-		connection.queue_redraw()
 		
-	queue_redraw()
+	for connection in connections:
+		connection.highlighted = true
+		
+	# Single redraw call — map.gd redraws all connection lines and node states
+	if map:
+		map.on_node_state_changed()
+	else:
+		queue_redraw()

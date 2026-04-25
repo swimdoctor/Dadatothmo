@@ -41,7 +41,7 @@ func _input(event: InputEvent) -> void:
 		toggle_pause_menu();
 	if event.is_pressed():
 		print("SDJHFKJSHDFKJ " + event.as_text())
-		if(event.as_text().contains("Q") and current_enemies[0]):
+		if(event.as_text().contains("Q") and current_enemies.size() > 0):
 			current_enemies[0].damage(100)
 		if(event.as_text().contains("W")):
 			player_health = max_player_health
@@ -147,15 +147,16 @@ func game_over() -> void:
 func load_map() -> GameMap:
 	if !is_instance_valid(current_map):
 		current_map = map_scene.instantiate()
-		current_map.createMap()
+		current_map.create_map()
+		add_child(current_map)
+		current_map.start_map()
 	else:
 		print("Map valid")
+		if current_map.get_parent():
+			current_map.get_parent().remove_child(current_map)
+		add_child(current_map)
 		
 	current_map.visible = true
-	
-	if current_map.get_parent():
-		current_map.get_parent().remove_child(current_map)
-	add_child(current_map)
 	
 	return current_map
 	
