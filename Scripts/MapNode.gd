@@ -63,10 +63,10 @@ func _draw() -> void:
 	# Connection lines are drawn by map.gd._draw() which has access to all
 	# node world positions. Only draw state indicators here.
 	if highlighted:
-		draw_circle(Vector2.ZERO, 30, Color.YELLOW)
+		draw_circle(Vector2.ZERO, 40, Color.YELLOW)
  
 	if occupied:
-		draw_circle(Vector2.ZERO, 30, Color.DARK_RED)
+		draw_circle(Vector2.ZERO, 40, Color.DARK_RED)
  
 ## Adds a node to connections array and increases count of connections
 func appendNode(_node: MapNode) -> void:

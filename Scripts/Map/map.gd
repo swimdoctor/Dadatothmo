@@ -345,7 +345,7 @@ func _build_map_nodes() -> void:
 		var world_pos := draw_offset + (Vector2(snapped) + Vector2(1.0, 1.0)) * DRAW_SCALE
 		var node_type := _node_type()
 		# Index 0 = entry, index 1 = exit — could assign special types later
-		var map_node := MapNode.create(world_pos, Vector2(20, 20), node_type)
+		var map_node := MapNode.create(world_pos, Vector2(40, 40), node_type)
 		_map_nodes.append(map_node)
 		add_child(map_node)
 
