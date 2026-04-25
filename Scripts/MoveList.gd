@@ -206,7 +206,7 @@ func new_move(move : MoveName):
 			description = "Heal 20% missing HP."
 			sprite = "res://Images/Test/Moves/heal.png"
 	
-	if (icon_path):
+	if (icon_path == ""):
 		icon_path = icon_folder_path + name + ".png";
 	return Move.new(move, name, description, load(icon_path), pattern, Callable(self, method), load(sprite));
 
